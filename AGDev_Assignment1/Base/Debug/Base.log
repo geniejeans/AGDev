@@ -1,0 +1,49 @@
+﻿  WeaponInfo.cpp
+  Pistol.cpp
+  LaserBlaster.cpp
+  GrenadeThrow.cpp
+  TextEntity.cpp
+  SpriteEntity.cpp
+  SpatialPartition.cpp
+d:\agdev\agdev_assignment1\base\source\spatialpartition\spatialpartition.cpp(71): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
+d:\agdev\agdev_assignment1\base\source\spatialpartition\spatialpartition.cpp(154): warning C4018: '<' : signed/unsigned mismatch
+d:\agdev\agdev_assignment1\base\source\spatialpartition\spatialpartition.cpp(178): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+d:\agdev\agdev_assignment1\base\source\spatialpartition\spatialpartition.cpp(180): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+  Grid.cpp
+d:\agdev\agdev_assignment1\base\source\spatialpartition\grid.cpp(42): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+d:\agdev\agdev_assignment1\base\source\spatialpartition\grid.cpp(43): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+d:\agdev\agdev_assignment1\base\source\spatialpartition\grid.cpp(123): warning C4018: '<' : signed/unsigned mismatch
+d:\agdev\agdev_assignment1\base\source\spatialpartition\grid.cpp(136): warning C4018: '<' : signed/unsigned mismatch
+d:\agdev\agdev_assignment1\base\source\spatialpartition\grid.cpp(175): warning C4018: '<' : signed/unsigned mismatch
+d:\agdev\agdev_assignment1\base\source\spatialpartition\grid.cpp(203): warning C4018: '<' : signed/unsigned mismatch
+  SkyBoxEntity.cpp
+  SceneText.cpp
+d:\agdev\agdev_assignment1\base\source\scenetext.cpp(231): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+  UpdateTransformation.cpp
+  Transform.cpp
+  SceneNode.cpp
+  SceneGraph.cpp
+  Projectile.cpp
+  Laser.cpp
+  Grenade.cpp
+d:\agdev\agdev_assignment1\base\source\projectile\grenade.cpp(54): warning C4018: '<' : signed/unsigned mismatch
+d:\agdev\agdev_assignment1\base\source\projectile\grenade.cpp(71): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+d:\agdev\agdev_assignment1\base\source\projectile\grenade.cpp(75): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+  PlayerInfo.cpp
+  OBJMesh.cpp
+  main.cpp
+  Generating Code...
+  Compiling...
+  Light.cpp
+  LevelOfDetails.cpp
+  GroundEntity.cpp
+  GenericEntity.cpp
+  FPSCamera.cpp
+  EntityManager.cpp
+  Enemy.cpp
+d:\agdev\agdev_assignment1\base\source\enemy\enemy.cpp(222): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+  Application.cpp
+  Generating Code...
+Application.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/OPT:LBR' specification
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+  Base.vcxproj -> D:\AGDev\AGDev_Assignment1\Debug\Base.exe
