@@ -31,6 +31,10 @@ public:
 	// Get the flag, bLaser
 	virtual bool GetIsLaser(void) const;
 
+	//Set collision with player
+	virtual void SetCollidePlayer(const bool _value) { m_bCollidePlayer = _value; };
+	virtual bool GetCollidePlayer() { return m_bCollidePlayer; };
+
 protected:
 	Vector3 position;
 	Vector3 scale;
@@ -38,6 +42,7 @@ protected:
 	bool isDone;
 	bool m_bCollider;
 	bool bLaser;
+	bool m_bCollidePlayer;
 };
 
 #endif // ENTITY_BASE_H

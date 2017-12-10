@@ -5,6 +5,7 @@
 #include <list>
 #include "Vector3.h"
 #include "SpatialPartition\SpatialPartition.h"
+#include "PlayerInfo\PlayerInfo.h"
 
 class EntityBase;
 
@@ -30,6 +31,8 @@ private:
 	bool CheckOverlap(Vector3 thisMinAABB, Vector3 thisMaxAABB, Vector3 thatMinAABB, Vector3 thatMaxAABB);
 	// Check if this entity's bounding sphere collided with that entity's bounding sphere 
 	bool CheckSphereCollision(EntityBase *ThisEntity, EntityBase *ThatEntity);
+	//Check between player and entity
+	bool CheckPlayerSphereCollision(CPlayerInfo *Player, EntityBase *ThisEntity);
 	// Check if this entity collided with another entity, but both must have collider
 	bool CheckAABBCollision(EntityBase *ThisEntity, EntityBase *ThatEntity);
 	// Check for intersection between a line segment and a plane
@@ -42,6 +45,8 @@ private:
 	bool InBox(Vector3 Hit, Vector3 B1, Vector3 B2, const int Axis);
 	// Check if any Collider is colliding with another Collider
 	bool CheckForCollision(void);
+
+	void CollisionPlayerResponse(CPlayerInfo *Player, EntityBase *ThisEntity);
 
 	std::list<EntityBase*> entityList;
 	

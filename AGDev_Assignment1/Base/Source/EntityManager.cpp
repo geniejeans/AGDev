@@ -250,6 +250,28 @@ bool EntityManager::CheckSphereCollision(EntityBase *ThisEntity, EntityBase *Tha
 	return false;
 }
 
+bool EntityManager::CheckPlayerSphereCollision(CPlayerInfo * Player, EntityBase * ThisEntity)
+{
+	double distance = sqrt(((ThisEntity->GetPosition().x - Player->GetPos().x) * (ThisEntity->GetPosition().x - Player->GetPos().x))
+
+		+ ((ThisEntity->GetPosition().z - Player->GetPos().z) * (ThisEntity->GetPosition().z - Player->GetPos().z)));
+
+	double PlayerRadius = 5;
+
+	double ObjOneRadius = ThisEntity->GetScale().x;
+
+	double sumOfRadius = PlayerRadius + ObjOneRadius;
+
+	if (distance > sumOfRadius + 5)
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}
+
 // Check if this entity collided with another entity, but both must have collider
 bool EntityManager::CheckAABBCollision(EntityBase *ThisEntity, EntityBase *ThatEntity)
 {
@@ -326,6 +348,8 @@ bool EntityManager::CheckLineSegmentPlane(	Vector3 line_start, Vector3 line_end,
 // Check if any Collider is colliding with another Collider
 bool EntityManager::CheckForCollision(void)
 {
+	bool playerCollide = false;
+
 	// Check for Collision
 	std::list<EntityBase*>::iterator colliderThis, colliderThisEnd;
 	std::list<EntityBase*>::iterator colliderThat, colliderThatEnd;
@@ -389,6 +413,18 @@ bool EntityManager::CheckForCollision(void)
 			// Check for collision with another collider class
 			colliderThatEnd = entityList.end();
 			int counter = 0;
+
+			if (CheckPlayerSphereCollision(CPlayerInfo::GetInstance(), thisEntity))
+			{
+				CollisionPlayerResponse(CPlayerInfo::GetInstance(), thisEntity);
+				playerCollide = true;
+			}
+			else if (!playerCollide)
+			{
+				CPlayerInfo::GetInstance()->SetCollision(false);
+				(thisEntity)->SetCollidePlayer(false);
+			}
+
 			for (colliderThat = entityList.begin(); colliderThat != colliderThatEnd; ++colliderThat)
 			{
 				if (colliderThat == colliderThis)
@@ -410,4 +446,9 @@ bool EntityManager::CheckForCollision(void)
 		}
 	}
 	return false;
+}
+
+void EntityManager::CollisionPlayerResponse(CPlayerInfo * Player, EntityBase * ThisEntity)
+{
+	Player->SetCollision(true);
 }

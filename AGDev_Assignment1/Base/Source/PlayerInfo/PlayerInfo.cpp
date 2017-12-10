@@ -26,6 +26,9 @@ CPlayerInfo::CPlayerInfo(void)
 	, m_pTerrain(NULL)
 	, primaryWeapon(NULL)
 	, secondaryWeapon(NULL)
+	, b_collision(false)
+	, m_health(30)
+
 {
 }
 
@@ -275,8 +278,8 @@ void CPlayerInfo::Update(double dt)
 	double mouse_diff_x, mouse_diff_y;
 	MouseController::GetInstance()->GetMouseDelta(mouse_diff_x, mouse_diff_y);
 
-	double camera_yaw = mouse_diff_x * 0.0174555555555556;		// 3.142 / 180.0
-	double camera_pitch = mouse_diff_y * 0.0174555555555556;	// 3.142 / 180.0
+//	double camera_yaw = mouse_diff_x * 0.0174555555555556;		// 3.142 / 180.0
+//	double camera_pitch = mouse_diff_y * 0.0174555555555556;	// 3.142 / 180.0
 
 	// Update the position if the WASD buttons were activated
 	if (KeyboardController::GetInstance()->IsKeyDown('W') ||
@@ -288,7 +291,8 @@ void CPlayerInfo::Update(double dt)
 		Vector3 rightUV;
 		if (KeyboardController::GetInstance()->IsKeyDown('W'))
 		{
-			position += viewVector.Normalized() * (float)m_dSpeed * (float)dt;
+			if (!b_collision)
+				position += viewVector.Normalized() * (float)m_dSpeed * (float)dt;
 		}
 		else if (KeyboardController::GetInstance()->IsKeyDown('S'))
 		{
@@ -378,7 +382,7 @@ void CPlayerInfo::Update(double dt)
 		Vector3 rightUV;
 
 		{
-			float yaw = (float)(-m_dSpeed * camera_yaw * (float)dt);
+			float yaw = (float)(-m_dSpeed * mouse_diff_x * (float)dt);
 			Mtx44 rotation;
 			rotation.SetToRotation(yaw, 0, 1, 0);
 			viewUV = rotation * viewUV;
@@ -389,7 +393,7 @@ void CPlayerInfo::Update(double dt)
 			up = rightUV.Cross(viewUV).Normalized();
 		}
 		{
-			float pitch = (float)(-m_dSpeed * camera_pitch * (float)dt);
+			float pitch = (float)(-m_dSpeed * mouse_diff_y * (float)dt);
 			rightUV = viewUV.Cross(up);
 			rightUV.y = 0;
 			rightUV.Normalize();
@@ -494,4 +498,24 @@ void CPlayerInfo::AttachCamera(FPSCamera* _cameraPtr)
 void CPlayerInfo::DetachCamera()
 {
 	attachedCamera = nullptr;
+}
+
+void CPlayerInfo::SetCollision(bool collide)
+{
+	b_collision = collide;
+}
+
+void CPlayerInfo::SetHealth(int value)
+{
+	m_health = value;
+}
+
+void CPlayerInfo::ChangeHealth(int value)
+{
+	m_health += value;
+}
+
+int CPlayerInfo::GetHealth()
+{
+	return m_health;
 }
