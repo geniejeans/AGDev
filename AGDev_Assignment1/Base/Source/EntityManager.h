@@ -17,7 +17,7 @@ public:
 	void Render();
 	void RenderUI();
 
-	void AddEntity(EntityBase* _newEntity, bool bAddToSpatialPartition=false);
+	void AddEntity(EntityBase* _newEntity, string type="", bool bAddToSpatialPartition=false);
 	bool RemoveEntity(EntityBase* _existingEntity);
 	bool MarkForDeletion(EntityBase* _existingEntity);
 
@@ -49,6 +49,7 @@ private:
 	void CollisionPlayerResponse(CPlayerInfo *Player, EntityBase *ThisEntity);
 
 	std::list<EntityBase*> entityList;
+	std::list<EntityBase*> treeList;
 	
 	// Handler to Spatial Partition
 	CSpatialPartition* theSpatialPartition;

@@ -55,7 +55,7 @@ void CEnemy::Init(void)
 	this->SetAABB(Vector3(1, 1, 1), Vector3(-1, -1, -1));
 
 	// Add to EntityManager
-	EntityManager::GetInstance()->AddEntity(this, true);
+	EntityManager::GetInstance()->AddEntity(this, "", true);
 }
 
 void CEnemy::Init(float x, float y)
@@ -88,7 +88,7 @@ void CEnemy::Init(float x, float y)
 	this->SetAABB(Vector3(1, 1, 1), Vector3(-1, -1, -1));
 
 	// Add to EntityManager
-	EntityManager::GetInstance()->AddEntity(this, true);
+	EntityManager::GetInstance()->AddEntity(this, "", true);
 }
 
 // Reset this player instance to default

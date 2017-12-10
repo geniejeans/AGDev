@@ -12,7 +12,9 @@ void EntityManager::Update(double _dt)
 {
 	// Update all entities
 	std::list<EntityBase*>::iterator it, end;
+	std::list<EntityBase*>::iterator it2, end2;
 	end = entityList.end();
+	end2 = treeList.end();
 	for (it = entityList.begin(); it != end; ++it)
 	{
 		(*it)->Update(_dt);
@@ -30,6 +32,7 @@ void EntityManager::Update(double _dt)
 
 	// Clean up entities that are done
 	it = entityList.begin();
+	it2 = treeList.begin();
 	while (it != end)
 	{
 		if ((*it)->IsDone())
@@ -44,6 +47,21 @@ void EntityManager::Update(double _dt)
 			++it;
 		}
 	}
+
+	//while (it2 != end2)
+	//{
+	//	if ((*it2)->IsDone())
+	//	{
+	//		// Delete if done
+	//		delete *it2;
+	//		it2 = treeList.erase(it);
+	//	}
+	//	else
+	//	{
+	//		// Move on otherwise
+	//		++it2;
+	//	}
+	//}
 }
 
 // Render all entities
@@ -51,12 +69,19 @@ void EntityManager::Render()
 {
 	// Render all entities
 	std::list<EntityBase*>::iterator it, end;
+	std::list<EntityBase*>::iterator it2, end2;
 	end = entityList.end();
+	end2 = treeList.end();
 	for (it = entityList.begin(); it != end; ++it)
 	{
 		(*it)->Render();
 	}
 
+	for (it2 = treeList.begin(); it2 != end2; ++it2)
+	{
+		(*it2)->Render();
+
+	}
 	// Render the Scene Graph
 	CSceneGraph::GetInstance()->Render();
 
@@ -70,17 +95,23 @@ void EntityManager::RenderUI()
 {
 	// Render all entities UI
 	std::list<EntityBase*>::iterator it, end;
+
 	end = entityList.end();
 	for (it = entityList.begin(); it != end; ++it)
 	{
 		(*it)->RenderUI();
 	}
+
+
 }
 
 // Add an entity to this EntityManager
-void EntityManager::AddEntity(EntityBase* _newEntity, bool bAddToSpatialPartition)
+void EntityManager::AddEntity(EntityBase* _newEntity, string type, bool bAddToSpatialPartition)
 {
-	entityList.push_back(_newEntity);
+	if (type == "tree")
+		treeList.push_back(_newEntity);
+	else
+		entityList.push_back(_newEntity);
 
 	// Add to the Spatial Partition
 	if (theSpatialPartition && bAddToSpatialPartition)
@@ -92,6 +123,7 @@ bool EntityManager::RemoveEntity(EntityBase* _existingEntity)
 {
 	// Find the entity's iterator
 	std::list<EntityBase*>::iterator findIter = std::find(entityList.begin(), entityList.end(), _existingEntity);
+	std::list<EntityBase*>::iterator findIter2 = std::find(treeList.begin(), treeList.end(), _existingEntity);
 
 	// Delete the entity if found
 	if (findIter != entityList.end())
@@ -113,6 +145,27 @@ bool EntityManager::RemoveEntity(EntityBase* _existingEntity)
 
 		return true;	
 	}
+
+	// Delete the entity if found
+	if (findIter2 != treeList.end())
+	{
+		delete *findIter2;
+		findIter2 = treeList.erase(findIter);
+
+		// Remove from SceneNode too
+		if (CSceneGraph::GetInstance()->DeleteNode(_existingEntity) == false)
+		{
+			cout << "EntityManager::RemoveEntity: Unable to remove this entity from Scene Graph" << endl;
+		}
+		else
+		{
+			// Add to the Spatial Partition
+			if (theSpatialPartition)
+				theSpatialPartition->Remove(_existingEntity);
+		}
+
+		return true;
+	}
 	// Return false if not found
 	return false;
 }
@@ -122,11 +175,19 @@ bool EntityManager::MarkForDeletion(EntityBase* _existingEntity)
 {
 	// Find the entity's iterator
 	std::list<EntityBase*>::iterator findIter = std::find(entityList.begin(), entityList.end(), _existingEntity);
+	std::list<EntityBase*>::iterator findIter2 = std::find(treeList.begin(), treeList.end(), _existingEntity);
 
 	// Delete the entity if found
 	if (findIter != entityList.end())
 	{
 		(*findIter)->SetIsDone(true);
+		return true;
+	}
+
+	// Delete the entity if found
+	if (findIter2 != treeList.end())
+	{
+		(*findIter2)->SetIsDone(true);
 		return true;
 	}
 	// Return false if not found
@@ -353,8 +414,10 @@ bool EntityManager::CheckForCollision(void)
 	// Check for Collision
 	std::list<EntityBase*>::iterator colliderThis, colliderThisEnd;
 	std::list<EntityBase*>::iterator colliderThat, colliderThatEnd;
+	std::list<EntityBase*>::iterator colliderTree, colliderTreeEnd;
 
 	colliderThisEnd = entityList.end();
+	colliderTreeEnd = treeList.end();
 	for (colliderThis = entityList.begin(); colliderThis != colliderThisEnd; ++colliderThis)
 	{
 		// Check if this entity is a CLaser type
@@ -443,6 +506,22 @@ bool EntityManager::CheckForCollision(void)
 					}
 				}
 			}
+		}
+	}
+
+	for (colliderTree = treeList.begin(); colliderTree != colliderTreeEnd; ++colliderTree)
+	{
+		EntityBase *treeEntity = dynamic_cast<EntityBase*>(*colliderTree);
+
+		if (CheckPlayerSphereCollision(CPlayerInfo::GetInstance(), treeEntity))
+		{
+			CollisionPlayerResponse(CPlayerInfo::GetInstance(), treeEntity);
+			playerCollide = true;
+		}
+		else if (!playerCollide)
+		{
+			CPlayerInfo::GetInstance()->SetCollision(false);
+			(treeEntity)->SetCollidePlayer(false);
 		}
 	}
 	return false;

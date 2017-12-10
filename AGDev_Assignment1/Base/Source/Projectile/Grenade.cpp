@@ -107,6 +107,6 @@ CGrenade* Create::Grenade(	const std::string& _meshName,
 	result->SetCollider(true);
 	result->SetSource(_source);
 	result->SetTerrain(_source->GetTerrain());
-	EntityManager::GetInstance()->AddEntity(result, true);
+	EntityManager::GetInstance()->AddEntity(result, "", true);
 	return result;
 }

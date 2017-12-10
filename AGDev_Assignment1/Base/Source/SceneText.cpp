@@ -253,9 +253,9 @@ void SceneText::Init()
 	{
 		float x = 1.0f + (i * rand() % 1000 - 500.0f);
 		float y = 1.0f + (i * rand() % 1000 - 500.0f);
-		GenericEntity* Tree = Create::Entity("TreeHigh", Vector3(x, -10.0f, y));
+		GenericEntity* Tree = Create::TreeEntity("TreeHigh", Vector3(x, -10.0f, y));
 		Tree->SetScale(Vector3(10.0f, 10.0f, 10.0f));
-		Tree->SetCollider(false);
+		Tree->SetCollider(true);
 		Tree->SetAABB(Vector3(0.5f, 0.5f, 0.5f), Vector3(-0.5f, -0.5f, -0.5f));
 		Tree->InitLOD("TreeHigh", "TreeMid", "TreeLow");
 	}
