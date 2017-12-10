@@ -145,6 +145,13 @@ void SceneText::Init()
 	MeshBuilder::GetInstance()->GenerateQuad("GEO_GRASS_LIGHTGREEN", Color(1, 1, 1), 1.f);
 	MeshBuilder::GetInstance()->GetMesh("GEO_GRASS_LIGHTGREEN")->textureID = LoadTGA("Image//grass_lightgreen.tga");
 	MeshBuilder::GetInstance()->GenerateCube("cubeSG", Color(1.0f, 0.64f, 0.0f), 1.0f);
+	//Tree
+	MeshBuilder::GetInstance()->GenerateOBJ("TreeHigh", "OBJ//Tree_High.obj");
+	MeshBuilder::GetInstance()->GetMesh("TreeHigh")->textureID = LoadTGA("Image//tree.tga");
+	MeshBuilder::GetInstance()->GenerateOBJ("TreeMid", "OBJ//Tree_Mid.obj");
+	MeshBuilder::GetInstance()->GetMesh("TreeMid")->textureID = LoadTGA("Image//tree.tga");
+	MeshBuilder::GetInstance()->GenerateOBJ("TreeLow", "OBJ//Tree_Low.obj");
+	MeshBuilder::GetInstance()->GetMesh("TreeLow")->textureID = LoadTGA("Image//tree.tga");
 
 	MeshBuilder::GetInstance()->GenerateQuad("SKYBOX_FRONT", Color(1, 1, 1), 1.f);
 	MeshBuilder::GetInstance()->GenerateQuad("SKYBOX_BACK", Color(1, 1, 1), 1.f);
@@ -239,6 +246,18 @@ void SceneText::Init()
 		theEnemy->SetTerrain(groundEntity);
 		theEnemy->SetTarget(theEnemy->GenerateTarget());
 		theEnemy = NULL;
+	}
+
+	// Create 100 trees
+	for (int i = 0; i < 100; i++)
+	{
+		float x = 1.0f + (i * rand() % 1000 - 500.0f);
+		float y = 1.0f + (i * rand() % 1000 - 500.0f);
+		GenericEntity* Tree = Create::Entity("TreeHigh", Vector3(x, -10.0f, y));
+		Tree->SetScale(Vector3(10.0f, 10.0f, 10.0f));
+		Tree->SetCollider(false);
+		Tree->SetAABB(Vector3(0.5f, 0.5f, 0.5f), Vector3(-0.5f, -0.5f, -0.5f));
+		Tree->InitLOD("TreeHigh", "TreeMid", "TreeLow");
 	}
 
 	// Setup the 2D entities
