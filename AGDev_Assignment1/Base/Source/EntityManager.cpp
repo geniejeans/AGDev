@@ -429,7 +429,7 @@ bool EntityManager::CheckForCollision(void)
 			// Check for collision with another collider class
 			colliderThatEnd = entityList.end();
 			int counter = 0;
-			//Checking with spatial partioning 
+			//Checking with spatial partitioning 
 			vector<EntityBase*> ExportList = CSpatialPartition::GetInstance()->GetObjects((*colliderThis)->GetPosition(), 0.05f);
 			if (ExportList.size() != 0)
 			{
@@ -532,4 +532,11 @@ bool EntityManager::CheckForCollision(void)
 void EntityManager::CollisionPlayerResponse(CPlayerInfo * Player, EntityBase * ThisEntity)
 {
 	Player->SetCollision(true);
+	if (ThisEntity->GetMeshName() == "Flag")
+	{
+		float newX = 1.0f + (rand() % 1000 - 500.0f);
+		float newZ = 1.0f + (rand() % 1000 - 500.0f);
+		Player->ChangePoints(10);
+		ThisEntity->SetPosition(Vector3(newX, 6.0f, newZ));
+	}
 }

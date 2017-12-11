@@ -28,6 +28,7 @@ CPlayerInfo::CPlayerInfo(void)
 	, secondaryWeapon(NULL)
 	, b_collision(false)
 	, m_health(30)
+	, m_points(0)
 
 {
 }
@@ -519,4 +520,19 @@ void CPlayerInfo::ChangeHealth(int value)
 int CPlayerInfo::GetHealth()
 {
 	return m_health;
+}
+
+void CPlayerInfo::SetPoint(int value)
+{
+	m_points = value;
+}
+
+void CPlayerInfo::ChangePoints(int value)
+{
+	m_points += value;
+}
+
+int CPlayerInfo::GetPoints()
+{
+	return m_points;
 }

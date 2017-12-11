@@ -96,14 +96,23 @@ public:
 	void AttachCamera(FPSCamera* _cameraPtr);
 	void DetachCamera(void);
 
+	//PLAYER INFO=================
 	// Setting collision for player 
 	void SetCollision(bool collide);
+
 	//Setting health for player
 	void SetHealth(int value);
 	//Change health for player
 	void ChangeHealth(int value);
 	//Getting health for player
 	int GetHealth();
+
+	//Set points of player
+	void SetPoint(int value);
+	//Change points of player
+	void ChangePoints(int value);
+	//Get points of player
+	int GetPoints();
 private:
 	Vector3 defaultPosition, defaultTarget, defaultUp;
 	Vector3 position, target, up;
@@ -129,4 +138,5 @@ private:
 	//Player info 
 	bool b_collision;
 	int m_health;
+	int m_points;
 };

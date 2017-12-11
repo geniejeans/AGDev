@@ -2,6 +2,7 @@
 #define ENTITY_BASE_H
 
 #include "Vector3.h"
+#include <string>
 
 class EntityBase
 {
@@ -35,6 +36,9 @@ public:
 	virtual void SetCollidePlayer(const bool _value) { m_bCollidePlayer = _value; };
 	virtual bool GetCollidePlayer() { return m_bCollidePlayer; };
 
+	virtual void SetMeshName(std::string meshName) { this->meshName = meshName; };
+	virtual std::string GetMeshName() { return meshName; };
+
 protected:
 	Vector3 position;
 	Vector3 scale;
@@ -43,6 +47,7 @@ protected:
 	bool m_bCollider;
 	bool bLaser;
 	bool m_bCollidePlayer;
+	std::string meshName;
 };
 
 #endif // ENTITY_BASE_H

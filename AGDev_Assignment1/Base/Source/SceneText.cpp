@@ -278,18 +278,21 @@ void SceneText::Init()
 	}
 
 	// Create 20 barrels
-	for (int i = 0; i < 20; i++)
+	for (int i = 1; i <= 20; i++)
 	{
 		float x = 1.0f + (i * rand() % 1000 - 500.0f);
 		float y = 1.0f + (i * rand() % 1000 - 500.0f);
-		GenericEntity* Tree = Create::TreeEntity("BarrelHigh", Vector3(x, -4.0f, y));
-		Tree->SetScale(Vector3(4.0f, 5.0f, 4.0f));
-		Tree->SetCollider(true);
-		Tree->SetAABB(Vector3(0.5f, 0.5f, 0.5f), Vector3(-0.5f, -0.5f, -0.5f));
-		Tree->InitLOD("BarrelHigh", "BarrelMid", "BarrelLow");
+		GenericEntity* barrel = Create::Entity("BarrelHigh", Vector3(x, -4.0f, y));
+		barrel->SetScale(Vector3(4.0f, 5.0f, 4.0f));
+		barrel->SetCollider(true);
+		barrel->SetAABB(Vector3(3.0f, 6.0f, 3.0f), Vector3(-4.0f, -6.0f, -3.0f));
+		barrel->InitLOD("BarrelHigh", "BarrelMid", "BarrelLow");
+
+		CSceneNode* theNode = CSceneGraph::GetInstance()->AddNode(barrel);
 	}
 
 	GenericEntity* Flag = Create::TreeEntity("flag", Vector3(0, 6.0f, 0));
+	Flag->SetMeshName("Flag");
 	Flag->SetScale(Vector3(15.0f, 15.0f, 15.0f));
 	Flag->SetCollider(true);
 	Flag->SetAABB(Vector3(0.5f, 0.5f, 0.5f), Vector3(-0.5f, -0.5f, -0.5f));
@@ -300,7 +303,7 @@ void SceneText::Init()
 	float halfWindowHeight = Application::GetInstance().GetWindowHeight() / 2.0f;
 	float fontSize = 25.0f;
 	float halfFontSize = fontSize / 2.0f;
-	for (int i = 0; i < 3; ++i)
+	for (int i = 0; i < 4; ++i)
 	{
 		textObj[i] = Create::Text2DObject("text", Vector3(-halfWindowWidth, -halfWindowHeight + fontSize*i + halfFontSize, 0.0f), "", Vector3(fontSize, fontSize, fontSize), Color(0.0f,1.0f,0.0f));
 	}
@@ -401,6 +404,11 @@ void SceneText::Update(double dt)
 	ss1.precision(4);
 	ss1 << "Player:" << playerInfo->GetPos();
 	textObj[2]->SetText(ss1.str());
+
+	std::ostringstream ss2;
+	ss2.precision(3);
+	ss2 << "Points:" << playerInfo->GetPoints();
+	textObj[3]->SetText(ss2.str());
 }
 
 void SceneText::Render()
