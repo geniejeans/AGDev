@@ -145,13 +145,26 @@ void SceneText::Init()
 	MeshBuilder::GetInstance()->GenerateQuad("GEO_GRASS_LIGHTGREEN", Color(1, 1, 1), 1.f);
 	MeshBuilder::GetInstance()->GetMesh("GEO_GRASS_LIGHTGREEN")->textureID = LoadTGA("Image//grass_lightgreen.tga");
 	MeshBuilder::GetInstance()->GenerateCube("cubeSG", Color(1.0f, 0.64f, 0.0f), 1.0f);
+
 	//Tree
 	MeshBuilder::GetInstance()->GenerateOBJ("TreeHigh", "OBJ//Tree_High.obj");
 	MeshBuilder::GetInstance()->GetMesh("TreeHigh")->textureID = LoadTGA("Image//tree.tga");
 	MeshBuilder::GetInstance()->GenerateOBJ("TreeMid", "OBJ//Tree_Mid.obj");
-	MeshBuilder::GetInstance()->GetMesh("TreeMid")->textureID = LoadTGA("Image//tree.tga");
+	MeshBuilder::GetInstance()->GetMesh("TreeMid")->textureID = LoadTGA("Image//tree_mid.tga");
 	MeshBuilder::GetInstance()->GenerateOBJ("TreeLow", "OBJ//Tree_Low.obj");
-	MeshBuilder::GetInstance()->GetMesh("TreeLow")->textureID = LoadTGA("Image//tree.tga");
+	MeshBuilder::GetInstance()->GetMesh("TreeLow")->textureID = LoadTGA("Image//tree_low.tga");
+	MeshBuilder::GetInstance()->GenerateOBJ("TreeMid2", "OBJ//Tree_Mid.obj");
+	MeshBuilder::GetInstance()->GetMesh("TreeMid2")->textureID = LoadTGA("Image//tree.tga");
+	MeshBuilder::GetInstance()->GenerateOBJ("TreeLow2", "OBJ//Tree_Low.obj");
+	MeshBuilder::GetInstance()->GetMesh("TreeLow2")->textureID = LoadTGA("Image//tree.tga");
+
+	//Barrel
+	MeshBuilder::GetInstance()->GenerateOBJ("BarrelHigh", "OBJ//Barrel_High.obj");
+	MeshBuilder::GetInstance()->GetMesh("BarrelHigh")->textureID = LoadTGA("Image//barrel.tga");
+	MeshBuilder::GetInstance()->GenerateOBJ("BarrelMid", "OBJ//Barrel_Mid.obj");
+	MeshBuilder::GetInstance()->GetMesh("BarrelMid")->textureID = LoadTGA("Image//barrel.tga");
+	MeshBuilder::GetInstance()->GenerateOBJ("BarrelLow", "OBJ//Barrel_Low.obj");
+	MeshBuilder::GetInstance()->GetMesh("BarrelLow")->textureID = LoadTGA("Image//barrel.tga");
 
 	MeshBuilder::GetInstance()->GenerateQuad("SKYBOX_FRONT", Color(1, 1, 1), 1.f);
 	MeshBuilder::GetInstance()->GenerateQuad("SKYBOX_BACK", Color(1, 1, 1), 1.f);
@@ -172,7 +185,7 @@ void SceneText::Init()
 	CSpatialPartition::GetInstance()->Init(100, 100, 10, 10);
 	CSpatialPartition::GetInstance()->SetMesh("GRIDMESH");
 	CSpatialPartition::GetInstance()->SetCamera(&camera);
-	CSpatialPartition::GetInstance()->SetLevelOfDetails(40000.0f, 160000.0f);
+	CSpatialPartition::GetInstance()->SetLevelOfDetails(60000.0f, 160000.0f);
 	EntityManager::GetInstance()->SetSpatialPartition(CSpatialPartition::GetInstance());
 
 	// Create entities into the scene
@@ -258,6 +271,18 @@ void SceneText::Init()
 		Tree->SetCollider(true);
 		Tree->SetAABB(Vector3(0.5f, 0.5f, 0.5f), Vector3(-0.5f, -0.5f, -0.5f));
 		Tree->InitLOD("TreeHigh", "TreeMid", "TreeLow");
+	}
+
+	// Create 20 barrels
+	for (int i = 0; i < 20; i++)
+	{
+		float x = 1.0f + (i * rand() % 1000 - 500.0f);
+		float y = 1.0f + (i * rand() % 1000 - 500.0f);
+		GenericEntity* Tree = Create::TreeEntity("BarrelHigh", Vector3(x, -10.0f, y));
+		Tree->SetScale(Vector3(5.0f, 6.0f, 5.0f));
+		Tree->SetCollider(true);
+		Tree->SetAABB(Vector3(0.5f, 0.5f, 0.5f), Vector3(-0.5f, -0.5f, -0.5f));
+		Tree->InitLOD("BarrelHigh", "BarrelMid", "BarrelLow");
 	}
 
 	// Setup the 2D entities
