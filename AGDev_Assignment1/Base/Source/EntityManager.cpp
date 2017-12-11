@@ -429,40 +429,42 @@ bool EntityManager::CheckForCollision(void)
 			// Check for collision with another collider class
 			colliderThatEnd = entityList.end();
 			int counter = 0;
-			for (colliderThat = entityList.begin(); colliderThat != colliderThatEnd; ++colliderThat)
+			//Checking with spatial partioning 
+			vector<EntityBase*> ExportList = CSpatialPartition::GetInstance()->GetObjects((*colliderThis)->GetPosition(), 0.05f);
+			if (ExportList.size() != 0)
 			{
-				if (colliderThat == colliderThis)
-					continue;
-
-				if ((*colliderThat)->HasCollider())
+				for (int i = 0; i < ExportList.size(); ++i)
 				{
-					Vector3 hitPosition = Vector3(0, 0, 0);
-
-					// Get the minAABB and maxAABB for (*colliderThat)
-					CCollider *thatCollider = dynamic_cast<CCollider*>(*colliderThat);
-					Vector3 thatMinAABB = (*colliderThat)->GetPosition() + thatCollider->GetMinAABB();
-					Vector3 thatMaxAABB = (*colliderThat)->GetPosition() + thatCollider->GetMaxAABB();
-
-					if (CheckLineSegmentPlane(	thisEntity->GetPosition(), 
-												thisEntity->GetPosition() - thisEntity->GetDirection() * thisEntity->GetLength(),
-												thatMinAABB, thatMaxAABB,
-												hitPosition) == true)
+					if (ExportList[i]->HasCollider() && !ExportList[i]->IsDone())
 					{
-						(*colliderThis)->SetIsDone(true);
-						(*colliderThat)->SetIsDone(true);
-
-
-						// Remove from Scene Graph
-						if (CSceneGraph::GetInstance()->DeleteNode((*colliderThis)) == true)
+						Vector3 hitPosition = Vector3(0, 0, 0);
+						
+						// Get the minAABB and maxAABB for (*colliderThat)
+						CCollider *thatCollider = dynamic_cast<CCollider*>(ExportList[i]);
+						Vector3 thatMinAABB = (ExportList[i])->GetPosition() + thatCollider->GetMinAABB();
+						Vector3 thatMaxAABB = (ExportList[i])->GetPosition() + thatCollider->GetMaxAABB();
+						
+						if (CheckLineSegmentPlane(	thisEntity->GetPosition(), 
+													thisEntity->GetPosition() - thisEntity->GetDirection() * thisEntity->GetLength(),
+													thatMinAABB, thatMaxAABB,
+													hitPosition) == true)
 						{
-							cout << "*** This Entity removed ***" << endl;
+							(*colliderThis)->SetIsDone(true);
+							(ExportList[i])->SetIsDone(true);
+						
+						
+							// Remove from Scene Graph
+							if (CSceneGraph::GetInstance()->DeleteNode((*colliderThis)) == true)
+							{
+								cout << "*** This Entity removed ***" << endl;
+							}
+							// Remove from Scene Graph
+							if (CSceneGraph::GetInstance()->DeleteNode(ExportList[i]) == true)
+							{
+								cout << "*** That Entity removed ***" << endl;
+							}
+						
 						}
-						// Remove from Scene Graph
-						if (CSceneGraph::GetInstance()->DeleteNode((*colliderThat)) == true)
-						{
-							cout << "*** That Entity removed ***" << endl;
-						}
-
 					}
 				}
 			}
