@@ -166,6 +166,10 @@ void SceneText::Init()
 	MeshBuilder::GetInstance()->GenerateOBJ("BarrelLow", "OBJ//Barrel_Low.obj");
 	MeshBuilder::GetInstance()->GetMesh("BarrelLow")->textureID = LoadTGA("Image//barrel.tga");
 
+	//flag
+	MeshBuilder::GetInstance()->GenerateOBJ("flag", "OBJ//flag.obj");
+	MeshBuilder::GetInstance()->GetMesh("flag")->textureID = LoadTGA("Image//flag.tga");
+
 	MeshBuilder::GetInstance()->GenerateQuad("SKYBOX_FRONT", Color(1, 1, 1), 1.f);
 	MeshBuilder::GetInstance()->GenerateQuad("SKYBOX_BACK", Color(1, 1, 1), 1.f);
 	MeshBuilder::GetInstance()->GenerateQuad("SKYBOX_LEFT", Color(1, 1, 1), 1.f);
@@ -278,12 +282,18 @@ void SceneText::Init()
 	{
 		float x = 1.0f + (i * rand() % 1000 - 500.0f);
 		float y = 1.0f + (i * rand() % 1000 - 500.0f);
-		GenericEntity* Tree = Create::TreeEntity("BarrelHigh", Vector3(x, -10.0f, y));
+		GenericEntity* Tree = Create::TreeEntity("BarrelHigh", Vector3(x, -4.0f, y));
 		Tree->SetScale(Vector3(4.0f, 5.0f, 4.0f));
 		Tree->SetCollider(true);
 		Tree->SetAABB(Vector3(0.5f, 0.5f, 0.5f), Vector3(-0.5f, -0.5f, -0.5f));
 		Tree->InitLOD("BarrelHigh", "BarrelMid", "BarrelLow");
 	}
+
+	GenericEntity* Flag = Create::TreeEntity("flag", Vector3(0, 6.0f, 0));
+	Flag->SetScale(Vector3(15.0f, 15.0f, 15.0f));
+	Flag->SetCollider(true);
+	Flag->SetAABB(Vector3(0.5f, 0.5f, 0.5f), Vector3(-0.5f, -0.5f, -0.5f));
+	Flag->InitLOD("flag", "flag", "flag");
 
 	// Setup the 2D entities
 	float halfWindowWidth = Application::GetInstance().GetWindowWidth() / 2.0f;
