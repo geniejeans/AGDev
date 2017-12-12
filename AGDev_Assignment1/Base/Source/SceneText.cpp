@@ -22,6 +22,7 @@
 #include "SkyBox/SkyBoxEntity.h"
 #include "SceneGraph\SceneGraph.h"
 #include "SpatialPartition\SpatialPartition.h"
+#include "PlayerEntityBase\PlayerEntityBase.h"
 
 #include <iostream>
 using namespace std;
@@ -253,17 +254,30 @@ void SceneText::Init()
 
 	// Create a CEnemy instance
 	srand(time(NULL));
-	for (int i = 0; i < 10; i++)
-	{
-		theEnemy = new CEnemy();
-		float x = 1.0f + (i * rand() % 1000 - 500.0f);
-		float y = 1.0f + (i * rand() % 1000 - 500.0f);
-		theEnemy->SetRandomSeed(rand());
-		theEnemy->Init(x, y);
-		theEnemy->SetTerrain(groundEntity);
-		theEnemy->SetTarget(theEnemy->GenerateTarget());
-		theEnemy = NULL;
-	}
+	//for (int i = 0; i < 10; i++)
+	//{
+	//	theEnemy = new CEnemy();
+	//	float x = 1.0f + (i * rand() % 1000 - 500.0f);
+	//	float y = 1.0f + (i * rand() % 1000 - 500.0f);
+	//	theEnemy->SetRandomSeed(rand());
+	//	theEnemy->Init(x, y);
+	//	theEnemy->SetTerrain(groundEntity);
+	//	theEnemy->SetTarget(theEnemy->GenerateTarget());
+	//	theEnemy = NULL;
+	//}
+
+	theEnemy = new CEnemy();
+	theEnemy->SetMeshName("Enemy");
+	theEnemy->Init(10, 10);
+	theEnemy->SetTerrain(groundEntity);
+	theEnemy->SetTarget(theEnemy->GenerateTarget());
+	theEnemy = NULL;
+
+	CPlayerEntityBase* player = new CPlayerEntityBase();
+	player->SetMeshName("Player");
+	player->SetScale(Vector3(4.0f, 5.0f, 4.0f));
+	player->Init(10, 10);
+	CSceneGraph::GetInstance()->AddNode(player);
 
 	// Create 100 trees
 	for (int i = 0; i < 100; i++)
@@ -303,7 +317,7 @@ void SceneText::Init()
 	float halfWindowHeight = Application::GetInstance().GetWindowHeight() / 2.0f;
 	float fontSize = 25.0f;
 	float halfFontSize = fontSize / 2.0f;
-	for (int i = 0; i < 4; ++i)
+	for (int i = 0; i < 5; ++i)
 	{
 		textObj[i] = Create::Text2DObject("text", Vector3(-halfWindowWidth, -halfWindowHeight + fontSize*i + halfFontSize, 0.0f), "", Vector3(fontSize, fontSize, fontSize), Color(0.0f,1.0f,0.0f));
 	}
@@ -409,6 +423,11 @@ void SceneText::Update(double dt)
 	ss2.precision(3);
 	ss2 << "Points:" << playerInfo->GetPoints();
 	textObj[3]->SetText(ss2.str());
+
+	ss2.str("");
+	ss2.precision(3);
+	ss2 << "Health:" << playerInfo->GetHealth();
+	textObj[4]->SetText(ss2.str());
 }
 
 void SceneText::Render()

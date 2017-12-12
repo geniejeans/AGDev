@@ -5,7 +5,7 @@
 
 class Mesh;
 
-class CEnemy :
+class CPlayerEntityBase :
 	public GenericEntity
 {
 protected:
@@ -24,8 +24,8 @@ protected:
 	float elapsed_time;
 
 public:
-	CEnemy(void);
-	virtual ~CEnemy();
+	CPlayerEntityBase(void);
+	virtual ~CPlayerEntityBase();
 
 	void Init(void);
 	void Init(float x, float y);
@@ -59,9 +59,5 @@ public:
 	void Constrain(void);
 	// Render
 	void Render(void);
-	// Set random seed
-	void SetRandomSeed(const int m_iSeed);
-	// Generate New Target
-	Vector3 GenerateTarget(void);
 
 };

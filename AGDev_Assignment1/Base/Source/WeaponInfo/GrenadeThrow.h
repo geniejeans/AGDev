@@ -13,5 +13,6 @@ public:
 	void Init(void);
 	// Discharge this weapon
 	void Discharge(Vector3 position, Vector3 target, CPlayerInfo* _source = NULL);
+	void Discharge(Vector3 position, Vector3 target, EntityBase * _source = NULL);
 };
 

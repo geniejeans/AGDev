@@ -23,6 +23,11 @@ public:
 
 	void SetSpatialPartition(CSpatialPartition* theSpatialPartition);
 
+	void ChangePlayerHealth(int value);
+
+	Vector3 GetPlayerTarget();
+	Vector3 GetPlayerPosition();
+
 private:
 	EntityManager();
 	virtual ~EntityManager();
@@ -47,6 +52,8 @@ private:
 	bool CheckForCollision(void);
 
 	void CollisionPlayerResponse(CPlayerInfo *Player, EntityBase *ThisEntity);
+
+
 
 	std::list<EntityBase*> entityList;
 	std::list<EntityBase*> treeList;

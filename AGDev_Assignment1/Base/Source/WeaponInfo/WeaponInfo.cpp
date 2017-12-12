@@ -1,5 +1,6 @@
 #include "WeaponInfo.h"
 #include "../Projectile/Projectile.h"
+#include "../Projectile/ProjectileEntityBase.h"
 
 #include <iostream>
 using namespace std;
@@ -136,7 +137,7 @@ void CWeaponInfo::Update(const double dt)
 	}
 }
 
-// Discharge this weapon
+// Discharge this weapon from player
 void CWeaponInfo::Discharge(Vector3 position, Vector3 target, CPlayerInfo* _source)
 {
 	if (bFire)
@@ -162,6 +163,23 @@ void CWeaponInfo::Discharge(Vector3 position, Vector3 target, CPlayerInfo* _sour
 	{
 		int a = 0;
 	}
+}
+
+// Discharge this weapon from entitybase(enemy)
+void CWeaponInfo::Discharge(Vector3 position, Vector3 target, EntityBase* _source)
+{
+		// If there is still ammo in the magazine, then fire
+			// Create a projectile with a cube mesh. Its position and direction is same as the player.
+			// It will last for 3.0 seconds and travel at 500 units per second
+			CProjectileEntityBase* aProjectile = Create::ProjectileEntityBase("cube",
+				position,
+				(target - position).Normalized(),
+				2.0f,
+				10.0f,
+				_source);
+			aProjectile->SetMeshName("EnemyBullet");
+			aProjectile->SetCollider(true);
+			aProjectile->SetAABB(Vector3(0.5f, 0.5f, 0.5f), Vector3(-0.5f, -0.5f, -0.5f));
 }
 
 // Reload this weapon

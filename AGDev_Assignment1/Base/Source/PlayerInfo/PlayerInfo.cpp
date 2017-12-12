@@ -27,7 +27,7 @@ CPlayerInfo::CPlayerInfo(void)
 	, primaryWeapon(NULL)
 	, secondaryWeapon(NULL)
 	, b_collision(false)
-	, m_health(30)
+	, m_health(100)
 	, m_points(0)
 
 {

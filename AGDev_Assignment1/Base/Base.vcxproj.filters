@@ -37,6 +37,9 @@
     <Filter Include="Enemy">
       <UniqueIdentifier>{f5fb02ce-b59a-403f-b90f-1e6eba658755}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayerEntityBase">
+      <UniqueIdentifier>{648e1ee0-c6fb-40b9-81f0-fd5721c8fdaf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp">
@@ -123,6 +126,15 @@
     <ClCompile Include="Source\Enemy\Enemy.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Projectile\ProjectileEntityBase.cpp">
+      <Filter>Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Projectile\GrenadeEntityBase.cpp">
+      <Filter>Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PlayerEntityBase\PlayerEntityBase.cpp">
+      <Filter>PlayerEntityBase</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -205,6 +217,15 @@
     </ClInclude>
     <ClInclude Include="Source\Enemy\Enemy.h">
       <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Projectile\ProjectileEntityBase.h">
+      <Filter>Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Projectile\GrenadeEntityBase.h">
+      <Filter>Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PlayerEntityBase\PlayerEntityBase.h">
+      <Filter>PlayerEntityBase</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

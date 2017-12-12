@@ -1,5 +1,6 @@
 #include "GrenadeThrow.h"
 #include "../Projectile/Grenade.h"
+#include "../Projectile/GrenadeEntityBase.h"
 
 CGrenadeThrow::CGrenadeThrow()
 {
@@ -55,4 +56,19 @@ void CGrenadeThrow::Discharge(Vector3 position, Vector3 target, CPlayerInfo* _so
 			magRounds--;
 		}
 	}
+}
+
+void CGrenadeThrow::Discharge(Vector3 position, Vector3 target, EntityBase * _source)
+{
+	// Create a projectile with a cube mesh. Its position and direction is same as the player.
+	// It will last for 3.0 seconds and travel at 500 units per second
+	CProjectile* aProjectile = Create::GrenadeEntityBase("sphere",
+		position,
+		(target - position).Normalized(),
+		7.0f,
+		8.0f,
+		_source);
+	aProjectile->SetMeshName("EnemyBullet");
+	aProjectile->SetCollider(true);
+	aProjectile->SetAABB(Vector3(0.5f, 0.5f, 0.5f), Vector3(-0.5f, -0.5f, -0.5f));
 }

@@ -1,4 +1,4 @@
-#include "Enemy.h"
+#include "PlayerEntityBase.h"
 #include "../EntityManager.h"
 #include "GraphicsManager.h"
 #include "RenderHelper.h"
@@ -7,7 +7,7 @@
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
 
-CEnemy::CEnemy()
+CPlayerEntityBase::CPlayerEntityBase()
 	: GenericEntity(NULL)
 	, defaultPosition(Vector3(0.0f, 0.0f, 0.0f))
 	, defaultTarget(Vector3(0.0f, 0.0f, 0.0f))
@@ -24,11 +24,11 @@ CEnemy::CEnemy()
 }
 
 
-CEnemy::~CEnemy()
+CPlayerEntityBase::~CPlayerEntityBase()
 {
 }
 
-void CEnemy::Init(void)
+void CPlayerEntityBase::Init(void)
 {
 	// Set the default values
 	defaultPosition.Set(0, 0, 10);
@@ -37,11 +37,6 @@ void CEnemy::Init(void)
 
 	// Set the current values
 	position.Set(10.0f, 0.0f, 0.0f);
-	if (m_pTerrain)
-		target = GenerateTarget();
-	else
-		target.Set(10.0f, 0.0f, 450.0f);
-	up.Set(0.0f, 1.0f, 0.0f);
 
 	// Set Boundary
 	maxBoundary.Set(1, 1, 1);
@@ -63,7 +58,7 @@ void CEnemy::Init(void)
 	EntityManager::GetInstance()->AddEntity(this, "", true);
 }
 
-void CEnemy::Init(float x, float y)
+void CPlayerEntityBase::Init(float x, float y)
 {
 	// Set the default values
 	defaultPosition.Set(0, 0, 10);
@@ -72,11 +67,6 @@ void CEnemy::Init(float x, float y)
 
 	// Set the current values
 	position.Set(x, 0.0f, y);
-	if (m_pTerrain)
-		target = GenerateTarget();
-	else
-		target.Set(10.0f, 0.0f, 450.0f);
-	up.Set(0.0f, 1.0f, 0.0f);
 
 	// Set Boundary
 	maxBoundary.Set(1, 1, 1);
@@ -85,12 +75,8 @@ void CEnemy::Init(float x, float y)
 	// Set speed
 	m_dSpeed = 10.0;
 
-	// Initialise the LOD meshes
-	InitLOD("cube", "sphere", "cubeSG");
-
 	// Initialise the Collider
-	this->SetCollider(true);
-	this->SetAABB(Vector3(1, 1, 1), Vector3(-1, -1, -1));
+	this->SetCollider(false);
 
 	primaryWeapon = new CGrenadeThrow();
 	primaryWeapon->Init();
@@ -100,7 +86,7 @@ void CEnemy::Init(float x, float y)
 }
 
 // Reset this player instance to default
-void CEnemy::Reset(void)
+void CPlayerEntityBase::Reset(void)
 {
 	// Set the current values to default values
 	position = defaultPosition;
@@ -109,29 +95,29 @@ void CEnemy::Reset(void)
 }
 
 // Set position
-void CEnemy::SetPos(const Vector3& pos)
+void CPlayerEntityBase::SetPos(const Vector3& pos)
 {
 	position = pos;
 }
 
 // Set target
-void CEnemy::SetTarget(const Vector3& target)
+void CPlayerEntityBase::SetTarget(const Vector3& target)
 {
 	this->target = target;
 }
 // Set Up
-void CEnemy::SetUp(const Vector3& up)
+void CPlayerEntityBase::SetUp(const Vector3& up)
 {
 	this->up = up;
 }
 // Set the boundary for the player info
-void CEnemy::SetBoundary(Vector3 max, Vector3 min)
+void CPlayerEntityBase::SetBoundary(Vector3 max, Vector3 min)
 {
 	maxBoundary = max;
 	minBoundary = min;
 }
 // Set the terrain for the player info
-void CEnemy::SetTerrain(GroundEntity* m_pTerrain)
+void CPlayerEntityBase::SetTerrain(GroundEntity* m_pTerrain)
 {
 	if (m_pTerrain != NULL)
 	{
@@ -142,54 +128,35 @@ void CEnemy::SetTerrain(GroundEntity* m_pTerrain)
 }
 
 // Get position
-Vector3 CEnemy::GetPos(void) const
+Vector3 CPlayerEntityBase::GetPos(void) const
 {
 	return position;
 }
 
 // Get target
-Vector3 CEnemy::GetTarget(void) const
+Vector3 CPlayerEntityBase::GetTarget(void) const
 {
 	return target;
 }
 // Get Up
-Vector3 CEnemy::GetUp(void) const
+Vector3 CPlayerEntityBase::GetUp(void) const
 {
 	return up;
 }
 // Get the terrain for the player info
-GroundEntity* CEnemy::GetTerrain(void)
+GroundEntity* CPlayerEntityBase::GetTerrain(void)
 {
 	return m_pTerrain;
 }
 
 // Update
-void CEnemy::Update(double dt)
+void CPlayerEntityBase::Update(double dt)
 {
-	elapsed_time += dt;
-	Vector3 viewVector = (target - position).Normalized();
-//	position += viewVector * (float)m_dSpeed * (float)dt;
-//	cout << position << " - " << target << "..." << viewVector << endl;
-
-	// Constrain the position
-	Constrain();
-
-	if (elapsed_time >= 10.0f)
-	{
-		if (primaryWeapon)
-			primaryWeapon->Discharge(position, EntityManager::GetInstance()->GetPlayerTarget(), this);
-		elapsed_time = 0.0f;
-	}
-
-	//// Update the target
-	//if (position.z > 400.0f)
-	//	target.z = position.z * -1;
-	//else if (position.z < -400.0f)
-	//	target.z = position.z * -1;
+	position = EntityManager::GetInstance()->GetPlayerPosition();
 }
 
 // Constrain the position within the borders
-void CEnemy::Constrain(void)
+void CPlayerEntityBase::Constrain(void)
 {
 	// Constrain player within the boundary
 	if (position.x > maxBoundary.x - 1.0f)
@@ -201,11 +168,6 @@ void CEnemy::Constrain(void)
 	if (position.z < minBoundary.z + 1.0f)
 		position.z = minBoundary.z + 1.0f;
 
-	if (abs(((target.x - position.x) * (target.x - position.x) - (target.z - position.z)*(target.z - position.z))) < m_dSpeed)
-	{
-		target = GenerateTarget();
-	}
-
 	// if the y position is not equal to terrain height at that position, 
 	// then update y position to the terrain height
 	if (position.y != m_pTerrain->GetTerrainHeight(position))
@@ -213,7 +175,7 @@ void CEnemy::Constrain(void)
 }
 
 // Render
-void CEnemy::Render(void)
+void CPlayerEntityBase::Render(void)
 {
 	MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();
 	modelStack.PushMatrix();
@@ -228,18 +190,4 @@ void CEnemy::Render(void)
 		}
 	}
 	modelStack.PopMatrix();
-}
-
-// Generate New Target
-Vector3 CEnemy::GenerateTarget(void)
-{
-	return Vector3(	rand() % (int)((maxBoundary.x - minBoundary.x)*0.5),	
-					0.0f, 
-					rand() % (int)((maxBoundary.x - minBoundary.x)*0.5));
-}
-
-// Set random seed
-void CEnemy::SetRandomSeed(const int m_iSeed)
-{
-	this->m_iSeed = m_iSeed;
 }

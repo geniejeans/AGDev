@@ -200,6 +200,11 @@ void EntityManager::SetSpatialPartition(CSpatialPartition* theSpatialPartition)
 	this->theSpatialPartition = theSpatialPartition;
 }
 
+void EntityManager::ChangePlayerHealth(int value)
+{
+	CPlayerInfo::GetInstance()->ChangeHealth(value);
+}
+
 // Constructor
 EntityManager::EntityManager()
 	: theSpatialPartition(NULL)
@@ -492,7 +497,8 @@ bool EntityManager::CheckForCollision(void)
 
 			for (colliderThat = entityList.begin(); colliderThat != colliderThatEnd; ++colliderThat)
 			{
-				if (colliderThat == colliderThis)
+				if (colliderThat == colliderThis || ((*colliderThat)->GetMeshName() == "EnemyBullet" && (*colliderThis)->GetMeshName() == "Enemy")
+					|| ((*colliderThis)->GetMeshName() == "EnemyBullet" && (*colliderThat)->GetMeshName() == "Enemy"))
 					continue;
 
 				if ((*colliderThat)->HasCollider())
@@ -539,4 +545,14 @@ void EntityManager::CollisionPlayerResponse(CPlayerInfo * Player, EntityBase * T
 		Player->ChangePoints(10);
 		ThisEntity->SetPosition(Vector3(newX, 6.0f, newZ));
 	}
+}
+
+Vector3 EntityManager::GetPlayerTarget()
+{
+	return CPlayerInfo::GetInstance()->GetTarget();
+}
+
+Vector3 EntityManager::GetPlayerPosition()
+{
+	return CPlayerInfo::GetInstance()->GetPos();
 }
