@@ -302,11 +302,17 @@ void SceneText::Init()
 	//}
 
 	//tank
-	GenericEntity* tankbottom = Create::Entity("tankbottom", Vector3(0.0f, 0.0f, 55.0f));
+	GenericEntity* tankbottom = Create::Entity("tankbottom", Vector3(55.0f, 0.0f, 55.0f));
+	tankbottom->SetMeshName("Enemy");
 	tankbottom->SetScale(Vector3(22.0f, 20.0f, 22.0f));
 	tankbottom->SetCollider(true);
+	tankbottom->SetAABB(Vector3(24.0f, 16.0f, 24.0f), Vector3(-24.0f, -16.0f, -24.0f));
 	tankbottom->InitLOD("tankbottom", "tankbottom", "tankbottom");
-
+	//making the tank move
+	CUpdateTransformation* moveTank = new CUpdateTransformation();
+	moveTank->ApplyUpdate(0, 0, 0.1);
+	moveTank->SetSteps(-120, 120);
+	tankbottom->SetUpdateTransformation(moveTank);
 	// Add the pointer to this new entity to the Scene Graph
 	CSceneNode* tankbottomenode = CSceneGraph::GetInstance()->AddNode(tankbottom);
 	if (tankbottomenode == NULL)
@@ -314,22 +320,26 @@ void SceneText::Init()
 		cout << "EntityManager::AddEntity: Unable to add to scene graph!" << endl;
 	}
 
+
+
+	// top of the tank
 	theEnemy = new CEnemy();
 	theEnemy->SetRandomSeed(rand());
 	theEnemy->SetMeshName("Enemy");
 	theEnemy->SetScale(Vector3(20.0f, 15.0f, 20.0f));
-	theEnemy->Init(0.0f, 12.0f, 55.0f);
+	theEnemy->SetAABB(Vector3(10.0f, 6.5f, 10.0f), Vector3(-10.0f, -6.5f, -10.0f));
+	theEnemy->Init(55.0f, 12.0f, 55.0f);
 	theEnemy->SetTerrain(groundEntity);
-	theEnemy->SetTarget(theEnemy->GenerateTarget());
-	theEnemy = NULL;
+	//CUpdateTransformation* moveTank1 = new CUpdateTransformation();
+	//moveTank1->ApplyUpdate(0, 0, 0.1);
+	//moveTank1->SetSteps(-120, 120);
+	//theEnemy->SetUpdateTransformation(moveTank1);
+	//theEnemy->SetTarget(theEnemy->GenerateTarget());
 	CSceneNode* tanktopnode = tankbottomenode->AddChild(theEnemy);
 	if (tanktopnode == NULL)
 	{
 		cout << "EntityManager::AddEntity: Unable to add to scene graph!" << endl;
 	}
-
-
-
 
 	CPlayerEntityBase* player = new CPlayerEntityBase();
 	player->SetMeshName("Player");

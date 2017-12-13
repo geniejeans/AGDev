@@ -1,6 +1,6 @@
 #include "EntityBase.h"
 
-EntityBase::EntityBase() 
+EntityBase::EntityBase()
 	: position(0.0f, 0.0f, 0.0f)
 	, scale(1.0f, 1.0f, 1.0f)
 	, isDone(false)
@@ -8,6 +8,7 @@ EntityBase::EntityBase()
 	, bLaser(false)
 	, m_bCollidePlayer(false)
 	, meshName("")
+	, health(100)
 {
 }
 

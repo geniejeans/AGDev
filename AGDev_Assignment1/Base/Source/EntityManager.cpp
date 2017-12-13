@@ -460,6 +460,29 @@ bool EntityManager::CheckForCollision(void)
 													thatMinAABB, thatMaxAABB,
 													hitPosition) == true)
 						{
+							if ((ExportList[i])->GetMeshName() == "Enemy")
+							{
+								//	CEnemy *enemy = dynamic_cast<CEnemy*>(ExportList[i]);
+
+								ExportList[i]->ChangeHealth(-20);
+								thisEntity->SetIsDone(true);
+								//std::cout << ExportList[i]->GetHealth() << std::endl;
+								if ((ExportList[i])->GetHealth() <= 0)
+								{
+									ExportList[i]->SetIsDone(true);
+									// Remove from Scene Graph
+									if (CSceneGraph::GetInstance()->DeleteNode((*colliderThis)) == true)
+									{
+										cout << "*** This Entity removed ***" << endl;
+									}
+									// Remove from Scene Graph
+									if (CSceneGraph::GetInstance()->DeleteNode(ExportList[i]) == true)
+									{
+										cout << "*** That Entity removed ***" << endl;
+									}
+								}
+								continue;
+							}
 							(*colliderThis)->SetIsDone(true);
 							(ExportList[i])->SetIsDone(true);
 						
@@ -517,7 +540,8 @@ bool EntityManager::CheckForCollision(void)
 			{
 				if (colliderThat == colliderThis || ((*colliderThat)->GetMeshName() == "EnemyBullet" && (*colliderThis)->GetMeshName() == "Enemy")
 					|| ((*colliderThis)->GetMeshName() == "EnemyBullet" && (*colliderThat)->GetMeshName() == "Enemy")
-					|| ((*colliderThis)->GetMeshName() == "Dummy" && (*colliderThat)->GetMeshName() == "Dummy"))
+					|| ((*colliderThis)->GetMeshName() == "Dummy" && (*colliderThat)->GetMeshName() == "Dummy")
+					|| ((*colliderThis)->GetMeshName() == "Enemy" && (*colliderThat)->GetMeshName() == "Enemy"))
 					continue;
 
 				if ((*colliderThat)->HasCollider())

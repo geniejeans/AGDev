@@ -49,14 +49,14 @@ void CGrenadeEntityBase::Update(double dt)
 		SetStatus(false);
 		SetIsDone(true);	// This method informs EntityManager to remove this instance
 
-		// Check the SpatialPartition to destroy nearby objects
+							// Check the SpatialPartition to destroy nearby objects
 		vector<EntityBase*> ExportList = CSpatialPartition::GetInstance()->GetObjects(position, 1.0f);
 		for (int i = 0; i < ExportList.size(); ++i)
 		{
 			if (ExportList[i]->GetMeshName() == "Player")
 				EntityManager::GetInstance()->ChangePlayerHealth(-10);
 			// Remove from Scene Graph
-			else if (CSceneGraph::GetInstance()->DeleteNode(ExportList[i]) == true)
+			else if (ExportList[i]->GetMeshName() != "Enemy" && CSceneGraph::GetInstance()->DeleteNode(ExportList[i]) == true)
 			{
 				cout << "*** This Entity removed ***" << endl;
 			}
@@ -72,9 +72,9 @@ void CGrenadeEntityBase::Update(double dt)
 		// Update Position
 		m_fElapsedTime += dt;
 
-		position.Set(	position.x + (float)(theDirection.x * m_fElapsedTime * m_fSpeed),
-						position.y + (float)(theDirection.y * m_fElapsedTime * m_fSpeed) + (0.5 * m_fGravity * m_fElapsedTime * m_fElapsedTime),
-						position.z + (float)(theDirection.z * m_fElapsedTime * m_fSpeed));
+		position.Set(position.x + (float)(theDirection.x * m_fElapsedTime * m_fSpeed),
+			position.y + (float)(theDirection.y * m_fElapsedTime * m_fSpeed) + (0.5 * m_fGravity * m_fElapsedTime * m_fElapsedTime),
+			position.z + (float)(theDirection.z * m_fElapsedTime * m_fSpeed));
 
 		if (position.y < 0 - 10.0f)
 		{
@@ -92,12 +92,12 @@ void CGrenadeEntityBase::SetTerrain(GroundEntity* m_pTerrain)
 }
 
 // Create a projectile and add it into EntityManager
-CGrenadeEntityBase* Create::GrenadeEntityBase(	const std::string& _meshName,
-							const Vector3& _position, 
-							const Vector3& _direction, 
-							const float m_fLifetime, 
-							const float m_fSpeed,
-							EntityBase* _source)
+CGrenadeEntityBase* Create::GrenadeEntityBase(const std::string& _meshName,
+	const Vector3& _position,
+	const Vector3& _direction,
+	const float m_fLifetime,
+	const float m_fSpeed,
+	EntityBase* _source)
 {
 	Mesh* modelMesh = MeshBuilder::GetInstance()->GetMesh(_meshName);
 	if (modelMesh == nullptr)
