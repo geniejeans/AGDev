@@ -178,6 +178,13 @@ void SceneText::Init()
 	MeshBuilder::GetInstance()->GetMesh("dummyarm")->textureID = LoadTGA("Image//dummy.tga");
 	MeshBuilder::GetInstance()->GenerateCube("dummybody", Color(0.871f, 0.722f, 0.529f), 1.0f);
 
+	//Tank
+	MeshBuilder::GetInstance()->GenerateOBJ("tankbottom", "OBJ//tankbottom.obj");
+	MeshBuilder::GetInstance()->GetMesh("tankbottom")->textureID = LoadTGA("Image//tank.tga");
+	MeshBuilder::GetInstance()->GenerateOBJ("tanktop", "OBJ//tanktop.obj");
+	MeshBuilder::GetInstance()->GetMesh("tanktop")->textureID = LoadTGA("Image//tank.tga");
+
+
 	MeshBuilder::GetInstance()->GenerateQuad("SKYBOX_FRONT", Color(1, 1, 1), 1.f);
 	MeshBuilder::GetInstance()->GenerateQuad("SKYBOX_BACK", Color(1, 1, 1), 1.f);
 	MeshBuilder::GetInstance()->GenerateQuad("SKYBOX_LEFT", Color(1, 1, 1), 1.f);
@@ -243,6 +250,29 @@ void SceneText::Init()
 		{
 			cout << "EntityManager::AddEntity: Unable to add to scene graph!" << endl;
 		}
+	}
+
+	//tank
+	GenericEntity* tankbottom = Create::Entity("tankbottom", Vector3(5.0f, 0.0f, 55.0f));
+	tankbottom->SetScale(Vector3(22.0f, 20.0f, 22.0f));
+	tankbottom->SetCollider(true);
+	tankbottom->InitLOD("tankbottom", "tankbottom", "tankbottom");
+
+	// Add the pointer to this new entity to the Scene Graph
+	CSceneNode* tankbottomenode = CSceneGraph::GetInstance()->AddNode(tankbottom);
+	if (tankbottomenode == NULL)
+	{
+		cout << "EntityManager::AddEntity: Unable to add to scene graph!" << endl;
+	}
+
+	GenericEntity* tanktop = Create::Entity("tanktop", Vector3(5.0f, 13.0f, 55.0f));
+	tanktop->SetScale(Vector3(20.0f, 15.0f, 20.0f));
+	tanktop->SetCollider(true);
+
+	CSceneNode* tanktopnode = tankbottomenode->AddChild(tanktop);
+	if (tanktopnode == NULL)
+	{
+		cout << "EntityManager::AddEntity: Unable to add to scene graph!" << endl;
 	}
 	
 	
