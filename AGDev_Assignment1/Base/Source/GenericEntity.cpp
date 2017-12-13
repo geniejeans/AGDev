@@ -31,8 +31,6 @@ void GenericEntity::Update(double _dt)
 	
 		minAABB.x = previousMin.x * cos(rotation) + previousMin.z * sin(rotation);
 		minAABB.z = -previousMin.x * sin(rotation) + previousMin.z * cos(rotation);
-	
-		std::cout << maxAABB << std::endl;
 	}
 }
 

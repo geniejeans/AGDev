@@ -435,6 +435,12 @@ bool EntityManager::CheckForCollision(void)
 			colliderThatEnd = entityList.end();
 			int counter = 0;
 			//Checking with spatial partitioning 
+			//int newGrid = 0;
+			//vector<EntityBase*> ExportList;
+			//if (previousGrid == 0)
+			//	ExportList = CSpatialPartition::GetInstance()->GetObjects((*colliderThis)->GetPosition(), 0.05f, previousGrid);
+			//else
+			//	ExportList = CSpatialPartition::GetInstance()->GetObjects((*colliderThis)->GetPosition(), 0.05f, newGrid);
 			vector<EntityBase*> ExportList = CSpatialPartition::GetInstance()->GetObjects((*colliderThis)->GetPosition(), 0.05f);
 			if (ExportList.size() != 0)
 			{
@@ -473,13 +479,25 @@ bool EntityManager::CheckForCollision(void)
 					}
 				}
 			}
+		//	if (previousGrid != newGrid)
+		//		CSpatialPartition::GetInstance()->DeRenderGrids(previousGrid);
 		}
 		else if ((*colliderThis)->HasCollider())
 		{
 			// This object was derived from a CCollider class, then it will have Collision Detection methods
 			//CCollider *thisCollider = dynamic_cast<CCollider*>(*colliderThis);
 			EntityBase *thisEntity = dynamic_cast<EntityBase*>(*colliderThis);
+			int newGrid = 0;
+			if (previousGrid == 0)
+				CSpatialPartition::GetInstance()->GetObjects(CPlayerInfo::GetInstance()->GetPos(), 0.05f, previousGrid);
+			else
+				CSpatialPartition::GetInstance()->GetObjects(CPlayerInfo::GetInstance()->GetPos(), 0.05f, newGrid);
 
+			if (newGrid != 0 && previousGrid != newGrid)
+			{
+				CSpatialPartition::GetInstance()->DeRenderGrids(previousGrid);
+				previousGrid = newGrid;
+			}
 			// Check for collision with another collider class
 			colliderThatEnd = entityList.end();
 			int counter = 0;

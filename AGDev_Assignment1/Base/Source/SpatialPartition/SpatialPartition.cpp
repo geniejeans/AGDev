@@ -177,6 +177,7 @@ void CSpatialPartition::Render(Vector3* theCameraPosition)
 			modelStack.PushMatrix();
 			modelStack.Translate(xGridSize*i - (xSize >> 1), 0.0f, zGridSize*j - (zSize >> 1));
 			modelStack.PushMatrix();
+			modelStack.Translate(50,0,50);
 			modelStack.Scale(xGridSize, 1.0f, zGridSize);
 			modelStack.Rotate(-90, 1, 0, 0);
 			theGrid[i*zNumOfGrid + j].Render();
@@ -242,12 +243,21 @@ CGrid CSpatialPartition::GetGrid(const int xIndex, const int yIndex) const
 /********************************************************************************
  Get vector of objects from this Spatial Partition
  ********************************************************************************/
+vector<EntityBase*> CSpatialPartition::GetObjects(Vector3 position, const float radius, int &gridNum)
+{
+	// Get the indices of the object's position
+	int xIndex = (((int)position.x - (-xSize >> 1)) / (xSize / xNumOfGrid));
+	int zIndex = (((int)position.z - (-zSize >> 1)) / (zSize / zNumOfGrid));
+	theGrid[xIndex*zNumOfGrid + zIndex].SetMesh("GRIDMESH");
+	gridNum = xIndex*zNumOfGrid + zIndex;
+	return theGrid[xIndex*zNumOfGrid + zIndex].GetListOfObject();
+}
+
 vector<EntityBase*> CSpatialPartition::GetObjects(Vector3 position, const float radius)
 {
 	// Get the indices of the object's position
 	int xIndex = (((int)position.x - (-xSize >> 1)) / (xSize / xNumOfGrid));
 	int zIndex = (((int)position.z - (-zSize >> 1)) / (zSize / zNumOfGrid));
-
 	return theGrid[xIndex*zNumOfGrid + zIndex].GetListOfObject();
 }
 
@@ -363,4 +373,10 @@ bool CSpatialPartition::IsVisible(	Vector3 theCameraPosition,
 		return false;
 	}
 	return true;
+}
+
+void CSpatialPartition::DeRenderGrids(int gridNum)
+{
+	theGrid[gridNum].SetMesh("");
+		
 }

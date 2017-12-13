@@ -53,7 +53,7 @@ private:
 
 	void CollisionPlayerResponse(CPlayerInfo *Player, EntityBase *ThisEntity);
 
-
+	int previousGrid = 0;
 
 	std::list<EntityBase*> entityList;
 	std::list<EntityBase*> treeList;

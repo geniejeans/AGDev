@@ -3,6 +3,7 @@
 #include "MeshBuilder.h"
 #include "RenderHelper.h"
 #include "../GenericEntity.h"
+#include "GraphicsManager.h"
 
 /********************************************************************************
 Constructor
@@ -51,6 +52,11 @@ void CGrid::Init(	const int xIndex, const int zIndex,
 ********************************************************************************/
 void CGrid::SetMesh(const std::string& _meshName)
 {
+	if (_meshName == "")
+	{
+		theMesh = NULL;
+		return;
+	}
 	Mesh* modelMesh = MeshBuilder::GetInstance()->GetMesh(_meshName);
 	if (modelMesh != nullptr)
 	{
@@ -93,9 +99,14 @@ void CGrid::Render(void)
 {
 	if (theMesh)
 	{
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	//	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	//	MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();
+	//	modelStack.PushMatrix();
+	//	modelStack.Translate(position.x, position.y, position.z);
+	//	modelStack.Scale(size.x, size.y, size.z);
 		RenderHelper::RenderMesh(theMesh);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	//	modelStack.PopMatrix();
+	//	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 }
 

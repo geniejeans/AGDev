@@ -80,8 +80,8 @@ public:
 	CGrid GetGrid(const int xIndex, const int zIndex) const;
 
 	// Get vector of objects from this Spatial Partition
+	vector<EntityBase*> GetObjects(Vector3 position, const float radius, int &gridNum);
 	vector<EntityBase*> GetObjects(Vector3 position, const float radius);
-
 	// Add a new object
 	void Add(EntityBase* theObject);
 	// Remove but not delete object from this grid
@@ -104,4 +104,7 @@ public:
 	void SetLevelOfDetails(const float distance_High2Mid, const float distance_Mid2Low);
 	// Check if a CGrid is visible to the camera
 	bool IsVisible(Vector3 theCameraPosition, Vector3 theCameraDirection, const int xIndex, const int zIndex);
+
+	//DeRender the grids(refresh)
+	void DeRenderGrids(int gridNum);
 };
