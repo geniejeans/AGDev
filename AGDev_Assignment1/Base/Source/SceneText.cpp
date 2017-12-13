@@ -252,28 +252,7 @@ void SceneText::Init()
 		}
 	}
 
-	//tank
-	GenericEntity* tankbottom = Create::Entity("tankbottom", Vector3(5.0f, 0.0f, 55.0f));
-	tankbottom->SetScale(Vector3(22.0f, 20.0f, 22.0f));
-	tankbottom->SetCollider(true);
-	tankbottom->InitLOD("tankbottom", "tankbottom", "tankbottom");
-
-	// Add the pointer to this new entity to the Scene Graph
-	CSceneNode* tankbottomenode = CSceneGraph::GetInstance()->AddNode(tankbottom);
-	if (tankbottomenode == NULL)
-	{
-		cout << "EntityManager::AddEntity: Unable to add to scene graph!" << endl;
-	}
-
-	GenericEntity* tanktop = Create::Entity("tanktop", Vector3(5.0f, 13.0f, 55.0f));
-	tanktop->SetScale(Vector3(20.0f, 15.0f, 20.0f));
-	tanktop->SetCollider(true);
-
-	CSceneNode* tanktopnode = tankbottomenode->AddChild(tanktop);
-	if (tanktopnode == NULL)
-	{
-		cout << "EntityManager::AddEntity: Unable to add to scene graph!" << endl;
-	}
+	
 	
 	// Windmail
 	GenericEntity* baseCube = Create::Asset("cube", Vector3(0.0f, 0.0f, 0.0f));
@@ -324,13 +303,35 @@ void SceneText::Init()
 	//	theEnemy = NULL;
 	//}
 
+	//tank
+	GenericEntity* tankbottom = Create::Entity("tankbottom", Vector3(0.0f, 0.0f, 55.0f));
+	tankbottom->SetScale(Vector3(22.0f, 20.0f, 22.0f));
+	tankbottom->SetCollider(true);
+	tankbottom->InitLOD("tankbottom", "tankbottom", "tankbottom");
+
+	// Add the pointer to this new entity to the Scene Graph
+	CSceneNode* tankbottomenode = CSceneGraph::GetInstance()->AddNode(tankbottom);
+	if (tankbottomenode == NULL)
+	{
+		cout << "EntityManager::AddEntity: Unable to add to scene graph!" << endl;
+	}
+
 	theEnemy = new CEnemy();
 	theEnemy->SetRandomSeed(rand());
 	theEnemy->SetMeshName("Enemy");
-	theEnemy->Init(10, 10);
+	theEnemy->SetScale(Vector3(20.0f, 15.0f, 20.0f));
+	theEnemy->Init(0.0f, 12.0f, 55.0f);
 	theEnemy->SetTerrain(groundEntity);
 	theEnemy->SetTarget(theEnemy->GenerateTarget());
 	theEnemy = NULL;
+	CSceneNode* tanktopnode = tankbottomenode->AddChild(theEnemy);
+	if (tanktopnode == NULL)
+	{
+		cout << "EntityManager::AddEntity: Unable to add to scene graph!" << endl;
+	}
+
+
+
 
 	CPlayerEntityBase* player = new CPlayerEntityBase();
 	player->SetMeshName("Player");

@@ -63,7 +63,7 @@ void CEnemy::Init(void)
 	EntityManager::GetInstance()->AddEntity(this, "", true);
 }
 
-void CEnemy::Init(float x, float y)
+void CEnemy::Init(float x, float y, float z)
 {
 	// Set the default values
 	defaultPosition.Set(0, 0, 10);
@@ -71,7 +71,7 @@ void CEnemy::Init(float x, float y)
 	defaultUp.Set(0, 1, 0);
 
 	// Set the current values
-	position.Set(x, 0.0f, y);
+	position.Set(x, y, z);
 	if (m_pTerrain)
 		target = GenerateTarget();
 	else
@@ -208,8 +208,8 @@ void CEnemy::Constrain(void)
 
 	// if the y position is not equal to terrain height at that position, 
 	// then update y position to the terrain height
-	if (position.y != m_pTerrain->GetTerrainHeight(position))
-		position.y = m_pTerrain->GetTerrainHeight(position);
+	//if (position.y != m_pTerrain->GetTerrainHeight(position))
+	//	position.y = m_pTerrain->GetTerrainHeight(position);
 }
 
 // Render
@@ -219,6 +219,7 @@ void CEnemy::Render(void)
 	modelStack.PushMatrix();
 	modelStack.Translate(position.x, position.y, position.z);
 	modelStack.Scale(scale.x, scale.y, scale.z);
+	modelStack.Rotate(180, 0, 1, 0);
 	modelStack.Rotate(Math::RadianToDegree(atan2(CPlayerInfo::GetInstance()->GetPosX() - position.x, CPlayerInfo::GetInstance()->GetPosZ() - position.z)), 0, 1, 0);
 	if (GetLODStatus() == true)
 	{
