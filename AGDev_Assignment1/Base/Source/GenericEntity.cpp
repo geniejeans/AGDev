@@ -15,10 +15,24 @@ GenericEntity::~GenericEntity()
 
 void GenericEntity::Update(double _dt)
 {
+
 	// Does nothing here, can inherit & override or create your own version of this class :D
 	if (theUpdateTransformation)
 	{
+		Vector3 previousMax = maxAABB;
+		Vector3 previousMin = minAABB;
+		Mtx44 matrix;
+		float rotation = 0.0f;
 		ApplyTransform(GetUpdateTransform());
+		matrix = GetUpdateTransform();
+		rotation = acos(matrix.a[0]);
+		maxAABB.x = previousMax.x * cos(rotation) + previousMax.z * sin(rotation) ;
+		maxAABB.z = -previousMax.x * sin(rotation) + previousMax.z * cos(rotation) ;
+	
+		minAABB.x = previousMin.x * cos(rotation) + previousMin.z * sin(rotation);
+		minAABB.z = -previousMin.x * sin(rotation) + previousMin.z * cos(rotation);
+	
+		std::cout << maxAABB << std::endl;
 	}
 }
 
