@@ -51,7 +51,7 @@ void CEnemy::Init(void)
 	m_dSpeed = 10.0;
 
 	// Initialise the LOD meshes
-	InitLOD("cube", "sphere", "cubeSG");
+	InitLOD("tanktop", "tanktop", "tanktop");
 
 	// Initialise the Collider
 	this->SetCollider(true);
@@ -86,7 +86,7 @@ void CEnemy::Init(float x, float y)
 	m_dSpeed = 10.0;
 
 	// Initialise the LOD meshes
-	InitLOD("cube", "sphere", "cubeSG");
+	InitLOD("tanktop", "tanktop", "tanktop");
 
 	// Initialise the Collider
 	this->SetCollider(true);
@@ -219,6 +219,7 @@ void CEnemy::Render(void)
 	modelStack.PushMatrix();
 	modelStack.Translate(position.x, position.y, position.z);
 	modelStack.Scale(scale.x, scale.y, scale.z);
+	modelStack.Rotate(Math::RadianToDegree(atan2(CPlayerInfo::GetInstance()->GetPosX() - position.x, CPlayerInfo::GetInstance()->GetPosZ() - position.z)), 0, 1, 0);
 	if (GetLODStatus() == true)
 	{
 		if (theDetailLevel != NO_DETAILS)

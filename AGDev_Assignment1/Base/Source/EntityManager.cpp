@@ -567,3 +567,4 @@ Vector3 EntityManager::GetPlayerPosition()
 {
 	return CPlayerInfo::GetInstance()->GetPos();
 }
+

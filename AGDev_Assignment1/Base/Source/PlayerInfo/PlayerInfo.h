@@ -67,6 +67,8 @@ public:
 
 	// Get position
 	Vector3 GetPos(void) const;
+	float GetPosX(void) const;
+	float GetPosZ(void) const;
 	// Get target
 	Vector3 GetTarget(void) const;
 	// Get Up

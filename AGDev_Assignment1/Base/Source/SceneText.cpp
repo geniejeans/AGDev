@@ -275,7 +275,6 @@ void SceneText::Init()
 		cout << "EntityManager::AddEntity: Unable to add to scene graph!" << endl;
 	}
 	
-	
 	// Windmail
 	GenericEntity* baseCube = Create::Asset("cube", Vector3(0.0f, 0.0f, 0.0f));
 	CSceneNode* baseNode = CSceneGraph::GetInstance()->AddNode(baseCube);
@@ -326,6 +325,7 @@ void SceneText::Init()
 	//}
 
 	theEnemy = new CEnemy();
+	theEnemy->SetRandomSeed(rand());
 	theEnemy->SetMeshName("Enemy");
 	theEnemy->Init(10, 10);
 	theEnemy->SetTerrain(groundEntity);

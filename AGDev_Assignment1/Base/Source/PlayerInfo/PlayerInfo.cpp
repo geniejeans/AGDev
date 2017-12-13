@@ -198,6 +198,17 @@ Vector3 CPlayerInfo::GetPos(void) const
 	return position;
 }
 
+float CPlayerInfo::GetPosX(void) const
+{
+	return position.x;
+}
+
+float CPlayerInfo::GetPosZ(void) const
+{
+	return position.z;
+}
+
+
 // Get target
 Vector3 CPlayerInfo::GetTarget(void) const
 {
