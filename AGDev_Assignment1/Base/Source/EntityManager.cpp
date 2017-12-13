@@ -498,7 +498,8 @@ bool EntityManager::CheckForCollision(void)
 			for (colliderThat = entityList.begin(); colliderThat != colliderThatEnd; ++colliderThat)
 			{
 				if (colliderThat == colliderThis || ((*colliderThat)->GetMeshName() == "EnemyBullet" && (*colliderThis)->GetMeshName() == "Enemy")
-					|| ((*colliderThis)->GetMeshName() == "EnemyBullet" && (*colliderThat)->GetMeshName() == "Enemy"))
+					|| ((*colliderThis)->GetMeshName() == "EnemyBullet" && (*colliderThat)->GetMeshName() == "Enemy")
+					|| ((*colliderThis)->GetMeshName() == "Dummy" && (*colliderThat)->GetMeshName() == "Dummy"))
 					continue;
 
 				if ((*colliderThat)->HasCollider())
@@ -510,6 +511,16 @@ bool EntityManager::CheckForCollision(void)
 						{
 							thisEntity->SetIsDone(true);
 							thatEntity->SetIsDone(true);
+							// Remove from Scene Graph
+							if (CSceneGraph::GetInstance()->DeleteNode((*colliderThis)) == true)
+							{
+								cout << "*** This Entity removed ***" << endl;
+							}
+							// Remove from Scene Graph
+							if (CSceneGraph::GetInstance()->DeleteNode((*colliderThat)) == true)
+							{
+								cout << "*** That Entity removed ***" << endl;
+							}
 						}
 					}
 				}

@@ -16,6 +16,10 @@ GenericEntity::~GenericEntity()
 void GenericEntity::Update(double _dt)
 {
 	// Does nothing here, can inherit & override or create your own version of this class :D
+	if (theUpdateTransformation)
+	{
+		ApplyTransform(GetUpdateTransform());
+	}
 }
 
 void GenericEntity::Render()
@@ -24,6 +28,7 @@ void GenericEntity::Render()
 	modelStack.PushMatrix();
 	modelStack.Translate(position.x, position.y, position.z);
 	modelStack.Scale(scale.x, scale.y, scale.z);
+	modelStack.MultMatrix(this->GetTransform());
 	if (GetLODStatus()==true)
 	{
 		if (theDetailLevel != NO_DETAILS)
@@ -31,7 +36,9 @@ void GenericEntity::Render()
 	}
 	else
 		RenderHelper::RenderMesh(modelMesh);
+	
 	modelStack.PopMatrix();
+
 }
 
 // Set the maxAABB and minAABB

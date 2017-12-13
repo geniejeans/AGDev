@@ -133,7 +133,6 @@ bool CSceneNode::DeleteChild(EntityBase* theEntity)
 					(*it)->GetEntity()->SetIsDone(true);
 					delete *it;
 					theChildren.erase(it);
-					return true;
 					break;	// Stop deleting since we have already found and deleted theEntity
 				}
 			}

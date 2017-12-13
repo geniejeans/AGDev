@@ -203,47 +203,48 @@ void SceneText::Init()
 	// Create entities into the scene
 	Create::Entity("reference", Vector3(0.0f, 0.0f, 0.0f)); // Reference
 	Create::Entity("lightball", Vector3(lights[0]->position.x, lights[0]->position.y, lights[0]->position.z)); // Lightball
-
-	//	Dummy
-	GenericEntity* dummybody = Create::Entity("dummybody", Vector3(-20.0f, -3.0f, -20.0f));
-	dummybody->SetCollider(true);
-	dummybody->SetScale(Vector3(3.0f, 5.0f, 3.0f));
-	dummybody->SetAABB(Vector3(1.5f, 2.5f, 1.5f), Vector3(-1.5f, -2.5f, -1.5f));
-	dummybody->InitLOD("dummybody", "dummybody", "dummybody");
-
-	// Add the pointer to this new entity to the Scene Graph
-	CSceneNode* theNode = CSceneGraph::GetInstance()->AddNode(dummybody);
-	if (theNode == NULL)
 	{
-		cout << "EntityManager::AddEntity: Unable to add to scene graph!" << endl;
+		//	Dummy
+		GenericEntity* dummybody = Create::Entity("dummybody", Vector3(-20.0f, -3.0f, -20.0f));
+		dummybody->SetCollider(true);
+		dummybody->SetScale(Vector3(3.0f, 5.0f, 3.0f));
+		dummybody->SetAABB(Vector3(1.5f, 2.5f, 1.5f), Vector3(-1.5f, -2.5f, -1.5f));
+		dummybody->InitLOD("dummybody", "dummybody", "dummybody");
+		dummybody->SetMeshName("Dummy");
+		CSceneNode* theNode = CSceneGraph::GetInstance()->AddNode(dummybody);
+		if (theNode == NULL)
+		{
+			cout << "EntityManager::AddEntity: Unable to add to scene graph!" << endl;
+		}
+
+		GenericEntity* dummyhead = Create::Entity("dummyhead", Vector3(-20.0f, 1.1f, -20.0f));
+		dummyhead->SetCollider(true);
+		dummyhead->SetScale(Vector3(3.0f, 3.0f, 3.0f));
+		dummyhead->SetAABB(Vector3(1.5f, 1.5f, 1.5f), Vector3(-1.5f, -1.5f, -1.5f));
+		dummyhead->SetMeshName("Dummy");
+		CSceneNode* anotherNode = theNode->AddChild(dummyhead);
+		if (anotherNode == NULL)
+		{
+			cout << "EntityManager::AddEntity: Unable to add to scene graph!" << endl;
+		}
+
+		GenericEntity* dummyarm = Create::Entity("dummyarm", Vector3(-20.0f, -1.5f, -20.0f));
+		dummyarm->SetScale(Vector3(2.0f, 2.0f, 2.0f));
+		dummyarm->SetCollider(true);
+		dummyarm->SetAABB(Vector3(8.0f, 1.0f, 1.0f), Vector3(-8.0f, -1.0f, -1.0f));
+		dummyarm->SetMeshName("Dummy");
+		CUpdateTransformation* rotateArms = new CUpdateTransformation();
+		rotateArms->ApplyUpdate(1.0f, 0.0f, 1.0f, 0.0f);
+		rotateArms->SetSteps(0, 360);
+		dummyarm->SetUpdateTransformation(rotateArms);
+		CSceneNode* thenode3 = theNode->AddChild(dummyarm);
+
+		if (thenode3 == NULL)
+		{
+			cout << "EntityManager::AddEntity: Unable to add to scene graph!" << endl;
+		}
 	}
-
-	GenericEntity* dummyhead = Create::Entity("dummyhead", Vector3(-20.0f, 1.1f, -20.0f));
-	dummyhead->SetCollider(true);
-	dummyhead->SetScale(Vector3(3.0f, 3.0f, 3.0f));
-	dummyhead->SetAABB(Vector3(1.5f, 1.5f, 1.5f), Vector3(-1.5f, -1.5f, -1.5f));
-
-	CSceneNode* thenode2 = theNode->AddChild(dummyhead);
-	if (thenode2 == NULL)
-	{
-		cout << "EntityManager::AddEntity: Unable to add to scene graph!" << endl;
-	}
-
-	GenericEntity* dummyarm = Create::Asset("dummyarm", Vector3(0.0f, 0.0f, 0.0f));
-	dummyarm->SetScale(Vector3(2.0f, 2.0f, 2.0f));
-	dummyarm->SetCollider(true);
-	dummyarm->SetAABB(Vector3(1.0f, 1.0f, 1.0f), Vector3(-1.0f, -1.0f, -1.0f));
-	CSceneNode* thenode3 = thenode2->AddChild(dummyarm);
-	thenode3->ApplyTranslate(-20.0f, -1.5f, -20.0f);
-	CUpdateTransformation* rotateArms = new CUpdateTransformation();
-	rotateArms->ApplyUpdate(1.0f, 0.0f, 1.0f, 0.0f);
-	rotateArms->SetSteps(0, 360);
-	thenode3->SetUpdateTransformation(rotateArms);
-
-	if (thenode3 == NULL)
-	{
-		cout << "EntityManager::AddEntity: Unable to add to scene graph!" << endl;
-	}
+	
 	
 	// Windmail
 	GenericEntity* baseCube = Create::Asset("cube", Vector3(0.0f, 0.0f, 0.0f));
