@@ -208,6 +208,7 @@ void EntityManager::ChangePlayerHealth(int value)
 // Constructor
 EntityManager::EntityManager()
 	: theSpatialPartition(NULL)
+	, previousLaserStart(0.0f,0.0f,0.0f)
 {
 }
 
@@ -441,66 +442,141 @@ bool EntityManager::CheckForCollision(void)
 			//	ExportList = CSpatialPartition::GetInstance()->GetObjects((*colliderThis)->GetPosition(), 0.05f, previousGrid);
 			//else
 			//	ExportList = CSpatialPartition::GetInstance()->GetObjects((*colliderThis)->GetPosition(), 0.05f, newGrid);
+			if ((*colliderThis)->GetPosition().z > 500 || (*colliderThis)->GetPosition().z < -500
+				|| (*colliderThis)->GetPosition().x > 500 || (*colliderThis)->GetPosition().x < -500)
+				continue;
 			vector<EntityBase*> ExportList = CSpatialPartition::GetInstance()->GetObjects((*colliderThis)->GetPosition(), 0.05f);
 			if (ExportList.size() != 0)
 			{
-				for (int i = 0; i < ExportList.size(); ++i)
+				if (previousLaserStart.IsZero())
 				{
-					if (ExportList[i]->HasCollider() && !ExportList[i]->IsDone())
+					for (int i = 0; i < ExportList.size(); ++i)
 					{
-						Vector3 hitPosition = Vector3(0, 0, 0);
-						
-						// Get the minAABB and maxAABB for (*colliderThat)
-						CCollider *thatCollider = dynamic_cast<CCollider*>(ExportList[i]);
-						Vector3 thatMinAABB = (ExportList[i])->GetPosition() + thatCollider->GetMinAABB();
-						Vector3 thatMaxAABB = (ExportList[i])->GetPosition() + thatCollider->GetMaxAABB();
-						
-						if (CheckLineSegmentPlane(	thisEntity->GetPosition(), 
-													thisEntity->GetPosition() - thisEntity->GetDirection() * thisEntity->GetLength(),
-													thatMinAABB, thatMaxAABB,
-													hitPosition) == true)
+						if (ExportList[i]->HasCollider() && !ExportList[i]->IsDone())
 						{
-							if ((ExportList[i])->GetMeshName() == "Enemy")
-							{
-								//	CEnemy *enemy = dynamic_cast<CEnemy*>(ExportList[i]);
+							Vector3 hitPosition = Vector3(0, 0, 0);
 
-								ExportList[i]->ChangeHealth(-20);
-								thisEntity->SetIsDone(true);
-								//std::cout << ExportList[i]->GetHealth() << std::endl;
-								if ((ExportList[i])->GetHealth() <= 0)
+							// Get the minAABB and maxAABB for (*colliderThat)
+							CCollider *thatCollider = dynamic_cast<CCollider*>(ExportList[i]);
+							Vector3 thatMinAABB = (ExportList[i])->GetPosition() + thatCollider->GetMinAABB();
+							Vector3 thatMaxAABB = (ExportList[i])->GetPosition() + thatCollider->GetMaxAABB();
+
+							if (CheckLineSegmentPlane(thisEntity->GetPosition(),
+								thisEntity->GetPosition() - thisEntity->GetDirection() * thisEntity->GetLength(),
+								thatMinAABB, thatMaxAABB,
+								hitPosition) == true)
+							{
+								if ((ExportList[i])->GetMeshName() == "Enemy")
 								{
-									ExportList[i]->SetIsDone(true);
-									// Remove from Scene Graph
-									if (CSceneGraph::GetInstance()->DeleteNode((*colliderThis)) == true)
+									//	CEnemy *enemy = dynamic_cast<CEnemy*>(ExportList[i]);
+
+									ExportList[i]->ChangeHealth(-20);
+									thisEntity->SetIsDone(true);
+									//std::cout << ExportList[i]->GetHealth() << std::endl;
+									if ((ExportList[i])->GetHealth() <= 0)
 									{
-										cout << "*** This Entity removed ***" << endl;
+										ExportList[i]->SetIsDone(true);
+										// Remove from Scene Graph
+										if (CSceneGraph::GetInstance()->DeleteNode((*colliderThis)) == true)
+										{
+											cout << "*** This Entity removed ***" << endl;
+										}
+										// Remove from Scene Graph
+										if (CSceneGraph::GetInstance()->DeleteNode(ExportList[i]) == true)
+										{
+											cout << "*** That Entity removed ***" << endl;
+										}
 									}
-									// Remove from Scene Graph
-									if (CSceneGraph::GetInstance()->DeleteNode(ExportList[i]) == true)
-									{
-										cout << "*** That Entity removed ***" << endl;
-									}
+									continue;
 								}
-								continue;
+								(*colliderThis)->SetIsDone(true);
+								(ExportList[i])->SetIsDone(true);
+
+
+								// Remove from Scene Graph
+								if (CSceneGraph::GetInstance()->DeleteNode((*colliderThis)) == true)
+								{
+									cout << "*** This Entity removed ***" << endl;
+								}
+								// Remove from Scene Graph
+								if (CSceneGraph::GetInstance()->DeleteNode(ExportList[i]) == true)
+								{
+									cout << "*** That Entity removed ***" << endl;
+								}
+
 							}
-							(*colliderThis)->SetIsDone(true);
-							(ExportList[i])->SetIsDone(true);
-						
-						
-							// Remove from Scene Graph
-							if (CSceneGraph::GetInstance()->DeleteNode((*colliderThis)) == true)
-							{
-								cout << "*** This Entity removed ***" << endl;
-							}
-							// Remove from Scene Graph
-							if (CSceneGraph::GetInstance()->DeleteNode(ExportList[i]) == true)
-							{
-								cout << "*** That Entity removed ***" << endl;
-							}
-						
 						}
 					}
+					previousLaserStart = thisEntity->GetPosition();
 				}
+				else
+				{
+					for (int i = 0; i < ExportList.size(); ++i)
+					{
+						if (ExportList[i]->HasCollider() && !ExportList[i]->IsDone())
+						{
+							Vector3 hitPosition = Vector3(0, 0, 0);
+
+							// Get the minAABB and maxAABB for (*colliderThat)
+							CCollider *thatCollider = dynamic_cast<CCollider*>(ExportList[i]);
+							Vector3 thatMinAABB = (ExportList[i])->GetPosition() + thatCollider->GetMinAABB();
+							Vector3 thatMaxAABB = (ExportList[i])->GetPosition() + thatCollider->GetMaxAABB();
+
+							if (CheckLineSegmentPlane(previousLaserStart,
+								thisEntity->GetPosition() - thisEntity->GetDirection() * thisEntity->GetLength(),
+								thatMinAABB, thatMaxAABB,
+								hitPosition) == true)
+							{
+								if ((ExportList[i])->GetMeshName() == "Enemy")
+								{
+									//	CEnemy *enemy = dynamic_cast<CEnemy*>(ExportList[i]);
+
+									ExportList[i]->ChangeHealth(-20);
+									thisEntity->SetIsDone(true);
+									//std::cout << ExportList[i]->GetHealth() << std::endl;
+									if ((ExportList[i])->GetHealth() <= 0)
+									{
+										ExportList[i]->SetIsDone(true);
+										// Remove from Scene Graph
+										if (CSceneGraph::GetInstance()->DeleteNode((*colliderThis)) == true)
+										{
+											cout << "*** This Entity removed ***" << endl;
+										}
+										// Remove from Scene Graph
+										if (CSceneGraph::GetInstance()->DeleteNode(ExportList[i]) == true)
+										{
+											cout << "*** That Entity removed ***" << endl;
+										}
+									}
+									continue;
+								}
+								(*colliderThis)->SetIsDone(true);
+								(ExportList[i])->SetIsDone(true);
+
+
+								// Remove from Scene Graph
+								if (CSceneGraph::GetInstance()->DeleteNode((*colliderThis)) == true)
+								{
+									cout << "*** This Entity removed ***" << endl;
+								}
+								// Remove from Scene Graph
+								if (CSceneGraph::GetInstance()->DeleteNode(ExportList[i]) == true)
+								{
+									cout << "*** That Entity removed ***" << endl;
+								}
+
+							}
+						}
+					}
+			
+				}
+				changePosition++; 
+				if (changePosition > 20)
+				{
+					previousLaserStart = thisEntity->GetPosition();
+					changePosition = 0;
+				}
+					
 			}
 		//	if (previousGrid != newGrid)
 		//		CSpatialPartition::GetInstance()->DeRenderGrids(previousGrid);

@@ -60,6 +60,10 @@ private:
 	
 	// Handler to Spatial Partition
 	CSpatialPartition* theSpatialPartition;
+
+	Vector3 previousLaserStart;
+
+	int changePosition = 0;
 };
 
 #endif // ENTITY_MANAGER_H
