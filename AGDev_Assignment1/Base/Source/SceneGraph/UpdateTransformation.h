@@ -30,5 +30,6 @@ public:
 
 	// Get the Update_Mtx
 	Mtx44 GetUpdateTransformation(void);
+//	CUpdateTransformation* GetClass() { return this; };
 };
 

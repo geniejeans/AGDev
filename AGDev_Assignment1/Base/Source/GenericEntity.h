@@ -20,9 +20,13 @@ public:
 
 	// Set the maxAABB and minAABB
 	void SetAABB(Vector3 maxAABB, Vector3 minAABB);
-
+	Vector3 GetMaxAABB(){ return maxAABB; };
+	Vector3 GetMinAABB(){ return minAABB; };
+	void SetAngleOfRotation(float angle) { angleOfRotation = angle; };
 private:
 	Mesh* modelMesh;
+	float angleOfRotation = 0.0f;
+	float angle = 0.0f;
 };
 
 namespace Create

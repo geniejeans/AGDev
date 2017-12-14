@@ -4,6 +4,7 @@
 
 #include "SceneGraph.h"
 #include "GraphicsManager.h"
+#include "../GenericEntity.h"
 
 CSceneNode::CSceneNode(void)
 	: ID(-1)
@@ -324,8 +325,48 @@ void CSceneNode::Update(void)
 	if (theUpdateTransformation)
 	{
 		ApplyTransform(GetUpdateTransform());
-	}
+		if (theEntity->GetMeshName() == "Enemy")
+		{
+			Vector3 position = theEntity->GetPosition();
+			position.z += GetUpdateTransform().a[14];
+			theEntity->SetPosition(position);
+		//	std::cout << position.z << std::endl;
+		}
+		if (theEntity->GetBaseName() == "dummyarm")
+		{
+			GenericEntity* thisObject = dynamic_cast<GenericEntity*>(theEntity);
+			Vector3 previousMax = thisObject->GetMaxAABB();
+			Vector3 previousMin = thisObject->GetMinAABB();
+			Vector3 newMax;
+			Vector3 newMin;
+			Mtx44 matrix;
+			float rotation = 0.0f;
+			ApplyTransform(GetUpdateTransform());
+			matrix = GetUpdateTransform();
+			rotation = acos(matrix.a[0]);
+			newMax.x = previousMax.x * cos(rotation) + previousMax.z * sin(rotation);
+			newMax.y = previousMax.y;
+			newMax.z = -previousMax.x * sin(rotation) + previousMax.z * cos(rotation);
 
+			newMin.x = previousMin.x * cos(rotation) + previousMin.z * sin(rotation);
+			newMin.y = previousMin.y;
+			newMin.z = -previousMin.x * sin(rotation) + previousMin.z * cos(rotation);
+
+			thisObject->SetAngleOfRotation(Math::RadianToDegree(rotation));
+			thisObject->SetAABB(newMax, newMin);
+		}
+	}
+	else if (theParent != NULL && theParent->GetClass() != NULL)
+	{
+		ApplyTransform(theParent->GetUpdateTransform());
+		if (theEntity->GetMeshName() == "Enemy")
+		{
+			Vector3 position = theEntity->GetPosition();
+			position.z += theParent->GetUpdateTransform().a[14];
+			theEntity->SetPosition(position);
+		//	std::cout << position.z << std::endl;
+		}
+	}
 	/*
 	Mtx44 orig = GetTransform();
 	Mtx44 update = GetUpdateTransform();
@@ -358,39 +399,39 @@ void CSceneNode::Update(void)
 // Render the Scene Graph
 void CSceneNode::Render(void)
 {
-	MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();
-	modelStack.PushMatrix();
+	//MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();
+	//modelStack.PushMatrix();
 
-		if (theEntity)
-		{
-			//modelStack.LoadMatrix(this->GetTransform());
-			modelStack.MultMatrix(this->GetTransform());
+	//	if (theEntity)
+	//	{
+	//		//modelStack.LoadMatrix(this->GetTransform());
+	//		modelStack.MultMatrix(this->GetTransform());
 
-			/*
-			Mtx44 Mtx = modelStack.Top();
-			cout << "======================================================================" << endl;
-			cout << "CSceneNode::PrintSelf" << endl;
-			cout << "----------------------------------------------------------------------" << endl;
-			cout << "[\t" << Mtx.a[0] << "\t" << Mtx.a[4] << "\t" << Mtx.a[8] << "\t" << Mtx.a[12] << "\t]" << endl;
-			cout << "[\t" << Mtx.a[1] << "\t" << Mtx.a[5] << "\t" << Mtx.a[9] << "\t" << Mtx.a[13] << "\t]" << endl;
-			cout << "[\t" << Mtx.a[2] << "\t" << Mtx.a[6] << "\t" << Mtx.a[10] << "\t" << Mtx.a[14] << "\t]" << endl;
-			cout << "[\t" << Mtx.a[3] << "\t" << Mtx.a[7] << "\t" << Mtx.a[11] << "\t" << Mtx.a[15] << "\t]" << endl;
-			cout << "======================================================================" << endl;
-			*/
+	//		/*
+	//		Mtx44 Mtx = modelStack.Top();
+	//		cout << "======================================================================" << endl;
+	//		cout << "CSceneNode::PrintSelf" << endl;
+	//		cout << "----------------------------------------------------------------------" << endl;
+	//		cout << "[\t" << Mtx.a[0] << "\t" << Mtx.a[4] << "\t" << Mtx.a[8] << "\t" << Mtx.a[12] << "\t]" << endl;
+	//		cout << "[\t" << Mtx.a[1] << "\t" << Mtx.a[5] << "\t" << Mtx.a[9] << "\t" << Mtx.a[13] << "\t]" << endl;
+	//		cout << "[\t" << Mtx.a[2] << "\t" << Mtx.a[6] << "\t" << Mtx.a[10] << "\t" << Mtx.a[14] << "\t]" << endl;
+	//		cout << "[\t" << Mtx.a[3] << "\t" << Mtx.a[7] << "\t" << Mtx.a[11] << "\t" << Mtx.a[15] << "\t]" << endl;
+	//		cout << "======================================================================" << endl;
+	//		*/
 
 
-			// Render the entity
-			theEntity->Render();
-		}
+	//		// Render the entity
+	//		theEntity->Render();
+	//	}
 
-		// Render the children
-		std::vector<CSceneNode*>::iterator it;
-		for (it = theChildren.begin(); it != theChildren.end(); ++it)
-		{
-			(*it)->Render();
-		}
+	//	// Render the children
+	//	std::vector<CSceneNode*>::iterator it;
+	//	for (it = theChildren.begin(); it != theChildren.end(); ++it)
+	//	{
+	//		(*it)->Render();
+	//	}
 
-	modelStack.PopMatrix();
+	//modelStack.PopMatrix();
 }
 
 // PrintSelf for debug purposes
@@ -426,4 +467,12 @@ void CSceneNode::PrintSelf(const int numTabs)
 			it++;
 		}
 	}
+}
+
+CUpdateTransformation * CSceneNode::GetClass()
+{
+	if (theUpdateTransformation != NULL)  
+		return theUpdateTransformation;
+	else
+		return NULL;
 }

@@ -95,6 +95,7 @@ void CEnemy::Init(float x, float y, float z)
 	primaryWeapon = new CGrenadeThrow();
 	primaryWeapon->Init();
 
+	distance = 2;
 	// Add to EntityManager
 	EntityManager::GetInstance()->AddEntity(this, "", true);
 }
@@ -168,9 +169,6 @@ void CEnemy::Update(double dt)
 {
 	elapsed_time += dt;
 	Vector3 viewVector = (target - position).Normalized();
-	position.z += 1.0f * (float)m_dSpeed * (float)dt;
-//	cout << position << " - " << target << "..." << viewVector << endl;
-
 	// Constrain the position
 	Constrain();
 
@@ -180,26 +178,6 @@ void CEnemy::Update(double dt)
 			primaryWeapon->Discharge(position, EntityManager::GetInstance()->GetPlayerTarget(), this);
 		elapsed_time = 0.0f;
 	}
-	/*if (theUpdateTransformation)
-	{
-		Vector3 previousMax = maxAABB;
-		Vector3 previousMin = minAABB;
-		Mtx44 matrix;
-		float rotation = 0.0f;
-		ApplyTransform(GetUpdateTransform());
-		matrix = GetUpdateTransform();
-		rotation = acos(matrix.a[0]);
-		maxAABB.x = previousMax.x * cos(rotation) + previousMax.z * sin(rotation);
-		maxAABB.z = -previousMax.x * sin(rotation) + previousMax.z * cos(rotation);
-
-		minAABB.x = previousMin.x * cos(rotation) + previousMin.z * sin(rotation);
-		minAABB.z = -previousMin.x * sin(rotation) + previousMin.z * cos(rotation);
-	}*/
-	//// Update the target
-	if (position.z > 200.0f)
-		target.z = position.z * -1;
-	else if (position.z < -200.0f)
-		target.z = position.z * -1;
 }
 
 // Constrain the position within the borders

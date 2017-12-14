@@ -58,6 +58,7 @@ public:
 	// PrintSelf for debug purposes
 	void PrintSelf(const int numTabs = 0);
 
+	CUpdateTransformation* GetClass();
 protected:
 	int			ID;
 	EntityBase* theEntity;

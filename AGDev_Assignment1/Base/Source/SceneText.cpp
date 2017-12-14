@@ -238,11 +238,11 @@ void SceneText::Init()
 		dummyarm->SetCollider(true);
 		dummyarm->SetAABB(Vector3(8.0f, 1.0f, 1.0f), Vector3(-8.0f, -1.0f, -1.0f));
 		dummyarm->SetMeshName("Dummy");
+		CSceneNode* thenode3 = theNode->AddChild(dummyarm);
 		CUpdateTransformation* rotateArms = new CUpdateTransformation();
 		rotateArms->ApplyUpdate(1.0f, 0.0f, 1.0f, 0.0f);
 		rotateArms->SetSteps(0, 360);
-		dummyarm->SetUpdateTransformation(rotateArms);
-		CSceneNode* thenode3 = theNode->AddChild(dummyarm);
+		thenode3->SetUpdateTransformation(rotateArms);
 
 		if (thenode3 == NULL)
 		{
@@ -309,12 +309,13 @@ void SceneText::Init()
 	tankbottom->SetAABB(Vector3(24.0f, 16.0f, 24.0f), Vector3(-24.0f, -16.0f, -24.0f));
 	tankbottom->InitLOD("tankbottom", "tankbottom", "tankbottom");
 	//making the tank move
-	CUpdateTransformation* moveTank = new CUpdateTransformation();
-	moveTank->ApplyUpdate(0, 0, 0.1);
-	moveTank->SetSteps(-120, 120);
-	tankbottom->SetUpdateTransformation(moveTank);
+
 	// Add the pointer to this new entity to the Scene Graph
 	CSceneNode* tankbottomenode = CSceneGraph::GetInstance()->AddNode(tankbottom);
+	CUpdateTransformation* moveTank = new CUpdateTransformation();
+	moveTank->ApplyUpdate(0, 0, 0.9);
+	moveTank->SetSteps(-320, 320);
+	tankbottomenode->SetUpdateTransformation(moveTank);
 	if (tankbottomenode == NULL)
 	{
 		cout << "EntityManager::AddEntity: Unable to add to scene graph!" << endl;
@@ -330,11 +331,6 @@ void SceneText::Init()
 	theEnemy->SetAABB(Vector3(10.0f, 6.5f, 10.0f), Vector3(-10.0f, -6.5f, -10.0f));
 	theEnemy->Init(55.0f, 12.0f, 55.0f);
 	theEnemy->SetTerrain(groundEntity);
-	//CUpdateTransformation* moveTank1 = new CUpdateTransformation();
-	//moveTank1->ApplyUpdate(0, 0, 0.1);
-	//moveTank1->SetSteps(-120, 120);
-	//theEnemy->SetUpdateTransformation(moveTank1);
-	//theEnemy->SetTarget(theEnemy->GenerateTarget());
 	CSceneNode* tanktopnode = tankbottomenode->AddChild(theEnemy);
 	if (tanktopnode == NULL)
 	{

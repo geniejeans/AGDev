@@ -8,6 +8,7 @@ EntityBase::EntityBase()
 	, bLaser(false)
 	, m_bCollidePlayer(false)
 	, meshName("")
+	, baseName("")
 	, health(100)
 {
 }

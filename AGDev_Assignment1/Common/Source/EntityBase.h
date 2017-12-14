@@ -39,6 +39,9 @@ public:
 	virtual void SetMeshName(std::string meshName) { this->meshName = meshName; };
 	virtual std::string GetMeshName() { return meshName; };
 
+	virtual void SetBaseName(const std::string baseName) { this->baseName = baseName; };
+	virtual std::string GetBaseName() { return baseName; };
+
 	virtual int GetHealth() { return health; };
 	virtual void ChangeHealth(int value) { health += value; };
 
@@ -52,6 +55,7 @@ protected:
 	bool bLaser;
 	bool m_bCollidePlayer;
 	std::string meshName;
+	std::string baseName;
 };
 
 #endif // ENTITY_BASE_H

@@ -15,23 +15,6 @@ GenericEntity::~GenericEntity()
 
 void GenericEntity::Update(double _dt)
 {
-
-	// Does nothing here, can inherit & override or create your own version of this class :D
-	if (theUpdateTransformation)
-	{
-		Vector3 previousMax = maxAABB;
-		Vector3 previousMin = minAABB;
-		Mtx44 matrix;
-		float rotation = 0.0f;
-		ApplyTransform(GetUpdateTransform());
-		matrix = GetUpdateTransform();
-		rotation = acos(matrix.a[0]);
-		maxAABB.x = previousMax.x * cos(rotation) + previousMax.z * sin(rotation) ;
-		maxAABB.z = -previousMax.x * sin(rotation) + previousMax.z * cos(rotation) ;
-	
-		minAABB.x = previousMin.x * cos(rotation) + previousMin.z * sin(rotation);
-		minAABB.z = -previousMin.x * sin(rotation) + previousMin.z * cos(rotation);
-	}
 }
 
 void GenericEntity::Render()
@@ -39,6 +22,12 @@ void GenericEntity::Render()
 	MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();
 	modelStack.PushMatrix();
 	modelStack.Translate(position.x, position.y, position.z);
+	if (baseName == "dummyarm")
+	{
+		angle += angleOfRotation;
+		modelStack.Rotate(angle, 0, 1, 0);
+	}
+		
 	modelStack.Scale(scale.x, scale.y, scale.z);
 	modelStack.MultMatrix(this->GetTransform());
 	if (GetLODStatus()==true)
@@ -72,6 +61,7 @@ GenericEntity* Create::Entity(	const std::string& _meshName,
 	result->SetPosition(_position);
 	result->SetScale(_scale);
 	result->SetCollider(false);
+	result->SetBaseName(_meshName);
 	EntityManager::GetInstance()->AddEntity(result, "", true);
 	return result;
 }

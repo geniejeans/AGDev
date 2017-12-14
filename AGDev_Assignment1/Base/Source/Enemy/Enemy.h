@@ -22,6 +22,7 @@ protected:
 	CWeaponInfo* primaryWeapon;
 
 	float elapsed_time;
+	float distance = 1;
 
 public:
 	CEnemy(void);
