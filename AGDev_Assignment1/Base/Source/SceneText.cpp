@@ -136,7 +136,7 @@ void SceneText::Init()
 	MeshBuilder::GetInstance()->GetMesh("Chair")->textureID = LoadTGA("Image//chair.tga");
 	MeshBuilder::GetInstance()->GenerateRing("ring", Color(1, 0, 1), 36, 1, 0.5f);
 	MeshBuilder::GetInstance()->GenerateSphere("lightball", Color(1, 1, 1), 18, 36, 1.f);
-	MeshBuilder::GetInstance()->GenerateSphere("sphere", Color(1, 0, 0), 18, 36, 0.5f);
+	MeshBuilder::GetInstance()->GenerateSphere("sphere", Color(0, 0, 0), 18, 36, 0.5f);
 	MeshBuilder::GetInstance()->GenerateCone("cone", Color(0.5f, 1, 0.3f), 36, 10.f, 10.f);
 	MeshBuilder::GetInstance()->GenerateCube("cube", Color(1.0f, 1.0f, 0.0f), 1.0f);
 	MeshBuilder::GetInstance()->GetMesh("cone")->material.kDiffuse.Set(0.99f, 0.99f, 0.99f);
@@ -170,19 +170,37 @@ void SceneText::Init()
 	//flag
 	MeshBuilder::GetInstance()->GenerateOBJ("flag", "OBJ//flag.obj");
 	MeshBuilder::GetInstance()->GetMesh("flag")->textureID = LoadTGA("Image//flag.tga");
+	MeshBuilder::GetInstance()->GenerateOBJ("flagmid", "OBJ//Flag_Mid.obj");
+	MeshBuilder::GetInstance()->GetMesh("flagmid")->textureID = LoadTGA("Image//flag.tga");
+	MeshBuilder::GetInstance()->GenerateOBJ("flaglow", "OBJ//Flag_Low.obj");
+	MeshBuilder::GetInstance()->GetMesh("flaglow")->textureID = LoadTGA("Image//flag.tga");
 
 	//Dummy
 	MeshBuilder::GetInstance()->GenerateOBJ("dummyhead", "OBJ//dummyhead.obj");
 	MeshBuilder::GetInstance()->GetMesh("dummyhead")->textureID = LoadTGA("Image//dummyhead.tga");
+	MeshBuilder::GetInstance()->GenerateOBJ("dummyheadmid", "OBJ//Dummyhead_Mid.obj");
+	MeshBuilder::GetInstance()->GetMesh("dummyheadmid")->textureID = LoadTGA("Image//dummyhead.tga");
+	MeshBuilder::GetInstance()->GenerateOBJ("dummyheadlow", "OBJ//Dummyhead_Low.obj");
+	MeshBuilder::GetInstance()->GetMesh("dummyheadlow")->textureID = LoadTGA("Image//dummyhead.tga");
 	MeshBuilder::GetInstance()->GenerateOBJ("dummyarm", "OBJ//dummyarm.obj");
 	MeshBuilder::GetInstance()->GetMesh("dummyarm")->textureID = LoadTGA("Image//dummy.tga");
+	MeshBuilder::GetInstance()->GenerateOBJ("dummyarmmid", "OBJ//Dummyarm_Mid.obj");
+	MeshBuilder::GetInstance()->GetMesh("dummyarmmid")->textureID = LoadTGA("Image//dummy.tga");
+	MeshBuilder::GetInstance()->GenerateOBJ("dummyarmlow", "OBJ//Dummyarm_Low.obj");
+	MeshBuilder::GetInstance()->GetMesh("dummyarmlow")->textureID = LoadTGA("Image//dummy.tga");
 	MeshBuilder::GetInstance()->GenerateCube("dummybody", Color(0.871f, 0.722f, 0.529f), 1.0f);
 
 	//Tank
 	MeshBuilder::GetInstance()->GenerateOBJ("tankbottom", "OBJ//tankbottom.obj");
 	MeshBuilder::GetInstance()->GetMesh("tankbottom")->textureID = LoadTGA("Image//tank.tga");
+	MeshBuilder::GetInstance()->GenerateOBJ("tankbottommid", "OBJ//Tankbottom_Mid.obj");
+	MeshBuilder::GetInstance()->GetMesh("tankbottommid")->textureID = LoadTGA("Image//tank.tga");
+	MeshBuilder::GetInstance()->GenerateOBJ("tankbottomlow", "OBJ//Tankbottom_Low.obj");
+	MeshBuilder::GetInstance()->GetMesh("tankbottomlow")->textureID = LoadTGA("Image//tank.tga");
 	MeshBuilder::GetInstance()->GenerateOBJ("tanktop", "OBJ//tanktop.obj");
 	MeshBuilder::GetInstance()->GetMesh("tanktop")->textureID = LoadTGA("Image//tank.tga");
+	MeshBuilder::GetInstance()->GenerateOBJ("tanktopmid", "OBJ//Tanktop_Mid.obj");
+	MeshBuilder::GetInstance()->GetMesh("tanktopmid")->textureID = LoadTGA("Image//tank.tga");
 
 
 	MeshBuilder::GetInstance()->GenerateQuad("SKYBOX_FRONT", Color(1, 1, 1), 1.f);
@@ -214,7 +232,6 @@ void SceneText::Init()
 		dummybody->SetCollider(true);
 		dummybody->SetScale(Vector3(3.0f, 5.0f, 3.0f));
 		dummybody->SetAABB(Vector3(1.5f, 2.5f, 1.5f), Vector3(-1.5f, -2.5f, -1.5f));
-		dummybody->InitLOD("dummybody", "dummybody", "dummybody");
 		dummybody->SetMeshName("Dummy");
 		CSceneNode* theNode = CSceneGraph::GetInstance()->AddNode(dummybody);
 		if (theNode == NULL)
@@ -227,6 +244,7 @@ void SceneText::Init()
 		dummyhead->SetScale(Vector3(3.0f, 3.0f, 3.0f));
 		dummyhead->SetAABB(Vector3(1.5f, 1.5f, 1.5f), Vector3(-1.5f, -1.5f, -1.5f));
 		dummyhead->SetMeshName("Dummy");
+		dummyhead->InitLOD("dummyhead", "dummyheadmid", "dummyheadlow");
 		CSceneNode* anotherNode = theNode->AddChild(dummyhead);
 		if (anotherNode == NULL)
 		{
@@ -239,6 +257,7 @@ void SceneText::Init()
 		dummyarm->SetAABB(Vector3(8.0f, 1.0f, 1.0f), Vector3(-8.0f, -1.0f, -1.0f));
 		dummyarm->SetMeshName("Dummy");
 		CSceneNode* thenode3 = theNode->AddChild(dummyarm);
+		dummyarm->InitLOD("dummyarm", "distancemid", "distancelow");
 		CUpdateTransformation* rotateArms = new CUpdateTransformation();
 		rotateArms->ApplyUpdate(1.0f, 0.0f, 1.0f, 0.0f);
 		rotateArms->SetSteps(0, 360);
@@ -307,7 +326,7 @@ void SceneText::Init()
 	tankbottom->SetScale(Vector3(22.0f, 20.0f, 22.0f));
 	tankbottom->SetCollider(true);
 	tankbottom->SetAABB(Vector3(24.0f, 16.0f, 24.0f), Vector3(-24.0f, -16.0f, -24.0f));
-	tankbottom->InitLOD("tankbottom", "tankbottom", "tankbottom");
+	tankbottom->InitLOD("tankbottom", "tankbottommid", "tankbottomlow");
 	//making the tank move
 
 	// Add the pointer to this new entity to the Scene Graph

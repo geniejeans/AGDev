@@ -52,6 +52,7 @@ void CGrenadeThrow::Discharge(Vector3 position, Vector3 target, CPlayerInfo* _so
 														_source);
 			aProjectile->SetCollider(true);
 			aProjectile->SetAABB(Vector3(0.5f, 0.5f, 0.5f), Vector3(-0.5f, -0.5f, -0.5f));
+			aProjectile->SetScale(Vector3(14.5f, 14.5f, 14.5f));
 			bFire = false;
 			magRounds--;
 		}
