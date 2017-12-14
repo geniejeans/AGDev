@@ -216,7 +216,7 @@ void SceneText::Init()
 	MeshBuilder::GetInstance()->GetMesh("SKYBOX_TOP")->textureID = LoadTGA("Image//SkyBox//skybox_top.tga");
 	MeshBuilder::GetInstance()->GetMesh("SKYBOX_BOTTOM")->textureID = LoadTGA("Image//SkyBox//skybox_bottom.tga");
 	MeshBuilder::GetInstance()->GenerateRay("laser", 10.0f);
-	MeshBuilder::GetInstance()->GenerateQuad("GRIDMESH", Color(1, 1, 1), 1.f);
+	MeshBuilder::GetInstance()->GenerateQuad("GRIDMESH", Color(0, 1, 0), 1.f);
 	// Set up the Spatial Partition and pass it to the EntityManager to manage
 	CSpatialPartition::GetInstance()->Init(100, 100, 10, 10);
 	CSpatialPartition::GetInstance()->SetCamera(&camera);
@@ -260,7 +260,7 @@ void SceneText::Init()
 		dummyarm->InitLOD("dummyarm", "distancemid", "distancelow");
 		CUpdateTransformation* rotateArms = new CUpdateTransformation();
 		rotateArms->ApplyUpdate(1.0f, 0.0f, 1.0f, 0.0f);
-		rotateArms->SetSteps(0, 360);
+		rotateArms->SetSteps(0, 36000);
 		thenode3->SetUpdateTransformation(rotateArms);
 
 		if (thenode3 == NULL)
@@ -374,6 +374,15 @@ void SceneText::Init()
 		Tree->InitLOD("TreeHigh", "TreeMid", "TreeLow");
 	}
 
+	GenericEntity* barrel = Create::Entity("BarrelHigh", Vector3(95, -4.0f, 55));
+	barrel->SetScale(Vector3(4.0f, 5.0f, 4.0f));
+	barrel->SetCollider(true);
+	barrel->SetMeshName("Barrel");
+	barrel->SetAABB(Vector3(3.0f, 6.0f, 3.0f), Vector3(-4.0f, -6.0f, -3.0f));
+	barrel->InitLOD("BarrelHigh", "BarrelMid", "BarrelLow");
+
+	CSceneNode* theNode = CSceneGraph::GetInstance()->AddNode(barrel);
+
 	// Create 20 barrels
 	for (int i = 1; i <= 20; i++)
 	{
@@ -383,6 +392,7 @@ void SceneText::Init()
 		barrel->SetScale(Vector3(4.0f, 5.0f, 4.0f));
 		barrel->SetCollider(true);
 		barrel->SetAABB(Vector3(3.0f, 6.0f, 3.0f), Vector3(-4.0f, -6.0f, -3.0f));
+		barrel->SetMeshName("Barrel");
 		barrel->InitLOD("BarrelHigh", "BarrelMid", "BarrelLow");
 
 		CSceneNode* theNode = CSceneGraph::GetInstance()->AddNode(barrel);

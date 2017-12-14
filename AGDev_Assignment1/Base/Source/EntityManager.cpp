@@ -541,7 +541,9 @@ bool EntityManager::CheckForCollision(void)
 				if (colliderThat == colliderThis || ((*colliderThat)->GetMeshName() == "EnemyBullet" && (*colliderThis)->GetMeshName() == "Enemy")
 					|| ((*colliderThis)->GetMeshName() == "EnemyBullet" && (*colliderThat)->GetMeshName() == "Enemy")
 					|| ((*colliderThis)->GetMeshName() == "Dummy" && (*colliderThat)->GetMeshName() == "Dummy")
-					|| ((*colliderThis)->GetMeshName() == "Enemy" && (*colliderThat)->GetMeshName() == "Enemy"))
+					|| ((*colliderThis)->GetMeshName() == "Enemy" && (*colliderThat)->GetMeshName() == "Enemy")
+					|| ((*colliderThis)->GetMeshName() == "Enemy" && (*colliderThat)->GetMeshName() == "Barrel")
+					|| ((*colliderThis)->GetMeshName() == "Barrel" && (*colliderThat)->GetMeshName() == "Enemy"))
 					continue;
 
 				if ((*colliderThat)->HasCollider())
