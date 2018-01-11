@@ -43,6 +43,9 @@
     <Filter Include="Waypoint">
       <UniqueIdentifier>{3ab22f8d-1163-4815-901a-e82fcdc61bb4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameStateManagement">
+      <UniqueIdentifier>{40f7fa6e-2cc0-49f2-89da-28ae52310d3a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp">
@@ -144,6 +147,12 @@
     <ClCompile Include="Source\Waypoint\WaypointManager.cpp">
       <Filter>Waypoint</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GameStateManagement\IntroState.cpp">
+      <Filter>GameStateManagement</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameStateManagement\MenuState.cpp">
+      <Filter>GameStateManagement</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -241,6 +250,12 @@
     </ClInclude>
     <ClInclude Include="Source\Waypoint\WaypointManager.h">
       <Filter>Waypoint</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameStateManagement\IntroState.h">
+      <Filter>GameStateManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameStateManagement\MenuState.h">
+      <Filter>GameStateManagement</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
