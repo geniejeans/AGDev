@@ -23,6 +23,7 @@
 #include "SceneGraph\SceneGraph.h"
 #include "SpatialPartition\SpatialPartition.h"
 #include "PlayerEntityBase\PlayerEntityBase.h"
+#include "Waypoint\WaypointManager.h"
 
 #include <iostream>
 using namespace std;
@@ -340,15 +341,19 @@ void SceneText::Init()
 	// Add the pointer to this new entity to the Scene Graph
 	CSceneNode* tankbottomenode = CSceneGraph::GetInstance()->AddNode(tankbottom);
 	CUpdateTransformation* moveTank = new CUpdateTransformation();
-	moveTank->ApplyUpdate(0, 0, 0.9);
-	moveTank->SetSteps(-320, 320);
-	tankbottomenode->SetUpdateTransformation(moveTank);
+//	moveTank->ApplyUpdate(0, 0, 0.9);
+//	moveTank->SetSteps(-320, 320);
+//	tankbottomenode->SetUpdateTransformation(moveTank);
 	if (tankbottomenode == NULL)
 	{
 		cout << "EntityManager::AddEntity: Unable to add to scene graph!" << endl;
 	}
 
-
+	//Create a Waypoint inside WaypointManager
+	int aWayPoint = CWaypointManager::GetInstance()->AddWaypoint(Vector3(10.f, 0.0f, 50.0f));
+	int anotherWaypoint = CWaypointManager::GetInstance()->AddWaypoint(aWayPoint, Vector3(10.0f, 0.0f, -50.0f));
+	CWaypointManager::GetInstance()->AddWaypoint(anotherWaypoint, Vector3(-10.0f, 0.0f, 0.0f));
+	CWaypointManager::GetInstance()->PrintSelf();
 
 	// top of the tank
 	theEnemy = new CEnemy();
@@ -358,11 +363,11 @@ void SceneText::Init()
 	theEnemy->SetAABB(Vector3(10.0f, 6.5f, 10.0f), Vector3(-10.0f, -6.5f, -10.0f));
 	theEnemy->Init(55.0f, 12.0f, 55.0f);
 	theEnemy->SetTerrain(groundEntity);
-	CSceneNode* tanktopnode = tankbottomenode->AddChild(theEnemy);
-	if (tanktopnode == NULL)
-	{
-		cout << "EntityManager::AddEntity: Unable to add to scene graph!" << endl;
-	}
+//	CSceneNode* tanktopnode = tankbottomenode->AddChild(theEnemy);
+//	if (tanktopnode == NULL)
+//	{
+//		cout << "EntityManager::AddEntity: Unable to add to scene graph!" << endl;
+//	}
 
 	CPlayerEntityBase* player = new CPlayerEntityBase();
 	player->SetMeshName("Player");

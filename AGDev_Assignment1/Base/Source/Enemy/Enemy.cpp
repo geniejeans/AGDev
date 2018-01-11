@@ -3,6 +3,7 @@
 #include "GraphicsManager.h"
 #include "RenderHelper.h"
 #include "../WeaponInfo/GrenadeThrow.h"
+#include "../Waypoint/WaypointManager.h"
 
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
@@ -20,7 +21,9 @@ CEnemy::CEnemy()
 	, m_iSeed(0)
 	, elapsed_time(0.0f)
 	, primaryWeapon(NULL)
+	, m_iWayPointIndex(-1)
 {
+	listOfWaypoints.clear();
 }
 
 
@@ -35,12 +38,24 @@ void CEnemy::Init(void)
 	defaultTarget.Set(0, 0, 0);
 	defaultUp.Set(0, 1, 0);
 
+	// Set up the waypoints
+	listOfWaypoints.push_back(0);
+	listOfWaypoints.push_back(1);
+	listOfWaypoints.push_back(2);
+
+	m_iWayPointIndex = 0;
+
 	// Set the current values
 	position.Set(10.0f, 0.0f, 0.0f);
-	if (m_pTerrain)
-		target = GenerateTarget();
+	//if (m_pTerrain)
+	//	target = GenerateTarget();
+	//else
+	//	target.Set(10.0f, 0.0f, 450.0f);
+	CWaypoint* nextWaypoint = GetNextWaypoint();
+	if (nextWaypoint)
+		target = nextWaypoint->GetPosition();
 	else
-		target.Set(10.0f, 0.0f, 450.0f);
+		target = Vector3(0, 0, 0);
 	up.Set(0.0f, 1.0f, 0.0f);
 
 	// Set Boundary
@@ -164,14 +179,35 @@ GroundEntity* CEnemy::GetTerrain(void)
 	return m_pTerrain;
 }
 
+CWaypoint * CEnemy::GetNextWaypoint(void)
+{
+	if ((int)listOfWaypoints.size() > 0)
+	{
+		m_iWayPointIndex++;
+		if (m_iWayPointIndex >= (int)listOfWaypoints.size())
+			m_iWayPointIndex = 0;
+		return CWaypointManager::GetInstance()->GetWaypoint(listOfWaypoints[m_iWayPointIndex]);
+	}
+	else
+		return NULL;
+}
+
 // Update
 void CEnemy::Update(double dt)
 {
 	elapsed_time += dt;
 	Vector3 viewVector = (target - position).Normalized();
+	position += viewVector * (float)m_dSpeed * (float)dt;//This is added
 	// Constrain the position
 	Constrain();
-
+	if ((target - position).LengthSquared() < 25.0f)
+	{
+		CWaypoint* nextWaypoint = GetNextWaypoint();
+		if (nextWaypoint)
+			target = nextWaypoint->GetPosition();
+		else
+			target = Vector3(0, 0, 0);
+	}
 	if (elapsed_time >= 10.0f)
 	{
 		if (primaryWeapon)
