@@ -199,9 +199,9 @@ void SceneText::Init()
 	MeshBuilder::GetInstance()->GenerateOBJ("tankbottomlow", "OBJ//Tankbottom_Low.obj");
 	MeshBuilder::GetInstance()->GetMesh("tankbottomlow")->textureID = LoadTGA("Image//tank.tga");
 	MeshBuilder::GetInstance()->GenerateOBJ("tanktop", "OBJ//tanktop.obj");
-	MeshBuilder::GetInstance()->GetMesh("tanktop")->textureID = LoadTGA("Image//tank.tga");
+	MeshBuilder::GetInstance()->GetMesh("tanktop")->textureID = LoadTGA("Image//tanktop.tga");
 	MeshBuilder::GetInstance()->GenerateOBJ("tanktopmid", "OBJ//Tanktop_Mid.obj");
-	MeshBuilder::GetInstance()->GetMesh("tanktopmid")->textureID = LoadTGA("Image//tank.tga");
+	MeshBuilder::GetInstance()->GetMesh("tanktopmid")->textureID = LoadTGA("Image//tanktop.tga");
 
 
 	MeshBuilder::GetInstance()->GenerateQuad("SKYBOX_FRONT", Color(1, 1, 1), 1.f);
