@@ -3,6 +3,7 @@
 #include "../FPSCamera.h"
 #include "../GroundEntity.h"
 #include "../WeaponInfo/WeaponInfo.h"
+#include "../Lua/LuaInterface.h"
 
 class CPlayerInfo
 {
@@ -136,6 +137,12 @@ private:
 
 	CWeaponInfo* primaryWeapon;
 	CWeaponInfo* secondaryWeapon;
+
+	//Key to move the player
+	char keyMoveForward;
+	char keyMoveBackward;
+	char keyMoveLeft;
+	char keyMoveRight;
 
 	//Player info 
 	bool b_collision;
