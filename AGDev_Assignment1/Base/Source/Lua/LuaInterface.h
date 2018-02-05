@@ -42,6 +42,7 @@ public:
 
 	//Pointer to the Lua State
 	lua_State *theLuaState;
+	lua_State *theErrorState;
 
 	int getIntValue(const char* name);
 //	void saveIntValue(const char* name, int value, bool overwrite = false);
@@ -59,4 +60,8 @@ public:
 	float getDistanceSquareValue(const char* varName, Vector3 source, Vector3 destination);
 	// Get variable number of values through the Lua Interface Class
 	int getVariableValues(const char* varName, int &a, int &b, int &c, int &d);
+	// Extract a field from a table
+	float GetField(const char *key);
+	// Get error message using an error cose
+	void error(const char *errorCode);
 };
