@@ -25,6 +25,8 @@
 #include "PlayerEntityBase\PlayerEntityBase.h"
 #include "Waypoint\WaypointManager.h"
 
+#include "States\StatesEnemy.h"
+
 #include <iostream>
 using namespace std;
 
@@ -372,7 +374,7 @@ void SceneText::Init()
 
 	CWaypointManager::GetInstance()->PrintSelf();
 
-	// top of the tank
+	// top of the tank ROAMING ENEMY HERE :0
 	theEnemy = new CEnemy();
 	theEnemy->SetRandomSeed(rand());
 	theEnemy->SetMeshName("Enemy");
@@ -380,6 +382,12 @@ void SceneText::Init()
 	theEnemy->SetAABB(Vector3(10.0f, 6.5f, 10.0f), Vector3(-10.0f, -6.5f, -10.0f));
 	theEnemy->Init(55.0f, 12.0f, 55.0f);
 	theEnemy->SetTerrain(groundEntity);
+	theEnemy->sm = new StateMachine();
+	theEnemy->sm->AddState(new StatePatrol("PATROL", theEnemy));
+	theEnemy->sm->AddState(new StateChase("CHASE", theEnemy));
+	theEnemy->sm->AddState(new StateSearch("SEARCH", theEnemy));
+	theEnemy->sm->AddState(new StateAttack("ATTACK", theEnemy));
+	theEnemy->sm->SetNextState("PATROL");
 //	CSceneNode* tanktopnode = tankbottomenode->AddChild(theEnemy);
 //	if (tanktopnode == NULL)
 //	{

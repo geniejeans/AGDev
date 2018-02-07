@@ -22,6 +22,7 @@ CEnemy::CEnemy()
 	, elapsed_time(0.0f)
 	, primaryWeapon(NULL)
 	, m_iWayPointIndex(-1)
+	, sm(NULL)
 {
 	listOfWaypoints.clear();
 }
@@ -200,20 +201,13 @@ void CEnemy::Update(double dt)
 	position += viewVector * (float)m_dSpeed * (float)dt;//This is added
 	// Constrain the position
 	Constrain();
-	if ((target - position).LengthSquared() < 25.0f)
-	{
-		CWaypoint* nextWaypoint = GetNextWaypoint();
-		if (nextWaypoint)
-			target = nextWaypoint->GetPosition();
-		else
-			target = Vector3(0, 0, 0);
-	}
 	if (elapsed_time >= 10.0f)
 	{
 		if (primaryWeapon)
 			primaryWeapon->Discharge(position, EntityManager::GetInstance()->GetPlayerTarget(), this);
 		elapsed_time = 0.0f;
 	}
+	sm->Update(dt);
 }
 
 // Constrain the position within the borders

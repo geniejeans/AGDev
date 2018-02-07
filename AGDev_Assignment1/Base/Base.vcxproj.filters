@@ -49,6 +49,9 @@
     <Filter Include="Lua">
       <UniqueIdentifier>{8eae2d17-4f61-44e3-9dd8-85cf16d2cabd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="States">
+      <UniqueIdentifier>{cde618b4-f60c-4c75-85d1-d6122c9f7499}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp">
@@ -158,6 +161,15 @@
     </ClCompile>
     <ClCompile Include="Source\Lua\LuaInterface.cpp">
       <Filter>Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\States\State.cpp">
+      <Filter>States</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\States\StateMachine.cpp">
+      <Filter>States</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\States\StatesEnemy.cpp">
+      <Filter>States</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -280,6 +292,15 @@
     </ClInclude>
     <ClInclude Include="Source\Lua\LuaInterface.h">
       <Filter>Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\States\State.h">
+      <Filter>States</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\States\StateMachine.h">
+      <Filter>States</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\States\StatesEnemy.h">
+      <Filter>States</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

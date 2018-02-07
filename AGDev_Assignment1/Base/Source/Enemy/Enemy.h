@@ -3,6 +3,7 @@
 #include "../GroundEntity.h"
 #include "../WeaponInfo/WeaponInfo.h"
 #include "../Waypoint/Waypoint.h"
+#include "../States/StateMachine.h"
 
 #include <vector>
 using namespace std;
@@ -75,5 +76,6 @@ public:
 	void SetRandomSeed(const int m_iSeed);
 	// Generate New Target
 	Vector3 GenerateTarget(void);
-
+	//State machine
+	StateMachine *sm;
 };
