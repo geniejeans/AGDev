@@ -3,6 +3,7 @@
 #include "Collider/Collider.h"
 #include "Projectile/Laser.h"
 #include "SceneGraph\SceneGraph.h"
+#include "Enemy\Enemy.h"
 
 #include <iostream>
 using namespace std;
@@ -14,9 +15,35 @@ void EntityManager::Update(double _dt)
 	std::list<EntityBase*>::iterator it, end;
 	std::list<EntityBase*>::iterator it2, end2;
 	end = entityList.end();
-	end2 = treeList.end();
 	for (it = entityList.begin(); it != end; ++it)
 	{
+		if ((*it)->GetMeshName() == "Player" || (*it)->GetMeshName() == "Enemy")
+		{
+			for (it2 = it; it2 != end; ++it2)
+			{
+				if (it2 == it)
+					continue;
+				if ((*it2)->GetMeshName() == "Player" || (*it2)->GetMeshName() == "Enemy")
+				{
+					CEnemy *enemy;
+					if ((*it)->GetMeshName() == "Enemy")
+					{
+						enemy = static_cast<CEnemy*>(*it);
+						enemy->SetPositionOfPlayer((*it2)->GetPosition());
+					}
+				
+					else
+					{
+						enemy = static_cast<CEnemy*>(*it2);
+						enemy->SetPositionOfPlayer((*it)->GetPosition());
+					}
+						
+					enemy->SetDistanceFromPlayer(((*it)->GetPosition() - (*it2)->GetPosition()).Length());
+		//			std::cout << enemy->GetDistanceFromPlayer() << std::endl;
+					break;
+				}
+			}
+		}
 		(*it)->Update(_dt);
 	}
 
@@ -32,7 +59,6 @@ void EntityManager::Update(double _dt)
 
 	// Clean up entities that are done
 	it = entityList.begin();
-	it2 = treeList.begin();
 	while (it != end)
 	{
 		if ((*it)->IsDone())
@@ -47,21 +73,6 @@ void EntityManager::Update(double _dt)
 			++it;
 		}
 	}
-
-	//while (it2 != end2)
-	//{
-	//	if ((*it2)->IsDone())
-	//	{
-	//		// Delete if done
-	//		delete *it2;
-	//		it2 = treeList.erase(it);
-	//	}
-	//	else
-	//	{
-	//		// Move on otherwise
-	//		++it2;
-	//	}
-	//}
 }
 
 // Render all entities

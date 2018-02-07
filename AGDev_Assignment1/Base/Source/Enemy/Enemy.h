@@ -17,6 +17,8 @@ protected:
 	Vector3 defaultPosition, defaultTarget, defaultUp;
 	Vector3 target, up;
 	Vector3 maxBoundary, minBoundary;
+	Vector3 positionOfPlayer;
+	Vector3 previousWayPoint;
 	GroundEntity* m_pTerrain;
 
 	//vector containing IDs of Waypoints
@@ -33,6 +35,7 @@ protected:
 
 	float elapsed_time;
 	float distance = 1;
+	float distanceFromPlayer;
 
 public:
 	CEnemy(void);
@@ -53,6 +56,12 @@ public:
 	void SetBoundary(Vector3 max, Vector3 min);
 	// Set the terrain for the player info
 	void SetTerrain(GroundEntity* m_pTerrain);
+	// Set the distance from player
+	void SetDistanceFromPlayer(float distance) { distanceFromPlayer = distance; };
+	// Set the position of the player
+	void SetPositionOfPlayer(Vector3 playerPos) { positionOfPlayer = playerPos; };
+	// Set previous waypoint
+	void SetPreviousWaypoint(Vector3 previousWaypoint) { previousWayPoint = previousWaypoint; };
 
 	// Get position
 	Vector3 GetPos(void) const;
@@ -60,10 +69,17 @@ public:
 	Vector3 GetTarget(void) const;
 	// Get Up
 	Vector3 GetUp(void) const;
+	// Get postion of player
+	Vector3 GetPositionOfPlayer() { return positionOfPlayer; };
+	// Get previous waypoint
+	Vector3 GetPreviousWaypoint() { return previousWayPoint; };
 	// Get the terrain for the player info
 	GroundEntity* GetTerrain(void);
 	// Get next Waypoint for this CEnemy
 	CWaypoint* GetNextWaypoint(void);
+	// Get distance from player
+	float GetDistanceFromPlayer() {return distanceFromPlayer;};
+
 
 	// Update
 	void Update(double dt = 0.0333f);

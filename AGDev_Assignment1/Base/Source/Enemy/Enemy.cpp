@@ -17,9 +17,12 @@ CEnemy::CEnemy()
 	, up(Vector3(0.0f, 0.0f, 0.0f))
 	, maxBoundary(Vector3(0.0f, 0.0f, 0.0f))
 	, minBoundary(Vector3(0.0f, 0.0f, 0.0f))
+	, positionOfPlayer(Vector3(0.0f, 0.0f, 0.0f))
+	, previousWayPoint(Vector3(0.0f, 0.0f, 0.0f))
 	, m_pTerrain(NULL)
 	, m_iSeed(0)
 	, elapsed_time(0.0f)
+	, distanceFromPlayer(0.0f)
 	, primaryWeapon(NULL)
 	, m_iWayPointIndex(-1)
 	, sm(NULL)
@@ -54,7 +57,10 @@ void CEnemy::Init(void)
 	//	target.Set(10.0f, 0.0f, 450.0f);
 	CWaypoint* nextWaypoint = GetNextWaypoint();
 	if (nextWaypoint)
+	{
 		target = nextWaypoint->GetPosition();
+		previousWayPoint = target;
+	}
 	else
 		target = Vector3(0, 0, 0);
 	up.Set(0.0f, 1.0f, 0.0f);
@@ -86,12 +92,24 @@ void CEnemy::Init(float x, float y, float z)
 	defaultTarget.Set(0, 0, 0);
 	defaultUp.Set(0, 1, 0);
 
+	// Set up the waypoints
+	listOfWaypoints.push_back(0);
+	listOfWaypoints.push_back(1);
+	listOfWaypoints.push_back(2);
+
+	m_iWayPointIndex = 0;
+
 	// Set the current values
 	position.Set(x, y, z);
-	if (m_pTerrain)
-		target = GenerateTarget();
+	CWaypoint* nextWaypoint = GetNextWaypoint();
+	if (nextWaypoint)
+	{
+		target = nextWaypoint->GetPosition();
+		previousWayPoint = target;
+	}
+		
 	else
-		target.Set(10.0f, 0.0f, 450.0f);
+		target = Vector3(0, 0, 0);
 	up.Set(0.0f, 1.0f, 0.0f);
 
 	// Set Boundary
@@ -184,6 +202,7 @@ CWaypoint * CEnemy::GetNextWaypoint(void)
 {
 	if ((int)listOfWaypoints.size() > 0)
 	{
+		std::cout << "YO MAN" << position << std::endl;
 		m_iWayPointIndex++;
 		if (m_iWayPointIndex >= (int)listOfWaypoints.size())
 			m_iWayPointIndex = 0;
@@ -191,6 +210,7 @@ CWaypoint * CEnemy::GetNextWaypoint(void)
 	}
 	else
 		return NULL;
+
 }
 
 // Update
@@ -198,7 +218,8 @@ void CEnemy::Update(double dt)
 {
 	elapsed_time += dt;
 	Vector3 viewVector = (target - position).Normalized();
-	position += viewVector * (float)m_dSpeed * (float)dt;//This is added
+	if (sm->GetCurrentState() != "ATTACK")
+		position += viewVector * (float)m_dSpeed * (float)dt;//This is added
 	// Constrain the position
 	Constrain();
 	if (elapsed_time >= 10.0f)
@@ -223,10 +244,10 @@ void CEnemy::Constrain(void)
 	if (position.z < minBoundary.z + 1.0f)
 		position.z = minBoundary.z + 1.0f;
 
-	if (abs(((target.x - position.x) * (target.x - position.x) - (target.z - position.z)*(target.z - position.z))) < m_dSpeed)
-	{
-		target = GenerateTarget();
-	}
+//	if (abs(((target.x - position.x) * (target.x - position.x) - (target.z - position.z)*(target.z - position.z))) < m_dSpeed)
+//	{
+//		target = GenerateTarget();
+//	}
 
 	// if the y position is not equal to terrain height at that position, 
 	// then update y position to the terrain height

@@ -334,24 +334,24 @@ void SceneText::Init()
 //	cube->SetScale(Vector3(3.0f, 3.0f, 3.0f));
 	cube->SetAABB(Vector3(1.5f, 1.5f, 1.5f), Vector3(-1.5f, -1.5f, -1.5f));
 	//tank
-	GenericEntity* tankbottom = Create::Entity("tankbottom", Vector3(55.0f, 0.0f, 55.0f));
-	tankbottom->SetMeshName("Enemy");
-	tankbottom->SetScale(Vector3(22.0f, 20.0f, 22.0f));
-	tankbottom->SetCollider(true);
-	tankbottom->SetAABB(Vector3(24.0f, 16.0f, 24.0f), Vector3(-24.0f, -16.0f, -24.0f));
-	tankbottom->InitLOD("tankbottom", "tankbottommid", "tankbottomlow");
+	//GenericEntity* tankbottom = Create::Entity("tankbottom", Vector3(55.0f, 0.0f, 55.0f));
+	//tankbottom->SetMeshName("Enemy");
+	//tankbottom->SetScale(Vector3(22.0f, 20.0f, 22.0f));
+	//tankbottom->SetCollider(true);
+	//tankbottom->SetAABB(Vector3(24.0f, 16.0f, 24.0f), Vector3(-24.0f, -16.0f, -24.0f));
+	//tankbottom->InitLOD("tankbottom", "tankbottommid", "tankbottomlow");
 	//making the tank move
 
 	// Add the pointer to this new entity to the Scene Graph
-	CSceneNode* tankbottomenode = CSceneGraph::GetInstance()->AddNode(tankbottom);
-	CUpdateTransformation* moveTank = new CUpdateTransformation();
+//	CSceneNode* tankbottomenode = CSceneGraph::GetInstance()->AddNode(tankbottom);
+//	CUpdateTransformation* moveTank = new CUpdateTransformation();
 //	moveTank->ApplyUpdate(0, 0, 0.9);
 //	moveTank->SetSteps(-320, 320);
 //	tankbottomenode->SetUpdateTransformation(moveTank);
-	if (tankbottomenode == NULL)
-	{
-		cout << "EntityManager::AddEntity: Unable to add to scene graph!" << endl;
-	}
+//	if (tankbottomenode == NULL)
+//	{
+//		cout << "EntityManager::AddEntity: Unable to add to scene graph!" << endl;
+//	}
 
 	//Create a Waypoint inside WaypointManager
 	//int aWayPoint = CWaypointManager::GetInstance()->AddWaypoint(Vector3(10.f, 0.0f, 50.0f));
