@@ -8,12 +8,12 @@
 #include "../SpriteEntity.h"
 
 class SceneManager;
-//class Text ENtity
-class COptionState :public Scene
+
+class CGameFileState : public Scene
 {
 public:
-	COptionState();
-	~COptionState();
+	CGameFileState();
+	~CGameFileState();
 
 	virtual void Init();
 	virtual void Update(double dt);
@@ -22,7 +22,6 @@ public:
 
 private:
 	FPSCamera camera;
-	SpriteEntity* IntroStateBackground;
+	SpriteEntity* GameFileStateBackground;
 	int choice;
-	// TextEntity* textObj[3];
 };

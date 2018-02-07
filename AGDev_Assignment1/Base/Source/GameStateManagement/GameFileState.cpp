@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-#include "MenuState.h"
+#include "GameFileState.h"
 #include "GL/glew.h"
 #include "../Application.h"
 #include "LoadTGA.h"
@@ -15,47 +15,80 @@ using namespace std;
 #include "KeyboardController.h"
 #include "SceneManager.h"
 
-CMenuState::CMenuState()
+CGameFileState::CGameFileState()
 {
 }
 
-CMenuState::~CMenuState()
+CGameFileState::~CGameFileState()
 {
 }
 
-void CMenuState::Init()
+void CGameFileState::Init()
 {
 	// create and attach the camera to the scene
 	camera.Init(Vector3(0, 0, 10), Vector3(0, 0, 0), Vector3(0, 1, 0));
 	GraphicsManager::GetInstance()->AttachCamera(&camera);
 
 	// Load all the meshes
-	MeshBuilder::GetInstance()->GenerateQuad("MENUSTATE_BKGROUND", Color(1, 1, 1), 1.f);
-	MeshBuilder::GetInstance()->GetMesh("MENUSTATE_BKGROUND")->textureID = LoadTGA("Image//MenuState.tga");
+	MeshBuilder::GetInstance()->GenerateQuad("GAMEFILESTATE_1", Color(1, 1, 1), 1.f);
+	MeshBuilder::GetInstance()->GetMesh("GAMEFILESTATE_1")->textureID = LoadTGA("Image//GameFilesState1.tga");
+
+	MeshBuilder::GetInstance()->GenerateQuad("GAMEFILESTATE_2", Color(1, 1, 1), 1.f);
+	MeshBuilder::GetInstance()->GetMesh("GAMEFILESTATE_2")->textureID = LoadTGA("Image//GameFilesState2.tga");
+
+	MeshBuilder::GetInstance()->GenerateQuad("GAMEFILESTATE_3", Color(1, 1, 1), 1.f);
+	MeshBuilder::GetInstance()->GetMesh("GAMEFILESTATE_3")->textureID = LoadTGA("Image//GameFilesState3.tga");
+
 	float halfWindowWidth = Application::GetInstance().GetWindowWidth() / 2.0f;
 	float halfWindowHeight = Application::GetInstance().GetWindowHeight() / 2.0f;
-	MenuStateBackground = Create::Sprite2DObject("MENUSTATE_BKGROUND",
+	GameFileStateBackground = Create::Sprite2DObject("GAMEFILESTATE_1",
 		Vector3(halfWindowWidth, halfWindowHeight, 0.0f),
 		Vector3(800.0f, 600.0f, 0.0f));
-	cout << "CMenuState loaded\n" << endl;
-	Application::GetInstance().SetInGame(false);
+	cout << "CGameFileState loaded\n" << endl;
+	choice = 1;
 }
 
-void CMenuState::Update(double dt)
+void CGameFileState::Update(double dt)
 {
-	if (KeyboardController::GetInstance()->IsKeyReleased(VK_SPACE))
-	{
-		cout << "Loading CMenuState" << endl;
-		SceneManager::GetInstance()->SetActiveScene("GameState");
-	}
-	if (KeyboardController::GetInstance()->IsKeyReleased('O'))
+	if (KeyboardController::GetInstance()->IsKeyReleased(VK_BACK))
 	{
 		cout << "Loading COptionState" << endl;
 		SceneManager::GetInstance()->SetActiveScene("OptionState");
 	}
+
+	if (KeyboardController::GetInstance()->IsKeyReleased(VK_LEFT))
+	{
+		if (choice == 3)
+		{
+			choice = 2;
+			GameFileStateBackground->SetMesh("GAMEFILESTATE_2");
+		}
+	
+		else if (choice == 2)
+		{
+			choice = 1;
+			GameFileStateBackground->SetMesh("GAMEFILESTATE_1");
+		}
+		
+	}
+
+	if (KeyboardController::GetInstance()->IsKeyReleased(VK_RIGHT))
+	{
+		if (choice == 1)
+		{
+			choice = 2;
+			GameFileStateBackground->SetMesh("GAMEFILESTATE_2");
+		}
+
+		else if (choice == 2)
+		{
+			choice = 3;
+			GameFileStateBackground->SetMesh("GAMEFILESTATE_3");
+		}
+	}
 }
 
-void CMenuState::Render()
+void CGameFileState::Render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -80,12 +113,12 @@ void CMenuState::Render()
 	EntityManager::GetInstance()->RenderUI();
 }
 
-void CMenuState::Exit()
+void CGameFileState::Exit()
 {
 	//Remove  the entity from EntityManager
-	EntityManager::GetInstance()->RemoveEntity(MenuStateBackground);
+	EntityManager::GetInstance()->RemoveEntity(GameFileStateBackground);
 
-	//Remove the meshes which are specific to CMenuState
+	//Remove the meshes which are specific to CGameFileState
 	MeshBuilder::GetInstance()->RemoveMesh("MENUSTATE_BKGROUND");
 
 	//Detach camera from other entities

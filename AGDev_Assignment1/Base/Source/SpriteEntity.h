@@ -33,6 +33,8 @@ public:
 
 	inline void SetTextRenderMode(SPRITE_RENDERMODE _mode){ mode = _mode; };
 
+	void SetMesh(const std::string& _meshName);
+
 private:
 	Vector3 position;
 	Vector3 scale;

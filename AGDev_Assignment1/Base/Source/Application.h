@@ -2,13 +2,7 @@
 #define APPLICATION_H
 
 #include "timer.h"
-#include "GameStateManagement\IntroState.h"
-#include "GameStateManagement\MenuState.h"
-#include "GameStateManagement\OptionState.h"
-#include "GameStateManagement\HighScoreState.h"
-#include "GameStateManagement\InventoryState.h"
-#include "GameStateManagement\ShopState.h"
-#include "GameStateManagement\SkillState.h"
+
 
 class ShaderProgram;
 struct GLFWwindow;
@@ -33,6 +27,9 @@ public:
 
 	int GetWindowHeight();
 	int GetWindowWidth();
+
+	bool GetInGame() { return inGame; };
+	void SetInGame(bool value) { inGame = value; };
 	
 private:
 	Application();
@@ -47,6 +44,8 @@ private:
 
 	int m_window_width;
 	int m_window_height;
+
+	bool inGame;
 
 	//Declare a window object
 	StopWatch m_timer;

@@ -47,6 +47,11 @@ void SpriteEntity::RenderUI()
 	modelStack.PopMatrix();
 }
 
+void SpriteEntity::SetMesh(const std::string & _meshName)
+{
+	modelMesh = MeshBuilder::GetInstance()->GetMesh(_meshName);
+}
+
 SpriteEntity* Create::Sprite2DObject(const std::string& _meshName, const Vector3& _position, const Vector3& _scale)
 {
 	Mesh* modelMesh = MeshBuilder::GetInstance()->GetMesh(_meshName);

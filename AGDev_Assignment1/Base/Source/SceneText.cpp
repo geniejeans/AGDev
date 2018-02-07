@@ -49,6 +49,8 @@ SceneText::~SceneText()
 
 void SceneText::Init()
 {
+	if (Application::GetInstance().GetInGame())
+		return;
 	//currProg = GraphicsManager::GetInstance()->LoadShader("default", "Shader//Texture.vertexshader", "Shader//Texture.fragmentshader");
 	//
 	//// Tell the shader program to store these uniform locations
@@ -453,10 +455,19 @@ void SceneText::Init()
 		textObj[i] = Create::Text2DObject("text", Vector3(-halfWindowWidth, -halfWindowHeight + fontSize*i + halfFontSize, 0.0f), "", Vector3(fontSize, fontSize, fontSize), Color(0.0f,1.0f,0.0f));
 	}
 	textObj[0]->SetText("HELLO WORLD");
+
+	Application::GetInstance().SetInGame(true);
 }
 
 void SceneText::Update(double dt)
 {
+	if (KeyboardController::GetInstance()->IsKeyReleased('O'))
+	{
+		cout << "Loading COptionState" << endl;
+		SceneManager::GetInstance()->SetActiveScene("OptionState");
+		return;
+	}
+
 	// Update our entities
 	EntityManager::GetInstance()->Update(dt);
 
@@ -582,6 +593,9 @@ void SceneText::Render()
 
 void SceneText::Exit()
 {
+	if (Application::GetInstance().GetInGame())
+		return;
+
 	// Detach camera from other entities
 	GraphicsManager::GetInstance()->DetachCamera();
 	playerInfo->DetachCamera();

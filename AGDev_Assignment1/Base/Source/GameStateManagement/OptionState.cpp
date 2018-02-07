@@ -34,11 +34,20 @@ void COptionState::Init()
 	// Load all the meshes
 	MeshBuilder::GetInstance()->GenerateQuad("OPTIONSTATE_BKGROUND", Color(1, 1, 1), 1.f);
 	MeshBuilder::GetInstance()->GetMesh("OPTIONSTATE_BKGROUND")->textureID = LoadTGA("Image//OptionState.tga");
+
+	MeshBuilder::GetInstance()->GenerateQuad("OPTIONSTATE_GAME", Color(1, 1, 1), 1.f);
+	MeshBuilder::GetInstance()->GetMesh("OPTIONSTATE_GAME")->textureID = LoadTGA("Image//OptionStateGame.tga");
+
+	MeshBuilder::GetInstance()->GenerateQuad("OPTIONSTATE_VIDEO", Color(1, 1, 1), 1.f);
+	MeshBuilder::GetInstance()->GetMesh("OPTIONSTATE_VIDEO")->textureID = LoadTGA("Image//OptionStateVideo.tga");
+
+
 	float halfWindowWidth = Application::GetInstance().GetWindowWidth() / 2.0f;
 	float halfWindowHeight = Application::GetInstance().GetWindowHeight() / 2.0f;
 	IntroStateBackground = Create::Sprite2DObject("OPTIONSTATE_BKGROUND",
 		Vector3(halfWindowWidth, halfWindowHeight, 0.0f),
 		Vector3(800.0f, 600.0f, 0.0f));
+	choice = 0;
 	cout << "CIntroState loaded\n" << endl;
 }
 
@@ -46,8 +55,40 @@ void COptionState::Update(double dt)
 {
 	if (KeyboardController::GetInstance()->IsKeyReleased(VK_SPACE))
 	{
-		cout << "Loading OptionState" << endl;
-		SceneManager::GetInstance()->SetActiveScene("MenuState");
+		if (!Application::GetInstance().GetInGame())
+		{
+			cout << "Loading MenuState" << endl;
+			SceneManager::GetInstance()->SetActiveScene("MenuState");
+		}
+		else
+		{
+			cout << "Loading GameState" << endl;
+			SceneManager::GetInstance()->SetActiveScene("GameState");
+		}
+	}
+
+	if (KeyboardController::GetInstance()->IsKeyReleased(VK_UP))
+	{
+		IntroStateBackground->SetMesh("OPTIONSTATE_GAME");
+		choice = 1;
+	}
+
+	if (KeyboardController::GetInstance()->IsKeyReleased(VK_DOWN))
+	{
+		IntroStateBackground->SetMesh("OPTIONSTATE_VIDEO");
+		choice = 2;
+	}
+	if (KeyboardController::GetInstance()->IsKeyReleased(VK_RETURN))
+	{
+		if(choice == 1)
+		{
+			SceneManager::GetInstance()->SetActiveScene("GameFileState");
+		}
+
+		else if (choice == 2)
+		{
+
+		}
 	}
 }
 

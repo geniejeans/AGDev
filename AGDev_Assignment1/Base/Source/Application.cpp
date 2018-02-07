@@ -18,6 +18,15 @@
 #include "SceneText.h"
 #include "Lua\LuaInterface.h"
 
+#include "GameStateManagement\IntroState.h"
+#include "GameStateManagement\MenuState.h"
+#include "GameStateManagement\OptionState.h"
+#include "GameStateManagement\HighScoreState.h"
+#include "GameStateManagement\InventoryState.h"
+#include "GameStateManagement\ShopState.h"
+#include "GameStateManagement\SkillState.h"
+#include "GameStateManagement\GameFileState.h"
+
 GLFWwindow* m_window;
 const unsigned char FPS = 60; // FPS of this game
 const unsigned int frameTime = 1000 / FPS; // time for each frame
@@ -117,6 +126,7 @@ void Application::Init()
 	CLuaInterface::GetInstance()->saveFloatValue("Player1", 200.10, true);
 	CLuaInterface::GetInstance()->saveIntValue("Player2", 100);
 
+	inGame = false;
 	//Set the error callback
 	glfwSetErrorCallback(error_callback);
 
@@ -178,6 +188,7 @@ void Application::Init()
 	SceneManager::GetInstance()->AddScene("InventoryState", new CInventoryState());
 	SceneManager::GetInstance()->AddScene("ShopState", new CShopState());
 	SceneManager::GetInstance()->AddScene("SkillState", new CSkillState());
+	SceneManager::GetInstance()->AddScene("GameFileState", new CGameFileState());
 	SceneManager::GetInstance()->AddScene("GameState", new SceneText());
 
 	//Set the active scene
