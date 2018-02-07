@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-#include "MenuState.h"
+#include "ShopState.h"
 #include "GL/glew.h"
 #include "../Application.h"
 #include "LoadTGA.h"
@@ -15,46 +15,43 @@ using namespace std;
 #include "KeyboardController.h"
 #include "SceneManager.h"
 
-CMenuState::CMenuState()
+CShopState::CShopState()
 {
+
 }
 
-CMenuState::~CMenuState()
+CShopState::~CShopState()
 {
+
 }
 
-void CMenuState::Init()
+void CShopState::Init()
 {
 	// create and attach the camera to the scene
 	camera.Init(Vector3(0, 0, 10), Vector3(0, 0, 0), Vector3(0, 1, 0));
 	GraphicsManager::GetInstance()->AttachCamera(&camera);
 
 	// Load all the meshes
-	MeshBuilder::GetInstance()->GenerateQuad("MENUSTATE_BKGROUND", Color(1, 1, 1), 1.f);
-	MeshBuilder::GetInstance()->GetMesh("MENUSTATE_BKGROUND")->textureID = LoadTGA("Image//MenuState.tga");
+	MeshBuilder::GetInstance()->GenerateQuad("OPTIONSTATE_BKGROUND", Color(1, 1, 1), 1.f);
+	MeshBuilder::GetInstance()->GetMesh("OPTIONSTATE_BKGROUND")->textureID = LoadTGA("Image//OptionState.tga");
 	float halfWindowWidth = Application::GetInstance().GetWindowWidth() / 2.0f;
 	float halfWindowHeight = Application::GetInstance().GetWindowHeight() / 2.0f;
-	MenuStateBackground = Create::Sprite2DObject("MENUSTATE_BKGROUND",
+	IntroStateBackground = Create::Sprite2DObject("OPTIONSTATE_BKGROUND",
 		Vector3(halfWindowWidth, halfWindowHeight, 0.0f),
 		Vector3(800.0f, 600.0f, 0.0f));
-	cout << "CMenuState loaded\n" << endl;
+	cout << "CIntroState loaded\n" << endl;
 }
 
-void CMenuState::Update(double dt)
+void CShopState::Update(double dt)
 {
 	if (KeyboardController::GetInstance()->IsKeyReleased(VK_SPACE))
 	{
-		cout << "Loading CMenuState" << endl;
-		SceneManager::GetInstance()->SetActiveScene("GameState");
-	}
-	if (KeyboardController::GetInstance()->IsKeyReleased('O'))
-	{
-		cout << "Loading COptionState" << endl;
-		SceneManager::GetInstance()->SetActiveScene("OptionState");
+		cout << "Loading OptionState" << endl;
+		SceneManager::GetInstance()->SetActiveScene("MenuState");
 	}
 }
 
-void CMenuState::Render()
+void CShopState::Render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -79,14 +76,15 @@ void CMenuState::Render()
 	EntityManager::GetInstance()->RenderUI();
 }
 
-void CMenuState::Exit()
+void CShopState::Exit()
 {
-	//Remove  the entity from EntityManager
-	EntityManager::GetInstance()->RemoveEntity(MenuStateBackground);
+	// Remove teh entity from EntityManager
+	EntityManager::GetInstance()->RemoveEntity(IntroStateBackground);
 
-	//Remove the meshes which are specific to CMenuState
-	MeshBuilder::GetInstance()->RemoveMesh("MENUSTATE_BKGROUND");
+	// Remove the meshes which are specific to CIntroState
+	MeshBuilder::GetInstance()->RemoveMesh("OPTIONSTATE_BKGROUND");
 
-	//Detach camera from other entities
+	// Detach camera from other entities
 	GraphicsManager::GetInstance()->DetachCamera();
+
 }
