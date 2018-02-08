@@ -21,16 +21,21 @@ public:
 
 	void UpdateInput();
 	void PostInputUpdate();
-	
+
 	static void MouseButtonCallbacks(GLFWwindow* window, int button, int action, int mods);
 	static void MouseScrollCallbacks(GLFWwindow* window, double xoffset, double yoffset);
 
 	int GetWindowHeight();
 	int GetWindowWidth();
 
+	void ChangeScene();
+
+	void ChangeScene2();
+
 	bool GetInGame() { return inGame; };
 	void SetInGame(bool value) { inGame = value; };
-	
+	bool switchswitch;
+
 private:
 	Application();
 	~Application();
@@ -46,6 +51,7 @@ private:
 	int m_window_height;
 
 	bool inGame;
+
 
 	//Declare a window object
 	StopWatch m_timer;

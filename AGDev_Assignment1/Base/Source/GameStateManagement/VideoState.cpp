@@ -58,13 +58,13 @@ void CVideoState::Update(double dt)
 			choice = 2;
 			MenuStateBackground->SetMesh("VIDEOSTATE_2");
 		}
-	
+
 		else if (choice == 2)
 		{
 			choice = 1;
 			MenuStateBackground->SetMesh("VIDEOSTATE_1");
 		}
-		
+
 	}
 
 	if (KeyboardController::GetInstance()->IsKeyReleased(VK_RIGHT))
@@ -94,14 +94,17 @@ void CVideoState::Update(double dt)
 		case 1:
 			CLuaInterface::GetInstance()->saveIntValue("width", 800, "Image/Settings.lua", true);
 			CLuaInterface::GetInstance()->saveIntValue("height", 600, "Image/Settings.lua");
+			Application::GetInstance().ChangeScene();
 			break;
 		case 2:
 			CLuaInterface::GetInstance()->saveIntValue("width", 1024, "Image/Settings.lua", true);
 			CLuaInterface::GetInstance()->saveIntValue("height", 768, "Image/Settings.lua");
+			Application::GetInstance().ChangeScene();
 			break;
 		case 3:
 			CLuaInterface::GetInstance()->saveIntValue("width", 1600, "Image/Settings.lua", true);
 			CLuaInterface::GetInstance()->saveIntValue("height", 1200, "Image/Settings.lua");
+			Application::GetInstance().ChangeScene();
 			break;
 		};
 	}
