@@ -43,7 +43,7 @@ void CGameFileState::Init()
 	float halfWindowHeight = Application::GetInstance().GetWindowHeight() / 2.0f;
 	GameFileStateBackground = Create::Sprite2DObject("GAMEFILESTATE_1",
 		Vector3(halfWindowWidth, halfWindowHeight, 0.0f),
-		Vector3(800.0f, 600.0f, 0.0f));
+		Vector3(Application::GetInstance().GetWindowWidth(), Application::GetInstance().GetWindowHeight(), 0.0f));
 	cout << "CGameFileState loaded\n" << endl;
 	choice = 1;
 }

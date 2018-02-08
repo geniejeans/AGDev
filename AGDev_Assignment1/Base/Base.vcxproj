@@ -23,6 +23,7 @@
     <ClCompile Include="Source\GameStateManagement\OptionState.cpp" />
     <ClCompile Include="Source\GameStateManagement\ShopState.cpp" />
     <ClCompile Include="Source\GameStateManagement\SkillState.cpp" />
+    <ClCompile Include="Source\GameStateManagement\VideoState.cpp" />
     <ClCompile Include="Source\GenericEntity.cpp" />
     <ClCompile Include="Source\GroundEntity.cpp" />
     <ClCompile Include="Source\LevelOfDetails\LevelOfDetails.cpp" />
@@ -70,6 +71,7 @@
     <ClInclude Include="Source\GameStateManagement\OptionState.h" />
     <ClInclude Include="Source\GameStateManagement\ShopState.h" />
     <ClInclude Include="Source\GameStateManagement\SkillState.h" />
+    <ClInclude Include="Source\GameStateManagement\VideoState.h" />
     <ClInclude Include="Source\GenericEntity.h" />
     <ClInclude Include="Source\GroundEntity.h" />
     <ClInclude Include="Source\LevelOfDetails\LevelOfDetails.h" />

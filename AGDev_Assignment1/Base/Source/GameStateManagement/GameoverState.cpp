@@ -38,7 +38,7 @@ void CGameoverState::Init()
 	float halfWindowHeight = Application::GetInstance().GetWindowHeight() / 2.0f;
 	IntroStateBackground = Create::Sprite2DObject("GAMEOVERSTATE_BKGROUND",
 		Vector3(halfWindowWidth, halfWindowHeight, 0.0f),
-		Vector3(800.0f, 600.0f, 0.0f));
+		Vector3(Application::GetInstance().GetWindowWidth(), Application::GetInstance().GetWindowHeight(), 0.0f));
 	cout << "CGameoverState loaded\n" << endl;
 }
 

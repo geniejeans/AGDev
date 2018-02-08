@@ -189,6 +189,9 @@
     <ClCompile Include="Source\GameStateManagement\GameoverState.cpp">
       <Filter>GameStateManagement</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GameStateManagement\VideoState.cpp">
+      <Filter>GameStateManagement</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -336,6 +339,9 @@
       <Filter>GameStateManagement</Filter>
     </ClInclude>
     <ClInclude Include="Source\GameStateManagement\GameoverState.h">
+      <Filter>GameStateManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameStateManagement\VideoState.h">
       <Filter>GameStateManagement</Filter>
     </ClInclude>
   </ItemGroup>

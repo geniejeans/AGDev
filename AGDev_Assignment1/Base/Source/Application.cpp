@@ -24,7 +24,7 @@
 #include "GameStateManagement\HighScoreState.h"
 #include "GameStateManagement\GameoverState.h"
 #include "GameStateManagement\ShopState.h"
-#include "GameStateManagement\SkillState.h"
+#include "GameStateManagement\VideoState.h"
 #include "GameStateManagement\GameFileState.h"
 
 GLFWwindow* m_window;
@@ -119,8 +119,8 @@ void Application::Init()
 	CLuaInterface::GetInstance()->Init();
 
 	//Get the OpenGL resolution 
-	m_window_width = CLuaInterface::GetInstance()->getIntValue("width", "Image/DM2240.lua");
-	m_window_height = CLuaInterface::GetInstance()->getIntValue("height", "Image/DM2240.lua");
+	m_window_width = CLuaInterface::GetInstance()->getIntValue("width", "Image/Settings.lua");
+	m_window_height = CLuaInterface::GetInstance()->getIntValue("height", "Image/Settings.lua");
 
 	CLuaInterface::GetInstance()->Run();
 	CLuaInterface::GetInstance()->saveFloatValue("Player1", 200.10, "Image/DM2240_HighScore.lua", true);
@@ -187,7 +187,7 @@ void Application::Init()
 	SceneManager::GetInstance()->AddScene("HighScoreState", new CHighScoreState());
 	SceneManager::GetInstance()->AddScene("GameoverState", new CGameoverState());
 	SceneManager::GetInstance()->AddScene("ShopState", new CShopState());
-	SceneManager::GetInstance()->AddScene("SkillState", new CSkillState());
+	SceneManager::GetInstance()->AddScene("VideoState", new CVideoState());
 	SceneManager::GetInstance()->AddScene("GameFileState", new CGameFileState());
 	SceneManager::GetInstance()->AddScene("GameState", new SceneText());
 
@@ -206,6 +206,16 @@ void Application::Run()
 		
 		SceneManager::GetInstance()->Update(m_timer.getElapsedTime());
 		SceneManager::GetInstance()->Render();
+
+//		if (m_window_height != CLuaInterface::GetInstance()->getIntValue("height", "Image/Settings.lua"))
+//		{
+//			m_window_width = CLuaInterface::GetInstance()->getIntValue("width", "Image/Settings.lua");
+//			m_window_height = CLuaInterface::GetInstance()->getIntValue("height", "Image/Settings.lua");
+//			resize_callback(m_window, m_window_width, m_window_height);
+//			glfwSetWindowSizeCallback(m_window, resize_callback);
+//			GraphicsManager::GetInstance()->Init();
+//		}
+	
 
 		//Swap buffers
 		glfwSwapBuffers(m_window);

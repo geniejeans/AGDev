@@ -46,7 +46,7 @@ void CHighScoreState::Init()
 	float halfFontSize = fontSize / 2.0f;
 	IntroStateBackground = Create::Sprite2DObject("HIGHSCORESTATE_BKGROUND",
 		Vector3(halfWindowWidth, halfWindowHeight, 0.0f),
-		Vector3(800.0f, 600.0f, 0.0f));
+		Vector3(Application::GetInstance().GetWindowWidth(), Application::GetInstance().GetWindowHeight(), 0.0f));
 	cout << "CIntroState loaded\n" << endl;
 
 	for (int i = 0; i < 5; ++i)

@@ -46,7 +46,7 @@ void COptionState::Init()
 	float halfWindowHeight = Application::GetInstance().GetWindowHeight() / 2.0f;
 	IntroStateBackground = Create::Sprite2DObject("OPTIONSTATE_BKGROUND",
 		Vector3(halfWindowWidth, halfWindowHeight, 0.0f),
-		Vector3(800.0f, 600.0f, 0.0f));
+		Vector3(Application::GetInstance().GetWindowWidth(), Application::GetInstance().GetWindowHeight(), 0.0f));
 	choice = 0;
 	cout << "CIntroState loaded\n" << endl;
 }
@@ -87,7 +87,7 @@ void COptionState::Update(double dt)
 
 		else if (choice == 2)
 		{
-
+			SceneManager::GetInstance()->SetActiveScene("VideoState");
 		}
 	}
 }
