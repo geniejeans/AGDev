@@ -1,38 +1,56 @@
-d:\my documents\2016_2017_sem2\dm2240 agdev\teaching materials\week_12\practical\nyp_framework_solution\base\debug\vc120.pdb
-d:\my documents\2016_2017_sem2\dm2240 agdev\teaching materials\week_12\practical\nyp_framework_solution\base\debug\vc120.idb
-d:\my documents\2016_2017_sem2\dm2240 agdev\teaching materials\week_12\practical\nyp_framework_solution\base\debug\main.obj
-d:\my documents\2016_2017_sem2\dm2240 agdev\teaching materials\week_12\practical\nyp_framework_solution\base\debug\objmesh.obj
-d:\my documents\2016_2017_sem2\dm2240 agdev\teaching materials\week_12\practical\nyp_framework_solution\base\debug\playerinfo.obj
-d:\my documents\2016_2017_sem2\dm2240 agdev\teaching materials\week_12\practical\nyp_framework_solution\base\debug\grenade.obj
-d:\my documents\2016_2017_sem2\dm2240 agdev\teaching materials\week_12\practical\nyp_framework_solution\base\debug\laser.obj
-d:\my documents\2016_2017_sem2\dm2240 agdev\teaching materials\week_12\practical\nyp_framework_solution\base\debug\projectile.obj
-d:\my documents\2016_2017_sem2\dm2240 agdev\teaching materials\week_12\practical\nyp_framework_solution\base\debug\scenegraph.obj
-d:\my documents\2016_2017_sem2\dm2240 agdev\teaching materials\week_12\practical\nyp_framework_solution\base\debug\scenenode.obj
-d:\my documents\2016_2017_sem2\dm2240 agdev\teaching materials\week_12\practical\nyp_framework_solution\base\debug\transform.obj
-d:\my documents\2016_2017_sem2\dm2240 agdev\teaching materials\week_12\practical\nyp_framework_solution\base\debug\updatetransformation.obj
-d:\my documents\2016_2017_sem2\dm2240 agdev\teaching materials\week_12\practical\nyp_framework_solution\base\debug\scenetext.obj
-d:\my documents\2016_2017_sem2\dm2240 agdev\teaching materials\week_12\practical\nyp_framework_solution\base\debug\skyboxentity.obj
-d:\my documents\2016_2017_sem2\dm2240 agdev\teaching materials\week_12\practical\nyp_framework_solution\base\debug\grid.obj
-d:\my documents\2016_2017_sem2\dm2240 agdev\teaching materials\week_12\practical\nyp_framework_solution\base\debug\spatialpartition.obj
-d:\my documents\2016_2017_sem2\dm2240 agdev\teaching materials\week_12\practical\nyp_framework_solution\base\debug\spriteentity.obj
-d:\my documents\2016_2017_sem2\dm2240 agdev\teaching materials\week_12\practical\nyp_framework_solution\base\debug\textentity.obj
-d:\my documents\2016_2017_sem2\dm2240 agdev\teaching materials\week_12\practical\nyp_framework_solution\base\debug\grenadethrow.obj
-d:\my documents\2016_2017_sem2\dm2240 agdev\teaching materials\week_12\practical\nyp_framework_solution\base\debug\laserblaster.obj
-d:\my documents\2016_2017_sem2\dm2240 agdev\teaching materials\week_12\practical\nyp_framework_solution\base\debug\pistol.obj
-d:\my documents\2016_2017_sem2\dm2240 agdev\teaching materials\week_12\practical\nyp_framework_solution\base\debug\weaponinfo.obj
-d:\my documents\2016_2017_sem2\dm2240 agdev\teaching materials\week_12\practical\nyp_framework_solution\base\debug\application.obj
-d:\my documents\2016_2017_sem2\dm2240 agdev\teaching materials\week_12\practical\nyp_framework_solution\base\debug\enemy.obj
-d:\my documents\2016_2017_sem2\dm2240 agdev\teaching materials\week_12\practical\nyp_framework_solution\base\debug\entitymanager.obj
-d:\my documents\2016_2017_sem2\dm2240 agdev\teaching materials\week_12\practical\nyp_framework_solution\base\debug\fpscamera.obj
-d:\my documents\2016_2017_sem2\dm2240 agdev\teaching materials\week_12\practical\nyp_framework_solution\base\debug\genericentity.obj
-d:\my documents\2016_2017_sem2\dm2240 agdev\teaching materials\week_12\practical\nyp_framework_solution\base\debug\groundentity.obj
-d:\my documents\2016_2017_sem2\dm2240 agdev\teaching materials\week_12\practical\nyp_framework_solution\base\debug\levelofdetails.obj
-d:\my documents\2016_2017_sem2\dm2240 agdev\teaching materials\week_12\practical\nyp_framework_solution\base\debug\light.obj
-d:\my documents\2016_2017_sem2\dm2240 agdev\teaching materials\week_12\practical\nyp_framework_solution\debug\base.exe
-d:\my documents\2016_2017_sem2\dm2240 agdev\teaching materials\week_12\practical\nyp_framework_solution\debug\base.pdb
-d:\my documents\2016_2017_sem2\dm2240 agdev\teaching materials\week_12\practical\nyp_framework_solution\base\debug\base.tlog\cl.command.1.tlog
-d:\my documents\2016_2017_sem2\dm2240 agdev\teaching materials\week_12\practical\nyp_framework_solution\base\debug\base.tlog\cl.read.1.tlog
-d:\my documents\2016_2017_sem2\dm2240 agdev\teaching materials\week_12\practical\nyp_framework_solution\base\debug\base.tlog\cl.write.1.tlog
-d:\my documents\2016_2017_sem2\dm2240 agdev\teaching materials\week_12\practical\nyp_framework_solution\base\debug\base.tlog\link.command.1.tlog
-d:\my documents\2016_2017_sem2\dm2240 agdev\teaching materials\week_12\practical\nyp_framework_solution\base\debug\base.tlog\link.read.1.tlog
-d:\my documents\2016_2017_sem2\dm2240 agdev\teaching materials\week_12\practical\nyp_framework_solution\base\debug\base.tlog\link.write.1.tlog
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\vc120.pdb
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\vc120.idb
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\projectileentitybase.obj
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\scenegraph.obj
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\scenenode.obj
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\transform.obj
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\updatetransformation.obj
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\scenetext.obj
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\skyboxentity.obj
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\grid.obj
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\spatialpartition.obj
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\spriteentity.obj
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\state.obj
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\statemachine.obj
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\statesenemy.obj
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\textentity.obj
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\waypoint.obj
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\waypointmanager.obj
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\grenadethrow.obj
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\laserblaster.obj
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\pistol.obj
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\weaponinfo.obj
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\highscorestate.obj
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\introstate.obj
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\menustate.obj
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\optionstate.obj
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\shopstate.obj
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\skillstate.obj
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\videostate.obj
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\genericentity.obj
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\groundentity.obj
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\levelofdetails.obj
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\light.obj
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\luainterface.obj
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\main.obj
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\objmesh.obj
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\playerentitybase.obj
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\playerinfo.obj
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\grenade.obj
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\grenadeentitybase.obj
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\laser.obj
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\projectile.obj
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\application.obj
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\enemy.obj
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\entitymanager.obj
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\fpscamera.obj
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\gamefilestate.obj
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\gameoverstate.obj
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\debug\base.exe
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\debug\base.pdb
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\base.tlog\cl.command.1.tlog
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\base.tlog\cl.read.1.tlog
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\base.tlog\cl.write.1.tlog
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\base.tlog\link.command.1.tlog
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\base.tlog\link.read.1.tlog
+c:\users\hongsheng\documents\github\agdev\agdev_assignment1\base\debug\base.tlog\link.write.1.tlog

@@ -54,6 +54,8 @@ public:
 	void saveFloatValue(const char* varName, const float value, const char* fileName, const bool bOverwrite = NULL);
 	// Save a vector3 value through the Lua Interface Class
 	void saveVector3Value(const char* varName, const Vector3 value, const char* fileName,const bool bOverwrite = NULL);
+	// Save a char value through the Lua Interface Class
+	void saveCharValue(const char* varName, const char value, const char* fileName, const bool bOverwrite = NULL);
 	// Get a char value through the Lua Interface Class
 	char getCharValue(const char* varName);
 	// Get Vector3 values through the Lua Interface Class
@@ -66,4 +68,6 @@ public:
 	float GetField(const char *key);
 	// Get error message using an error cose
 	void error(const char *errorCode);
+	// replace forward button
+	void replaceForward(const char* varName, const char value);
 };

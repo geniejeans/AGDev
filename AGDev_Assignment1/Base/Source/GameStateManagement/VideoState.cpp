@@ -54,6 +54,7 @@ void CVideoState::Init()
 	cout << "CVideoState loaded\n" << endl;
 	Application::GetInstance().SetInGame(false);
 	choice = 1;
+	changekeys = false;
 
 	for (int i = 0; i < 5; ++i)
 	{
@@ -105,24 +106,50 @@ void CVideoState::Update(double dt)
 		switch (choice)
 		{
 		case 1:
-			CLuaInterface::GetInstance()->saveIntValue("width", 800, "Image/Settings.lua", true);
-			CLuaInterface::GetInstance()->saveIntValue("height", 600, "Image/Settings.lua");
-			Application::GetInstance().ChangeScene();
+			//CLuaInterface::GetInstance()->saveIntValue("width", 800, "Image/Settings.lua", true);
+			//CLuaInterface::GetInstance()->saveIntValue("height", 600, "Image/Settings.lua");
+			//Application::GetInstance().ChangeScene();
+
+			if (changekeys)
+				changekeys = false;
+			else
+				changekeys = true;
 			break;
 		case 2:
-			CLuaInterface::GetInstance()->saveIntValue("width", 1024, "Image/Settings.lua", true);
-			CLuaInterface::GetInstance()->saveIntValue("height", 768, "Image/Settings.lua");
-			Application::GetInstance().ChangeScene();
+			//CLuaInterface::GetInstance()->saveIntValue("width", 1024, "Image/Settings.lua", true);
+			//CLuaInterface::GetInstance()->saveIntValue("height", 768, "Image/Settings.lua");
+			//Application::GetInstance().ChangeScene();
+			if (changekeys)
+				changekeys = false;
+			else
+				changekeys = true;
 			break;
 		case 3:
-			CLuaInterface::GetInstance()->saveIntValue("width", 1600, "Image/Settings.lua", true);
-			CLuaInterface::GetInstance()->saveIntValue("height", 1200, "Image/Settings.lua");
-			Application::GetInstance().ChangeScene();
+			//CLuaInterface::GetInstance()->saveIntValue("width", 1600, "Image/Settings.lua", true);
+			//CLuaInterface::GetInstance()->saveIntValue("height", 1200, "Image/Settings.lua");
+			//Application::GetInstance().ChangeScene();
+			if (changekeys)
+				changekeys = false;
+			else
+				changekeys = true;
 			break;
 		};
 	}
 
+	if (changekeys)
+	{
+		for (int i = 'A'; i <= 'Z'; i++)
+		{
+			if (KeyboardController::GetInstance()->IsKeyReleased(i))
+			{
+				cout << "hi" << endl;
+				CLuaInterface::GetInstance()->replaceForward("ReplaceForward", i);
+			}
+		}
+	}
+
 	std::ostringstream ss1;
+	if (changekeys)
 	ss1 << "right:" << CLuaInterface::GetInstance()->getCharValue("moveRight");
 	textObj[1]->SetText(ss1.str());
 
@@ -134,13 +161,13 @@ void CVideoState::Update(double dt)
 	ss2.str("");
 	ss2.precision(3);
 	ss2 << "backward:" << CLuaInterface::GetInstance()->getCharValue("moveBackward");
-
 	textObj[3]->SetText(ss2.str());
 
 	std::ostringstream ss3;
 	ss3.precision(3);
 	ss3 << "Forward" << CLuaInterface::GetInstance()->getCharValue("moveForward");
 	textObj[4]->SetText(ss3.str());
+
 }
 
 void CVideoState::Render()

@@ -144,6 +144,17 @@ void CLuaInterface::saveVector3Value(const char * varName, const Vector3 value,c
 	lua_call(theLuaState, 3, 0);
 }
 
+void CLuaInterface::saveCharValue(const char * varName, const char value, const char * fileName, const bool bOverwrite)
+{
+	lua_getglobal(theLuaState, "SaveToLuaFile");
+	char outputString[80];
+	sprintf(outputString, "%s = %c\n", varName, value);
+	lua_pushstring(theLuaState, outputString);
+	lua_pushstring(theLuaState, fileName);
+	lua_pushinteger(theLuaState, bOverwrite);
+	lua_call(theLuaState, 3, 0);
+}
+
 char CLuaInterface::getCharValue(const char * varName)
 {
 	lua_getglobal(theLuaState, varName);
@@ -239,4 +250,13 @@ void CLuaInterface::error(const char * errorCode)
 		cout << errorMsg << endl;
 	else
 		cout << errorCode << " is not a vlid. \n*** Please contact the developer ***" << endl;
+}
+
+void CLuaInterface::replaceForward(const char * varName, const char value)
+{
+	lua_getglobal(theLuaState, varName);
+	lua_pushnumber(theLuaState, value);
+	lua_call(theLuaState, 1, 1);
+	//float distanceSquare = (float)lua_tonumber(theLuaState, -1);
+	lua_pop(theLuaState, 1);
 }

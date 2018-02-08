@@ -45,6 +45,25 @@ function GetMinMax(...)
 	return minValue, maxValue, avgValue, numValues
 end
 
+function ReplaceForward(newValue)
+	moveForward = string.char(newValue)
+	print(string.char(newValue))
+	
+end
+
+function CompareScore(score1, score2, score3)
+	if score1 >= score2 then
+		highscore = score1
+	else
+		highscore = score2
+	end
+	
+	if score3 > highscore then
+		highscore = score3
+	end
+	return highscore;
+end
+
 title = "DM2240 - Week 14 Scripting"
 width = 800
 height = 600
@@ -62,3 +81,7 @@ CPlayerInfoStartPos = {0,0,10}
 Waypoint_A_1 = {x=30.0, y=0.0, z=0.0}
 Waypoint_A_2 = {x=100.0, y=0.0, z=100.0}
 Waypoint_A_3 = {x=-30.0, y=0.0, z=0.0}
+
+
+
+--print(moveForward)
