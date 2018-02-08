@@ -99,6 +99,7 @@ void CGameFileState::Update(double dt)
 				CPlayerInfo::GetInstance()->SetTarget(CLuaInterface::GetInstance()->getVector3Values("tar", "Image/GameFile1.lua"));
 				CPlayerInfo::GetInstance()->SetUp(CLuaInterface::GetInstance()->getVector3Values("up", "Image/GameFile1.lua"));
 				CPlayerInfo::GetInstance()->SetHealth(CLuaInterface::GetInstance()->getIntValue("health", "Image/GameFile1.lua"));
+				CPlayerInfo::GetInstance()->SetPoint(CLuaInterface::GetInstance()->getIntValue("points", "Image/GameFile1.lua"));
 				cout << "Loading CGameState" << endl;
 				SceneManager::GetInstance()->SetActiveScene("GameState");
 			}
@@ -108,6 +109,7 @@ void CGameFileState::Update(double dt)
 				CLuaInterface::GetInstance()->saveVector3Value("tar", CPlayerInfo::GetInstance()->GetTarget(), "Image/GameFile1.lua");
 				CLuaInterface::GetInstance()->saveVector3Value("up", CPlayerInfo::GetInstance()->GetUp(), "Image/GameFile1.lua");
 				CLuaInterface::GetInstance()->saveIntValue("health", CPlayerInfo::GetInstance()->GetHealth(), "Image/GameFile1.lua");
+				CLuaInterface::GetInstance()->saveIntValue("points", CPlayerInfo::GetInstance()->GetPoints(), "Image/GameFile1.lua");
 			}
 			break;
 		case 2:
@@ -118,6 +120,7 @@ void CGameFileState::Update(double dt)
 				CPlayerInfo::GetInstance()->SetTarget(CLuaInterface::GetInstance()->getVector3Values("tar", "Image/GameFile2.lua"));
 				CPlayerInfo::GetInstance()->SetUp(CLuaInterface::GetInstance()->getVector3Values("up", "Image/GameFile2.lua"));
 				CPlayerInfo::GetInstance()->SetHealth(CLuaInterface::GetInstance()->getIntValue("health", "Image/GameFile2.lua"));
+				CPlayerInfo::GetInstance()->SetPoint(CLuaInterface::GetInstance()->getIntValue("points", "Image/GameFile2.lua"));
 				cout << "Loading CGameState" << endl;
 				SceneManager::GetInstance()->SetActiveScene("GameState");
 			}
@@ -127,6 +130,7 @@ void CGameFileState::Update(double dt)
 				CLuaInterface::GetInstance()->saveVector3Value("tar", CPlayerInfo::GetInstance()->GetTarget(), "Image/GameFile2.lua");
 				CLuaInterface::GetInstance()->saveVector3Value("up", CPlayerInfo::GetInstance()->GetUp(), "Image/GameFile2.lua");
 				CLuaInterface::GetInstance()->saveIntValue("health", CPlayerInfo::GetInstance()->GetHealth(), "Image/GameFile2.lua");
+				CLuaInterface::GetInstance()->saveIntValue("points", CPlayerInfo::GetInstance()->GetPoints(), "Image/GameFile2.lua");
 			}
 			break;
 		case 3:
@@ -137,6 +141,7 @@ void CGameFileState::Update(double dt)
 				CPlayerInfo::GetInstance()->SetTarget(CLuaInterface::GetInstance()->getVector3Values("tar", "Image/GameFile3.lua"));
 				CPlayerInfo::GetInstance()->SetUp(CLuaInterface::GetInstance()->getVector3Values("up", "Image/GameFile3.lua"));
 				CPlayerInfo::GetInstance()->SetHealth(CLuaInterface::GetInstance()->getIntValue("health", "Image/GameFile3.lua"));
+				CPlayerInfo::GetInstance()->SetPoint(CLuaInterface::GetInstance()->getIntValue("points", "Image/GameFile3.lua"));
 				cout << "Loading CGameState" << endl;
 				SceneManager::GetInstance()->SetActiveScene("GameState");
 			}
@@ -146,6 +151,7 @@ void CGameFileState::Update(double dt)
 				CLuaInterface::GetInstance()->saveVector3Value("tar", CPlayerInfo::GetInstance()->GetTarget(), "Image/GameFile3.lua");
 				CLuaInterface::GetInstance()->saveVector3Value("up", CPlayerInfo::GetInstance()->GetUp(), "Image/GameFile3.lua");
 				CLuaInterface::GetInstance()->saveIntValue("health", CPlayerInfo::GetInstance()->GetHealth(), "Image/GameFile3.lua");
+				CLuaInterface::GetInstance()->saveIntValue("points", CPlayerInfo::GetInstance()->GetPoints(), "Image/GameFile3.lua");
 			}
 			break;
 		};

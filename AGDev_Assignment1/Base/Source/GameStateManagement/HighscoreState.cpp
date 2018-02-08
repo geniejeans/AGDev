@@ -10,6 +10,7 @@ using namespace std;
 #include "../TextEntity.h"
 #include "RenderHelper.h"
 #include "../SpriteEntity.h"
+#include <sstream>
 #include "../EntityManager.h"
 
 #include "KeyboardController.h"
@@ -32,21 +33,64 @@ void CHighScoreState::Init()
 	GraphicsManager::GetInstance()->AttachCamera(&camera);
 
 	// Load all the meshes
-	MeshBuilder::GetInstance()->GenerateQuad("OPTIONSTATE_BKGROUND", Color(1, 1, 1), 1.f);
-	MeshBuilder::GetInstance()->GetMesh("OPTIONSTATE_BKGROUND")->textureID = LoadTGA("Image//OptionState.tga");
+	MeshBuilder::GetInstance()->GenerateQuad("HIGHSCORESTATE_BKGROUND", Color(1, 1, 1), 1.f);
+	MeshBuilder::GetInstance()->GetMesh("HIGHSCORESTATE_BKGROUND")->textureID = LoadTGA("Image//HighscoreState.tga");
+
+	MeshBuilder::GetInstance()->GenerateText("text", 16, 16);
+	MeshBuilder::GetInstance()->GetMesh("text")->textureID = LoadTGA("Image//calibri.tga");
+	MeshBuilder::GetInstance()->GetMesh("text")->material.kAmbient.Set(0, 1, 0);
+
 	float halfWindowWidth = Application::GetInstance().GetWindowWidth() / 2.0f;
 	float halfWindowHeight = Application::GetInstance().GetWindowHeight() / 2.0f;
-	IntroStateBackground = Create::Sprite2DObject("OPTIONSTATE_BKGROUND",
+	float fontSize = 40.0f;
+	float halfFontSize = fontSize / 2.0f;
+	IntroStateBackground = Create::Sprite2DObject("HIGHSCORESTATE_BKGROUND",
 		Vector3(halfWindowWidth, halfWindowHeight, 0.0f),
 		Vector3(800.0f, 600.0f, 0.0f));
 	cout << "CIntroState loaded\n" << endl;
+
+	for (int i = 0; i < 5; ++i)
+	{
+		textObj[i] = Create::Text2DObject("text", Vector3(halfWindowWidth / 2, halfWindowHeight + fontSize*i + halfFontSize, 2.0f), "", Vector3(fontSize, fontSize, fontSize), Color(0.0f, 1.0f, 0.0f));
+	}
+
+	score1 = CLuaInterface::GetInstance()->getIntValue("points", "Image/GameFile1.lua");
+	score2 = CLuaInterface::GetInstance()->getIntValue("points", "Image/GameFile2.lua");
+	score3 = CLuaInterface::GetInstance()->getIntValue("points", "Image/GameFile3.lua");
+
+	if (score1 < score2)
+	{
+		highscore = score2;
+	}
+
+	else
+	{
+		highscore = score1;
+	}
+
+	if (highscore < score3)
+	{
+		highscore = score3;
+	}
+
+	cout << score1 << endl;
+	cout << score2 << endl;
+	cout << score3 << endl;
+	cout << highscore << endl;
+	std::ostringstream ss1;
+	ss1 << "HIGHSCORE:" << highscore;
+	textObj[1]->SetText(ss1.str());
+	textObj[1]->SetColor(Color(0, 1, 0));
+
 }
 
 void CHighScoreState::Update(double dt)
 {
-	if (KeyboardController::GetInstance()->IsKeyReleased(VK_SPACE))
+
+
+	if (KeyboardController::GetInstance()->IsKeyReleased(VK_BACK))
 	{
-		cout << "Loading OptionState" << endl;
+		cout << "Loading HighscoreState" << endl;
 		SceneManager::GetInstance()->SetActiveScene("MenuState");
 	}
 }
@@ -80,9 +124,11 @@ void CHighScoreState::Exit()
 {
 	// Remove teh entity from EntityManager
 	EntityManager::GetInstance()->RemoveEntity(IntroStateBackground);
+	for (int i = 0; i < 5; ++i)
+		EntityManager::GetInstance()->RemoveEntity(textObj[i]);
 
 	// Remove the meshes which are specific to CIntroState
-	MeshBuilder::GetInstance()->RemoveMesh("OPTIONSTATE_BKGROUND");
+	MeshBuilder::GetInstance()->RemoveMesh("HIGHSCORESTATE_BKGROUND");
 
 	// Detach camera from other entities
 	GraphicsManager::GetInstance()->DetachCamera();

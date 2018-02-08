@@ -95,6 +95,8 @@ void CMenuState::Update(double dt)
 			SceneManager::GetInstance()->SetActiveScene("OptionState");
 			break;
 		case 3:
+			cout << "Loading CHighscoreState" << endl;
+			SceneManager::GetInstance()->SetActiveScene("HighScoreState");
 			break;
 		};
 	}
