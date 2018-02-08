@@ -86,6 +86,71 @@ void CGameFileState::Update(double dt)
 			GameFileStateBackground->SetMesh("GAMEFILESTATE_3");
 		}
 	}
+
+	if (KeyboardController::GetInstance()->IsKeyReleased(VK_RETURN))
+	{
+		switch (choice)
+		{
+		case 1:
+			if (!Application::GetInstance().GetInGame())
+			{
+				CPlayerInfo::GetInstance()->SetLoadFromFile(true);
+				CPlayerInfo::GetInstance()->SetPos(CLuaInterface::GetInstance()->getVector3Values("pos", "Image/GameFile1.lua"));
+				CPlayerInfo::GetInstance()->SetTarget(CLuaInterface::GetInstance()->getVector3Values("tar", "Image/GameFile1.lua"));
+				CPlayerInfo::GetInstance()->SetUp(CLuaInterface::GetInstance()->getVector3Values("up", "Image/GameFile1.lua"));
+				CPlayerInfo::GetInstance()->SetHealth(CLuaInterface::GetInstance()->getIntValue("health", "Image/GameFile1.lua"));
+				cout << "Loading CGameState" << endl;
+				SceneManager::GetInstance()->SetActiveScene("GameState");
+			}
+			else
+			{
+				CLuaInterface::GetInstance()->saveVector3Value("pos", CPlayerInfo::GetInstance()->GetPos(), "Image/GameFile1.lua", true);
+				CLuaInterface::GetInstance()->saveVector3Value("tar", CPlayerInfo::GetInstance()->GetTarget(), "Image/GameFile1.lua");
+				CLuaInterface::GetInstance()->saveVector3Value("up", CPlayerInfo::GetInstance()->GetUp(), "Image/GameFile1.lua");
+				CLuaInterface::GetInstance()->saveIntValue("health", CPlayerInfo::GetInstance()->GetHealth(), "Image/GameFile1.lua");
+			}
+			break;
+		case 2:
+			if (!Application::GetInstance().GetInGame())
+			{
+				CPlayerInfo::GetInstance()->SetLoadFromFile(true);
+				CPlayerInfo::GetInstance()->SetPos(CLuaInterface::GetInstance()->getVector3Values("pos", "Image/GameFile2.lua"));
+				CPlayerInfo::GetInstance()->SetTarget(CLuaInterface::GetInstance()->getVector3Values("tar", "Image/GameFile2.lua"));
+				CPlayerInfo::GetInstance()->SetUp(CLuaInterface::GetInstance()->getVector3Values("up", "Image/GameFile2.lua"));
+				CPlayerInfo::GetInstance()->SetHealth(CLuaInterface::GetInstance()->getIntValue("health", "Image/GameFile2.lua"));
+				cout << "Loading CGameState" << endl;
+				SceneManager::GetInstance()->SetActiveScene("GameState");
+			}
+			else
+			{
+				CLuaInterface::GetInstance()->saveVector3Value("pos", CPlayerInfo::GetInstance()->GetPos(), "Image/GameFile2.lua", true);
+				CLuaInterface::GetInstance()->saveVector3Value("tar", CPlayerInfo::GetInstance()->GetTarget(), "Image/GameFile2.lua");
+				CLuaInterface::GetInstance()->saveVector3Value("up", CPlayerInfo::GetInstance()->GetUp(), "Image/GameFile2.lua");
+				CLuaInterface::GetInstance()->saveIntValue("health", CPlayerInfo::GetInstance()->GetHealth(), "Image/GameFile2.lua");
+			}
+			break;
+		case 3:
+			if (!Application::GetInstance().GetInGame())
+			{
+				CPlayerInfo::GetInstance()->SetLoadFromFile(true);
+				CPlayerInfo::GetInstance()->SetPos(CLuaInterface::GetInstance()->getVector3Values("pos", "Image/GameFile3.lua"));
+				CPlayerInfo::GetInstance()->SetTarget(CLuaInterface::GetInstance()->getVector3Values("tar", "Image/GameFile3.lua"));
+				CPlayerInfo::GetInstance()->SetUp(CLuaInterface::GetInstance()->getVector3Values("up", "Image/GameFile3.lua"));
+				CPlayerInfo::GetInstance()->SetHealth(CLuaInterface::GetInstance()->getIntValue("health", "Image/GameFile3.lua"));
+				cout << "Loading CGameState" << endl;
+				SceneManager::GetInstance()->SetActiveScene("GameState");
+			}
+			else
+			{
+				CLuaInterface::GetInstance()->saveVector3Value("pos", CPlayerInfo::GetInstance()->GetPos(), "Image/GameFile3.lua", true);
+				CLuaInterface::GetInstance()->saveVector3Value("tar", CPlayerInfo::GetInstance()->GetTarget(), "Image/GameFile3.lua");
+				CLuaInterface::GetInstance()->saveVector3Value("up", CPlayerInfo::GetInstance()->GetUp(), "Image/GameFile3.lua");
+				CLuaInterface::GetInstance()->saveIntValue("health", CPlayerInfo::GetInstance()->GetHealth(), "Image/GameFile3.lua");
+			}
+			break;
+		};
+	
+	}
 }
 
 void CGameFileState::Render()

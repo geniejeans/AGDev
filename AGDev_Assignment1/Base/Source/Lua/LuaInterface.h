@@ -44,18 +44,20 @@ public:
 	lua_State *theLuaState;
 	lua_State *theErrorState;
 
-	int getIntValue(const char* name);
+	int getIntValue(const char* name, const char* fileName);
 //	void saveIntValue(const char* name, int value, bool overwrite = false);
 //	void saveFloatValue(const char* name, float value, bool smth = false);
 
 	// Save an integer value through the Lua Interface Class
-	void saveIntValue(const char* varName, const int value, const bool bOverwrite = NULL);
+	void saveIntValue(const char* varName, const int value, const char* fileName, const bool bOverwrite = NULL);
 	// Save a float value through the Lua Interface Class
-	void saveFloatValue(const char* varName, const float value, const bool bOverwrite = NULL);
+	void saveFloatValue(const char* varName, const float value, const char* fileName, const bool bOverwrite = NULL);
+	// Save a vector3 value through the Lua Interface Class
+	void saveVector3Value(const char* varName, const Vector3 value, const char* fileName,const bool bOverwrite = NULL);
 	// Get a char value through the Lua Interface Class
 	char getCharValue(const char* varName);
 	// Get Vector3 values through the Lua Interface Class
-	Vector3 getVector3Values(const char* varName);
+	Vector3 getVector3Values(const char* varName, const char* fileName);
 	// Get distance square value through the Lua Interface Class
 	float getDistanceSquareValue(const char* varName, Vector3 source, Vector3 destination);
 	// Get variable number of values through the Lua Interface Class

@@ -116,6 +116,9 @@ public:
 	void ChangePoints(int value);
 	//Get points of player
 	int GetPoints();
+
+	bool GetLoadFromFile() { return loadFromFile; };
+	void SetLoadFromFile(bool value) { loadFromFile = value; };
 private:
 	Vector3 defaultPosition, defaultTarget, defaultUp;
 	Vector3 position, target, up;
@@ -148,4 +151,6 @@ private:
 	bool b_collision;
 	int m_health;
 	int m_points;
+
+	bool loadFromFile;
 };

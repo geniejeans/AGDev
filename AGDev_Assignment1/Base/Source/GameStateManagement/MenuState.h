@@ -23,5 +23,6 @@ public:
 private:
 	FPSCamera camera;
 	SpriteEntity* MenuStateBackground;
+	int choice;
 	// TextEntity* textObj[3];
 };

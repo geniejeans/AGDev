@@ -119,12 +119,12 @@ void Application::Init()
 	CLuaInterface::GetInstance()->Init();
 
 	//Get the OpenGL resolution 
-	m_window_width = CLuaInterface::GetInstance()->getIntValue("width");
-	m_window_height = CLuaInterface::GetInstance()->getIntValue("height");
+	m_window_width = CLuaInterface::GetInstance()->getIntValue("width", "Image/DM2240.lua");
+	m_window_height = CLuaInterface::GetInstance()->getIntValue("height", "Image/DM2240.lua");
 
 	CLuaInterface::GetInstance()->Run();
-	CLuaInterface::GetInstance()->saveFloatValue("Player1", 200.10, true);
-	CLuaInterface::GetInstance()->saveIntValue("Player2", 100);
+	CLuaInterface::GetInstance()->saveFloatValue("Player1", 200.10, "Image/DM2240_HighScore.lua", true);
+	CLuaInterface::GetInstance()->saveIntValue("Player2", 100, "Image/DM2240_HighScore.lua");
 
 	inGame = false;
 	//Set the error callback

@@ -33,6 +33,7 @@ CPlayerInfo::CPlayerInfo(void)
 	, keyMoveBackward('S')
 	, keyMoveLeft('A')
 	, keyMoveRight('D')
+	, loadFromFile(false)
 { 	 	 
 }
 
@@ -60,9 +61,13 @@ void CPlayerInfo::Init(void)
 	defaultUp.Set(0,1,0);
 
 	// Set the current values
-	position.Set(0, 0, 10);
-	target.Set(0, 0, 0);
-	up.Set(0, 1, 0);
+	if (!loadFromFile)
+	{
+		position.Set(0, 0, 10);
+		target.Set(0, 0, 0);
+		up.Set(0, 1, 0);
+	}
+
 
 	// Set Boundary
 	maxBoundary.Set(1,1,1);

@@ -83,9 +83,11 @@ void CLuaInterface::Drop()
 	}
 }
 
-int CLuaInterface::getIntValue(const char* name)
+int CLuaInterface::getIntValue(const char* name,const char* fileName)
 {
+	luaL_dofile(theLuaState, fileName);
 	lua_getglobal(theLuaState, name);
+	luaL_dofile(theLuaState, "Image//DM2240.lua");
 	return lua_tointeger(theLuaState, -1);
 }
 
@@ -108,25 +110,38 @@ int CLuaInterface::getIntValue(const char* name)
 
 // Save an integer value through the Lua Interface Class
 void CLuaInterface::saveIntValue(const char* varName,
-	const int value, const bool bOverwrite)
+	const int value, const char* fileName, const bool bOverwrite)
 {
 	lua_getglobal(theLuaState, "SaveToLuaFile");
 	char outputString[80];
 	sprintf(outputString, "%s = %d\n", varName, value);
 	lua_pushstring(theLuaState, outputString);
+	lua_pushstring(theLuaState, fileName);
 	lua_pushinteger(theLuaState, bOverwrite);
-	lua_call(theLuaState, 2, 0); cout << "....................";
+	lua_call(theLuaState, 3, 0); cout << "....................";
 }
 // Save a float value through the Lua Interface Class
 void CLuaInterface::saveFloatValue(const char* varName,
-	const float value, const bool bOverwrite)
+	const float value, const char* fileName, const bool bOverwrite)
 {
 	lua_getglobal(theLuaState, "SaveToLuaFile");
 	char outputString[80];
 	sprintf(outputString, "%s = %6.4f\n", varName, value);
 	lua_pushstring(theLuaState, outputString);
+	lua_pushstring(theLuaState, fileName);
 	lua_pushinteger(theLuaState, bOverwrite);
-	lua_call(theLuaState, 2, 0);
+	lua_call(theLuaState, 3, 0);
+}
+
+void CLuaInterface::saveVector3Value(const char * varName, const Vector3 value,const char* fileName, const bool bOverwrite)
+{
+	lua_getglobal(theLuaState, "SaveToLuaFile");
+	char outputString[80];
+	sprintf(outputString, "%s = {%6.4f,%6.4f,%6.4f}\n", varName, value.x, value.y, value.z);
+	lua_pushstring(theLuaState, outputString);
+	lua_pushstring(theLuaState, fileName);
+	lua_pushinteger(theLuaState, bOverwrite);
+	lua_call(theLuaState, 3, 0);
 }
 
 char CLuaInterface::getCharValue(const char * varName)
@@ -142,19 +157,22 @@ char CLuaInterface::getCharValue(const char * varName)
 		return ' ';
 }
 
-Vector3 CLuaInterface::getVector3Values(const char * varName)
+Vector3 CLuaInterface::getVector3Values(const char * varName,const char* fileName)
 {
-	lua_getglobal(theLuaState, "CPlayerInfoStartPos");
+	luaL_dofile(theLuaState, fileName);
+
+	lua_getglobal(theLuaState, varName);
 	lua_rawgeti(theLuaState, -1, 1);
-	int x = lua_tonumber(theLuaState, -1);
+	float x = lua_tonumber(theLuaState, -1);
 	lua_pop(theLuaState, 1);
 	lua_rawgeti(theLuaState, -1, 2);
-	int y = lua_tonumber(theLuaState, -1);
+	float y = lua_tonumber(theLuaState, -1);
 	lua_pop(theLuaState, 1);
 	lua_rawgeti(theLuaState, -1, 3);
-	int z = lua_tonumber(theLuaState, -1);
+	float z = lua_tonumber(theLuaState, -1);
 	lua_pop(theLuaState, 1);
 
+	luaL_dofile(theLuaState, "Image//DM2240.lua");
 	return Vector3(x, y, z);
 }
 

@@ -30,28 +30,73 @@ void CMenuState::Init()
 	GraphicsManager::GetInstance()->AttachCamera(&camera);
 
 	// Load all the meshes
-	MeshBuilder::GetInstance()->GenerateQuad("MENUSTATE_BKGROUND", Color(1, 1, 1), 1.f);
-	MeshBuilder::GetInstance()->GetMesh("MENUSTATE_BKGROUND")->textureID = LoadTGA("Image//MenuState.tga");
+	MeshBuilder::GetInstance()->GenerateQuad("MENUSTATE_PLAY", Color(1, 1, 1), 1.f);
+	MeshBuilder::GetInstance()->GetMesh("MENUSTATE_PLAY")->textureID = LoadTGA("Image//MenuStatePlay.tga");
+
+	MeshBuilder::GetInstance()->GenerateQuad("MENUSTATE_OPTIONS", Color(1, 1, 1), 1.f);
+	MeshBuilder::GetInstance()->GetMesh("MENUSTATE_OPTIONS")->textureID = LoadTGA("Image//MenuStateOptions.tga");
+
+	MeshBuilder::GetInstance()->GenerateQuad("MENUSTATE_HIGHSCORE", Color(1, 1, 1), 1.f);
+	MeshBuilder::GetInstance()->GetMesh("MENUSTATE_HIGHSCORE")->textureID = LoadTGA("Image//MenuStateHighScore.tga");
+
 	float halfWindowWidth = Application::GetInstance().GetWindowWidth() / 2.0f;
 	float halfWindowHeight = Application::GetInstance().GetWindowHeight() / 2.0f;
-	MenuStateBackground = Create::Sprite2DObject("MENUSTATE_BKGROUND",
+	MenuStateBackground = Create::Sprite2DObject("MENUSTATE_PLAY",
 		Vector3(halfWindowWidth, halfWindowHeight, 0.0f),
 		Vector3(800.0f, 600.0f, 0.0f));
 	cout << "CMenuState loaded\n" << endl;
 	Application::GetInstance().SetInGame(false);
+	choice = 1;
 }
 
 void CMenuState::Update(double dt)
 {
-	if (KeyboardController::GetInstance()->IsKeyReleased(VK_SPACE))
+	if (KeyboardController::GetInstance()->IsKeyReleased(VK_UP))
 	{
-		cout << "Loading CMenuState" << endl;
-		SceneManager::GetInstance()->SetActiveScene("GameState");
+		if (choice == 3)
+		{
+			choice = 2;
+			MenuStateBackground->SetMesh("MENUSTATE_OPTIONS");
+		}
+	
+		else if (choice == 2)
+		{
+			choice = 1;
+			MenuStateBackground->SetMesh("MENUSTATE_PLAY");
+		}
+		
 	}
-	if (KeyboardController::GetInstance()->IsKeyReleased('O'))
+
+	if (KeyboardController::GetInstance()->IsKeyReleased(VK_DOWN))
 	{
-		cout << "Loading COptionState" << endl;
-		SceneManager::GetInstance()->SetActiveScene("OptionState");
+		if (choice == 1)
+		{
+			choice = 2;
+			MenuStateBackground->SetMesh("MENUSTATE_OPTIONS");
+		}
+
+		else if (choice == 2)
+		{
+			choice = 3;
+			MenuStateBackground->SetMesh("MENUSTATE_HIGHSCORE");
+		}
+	}
+
+	if (KeyboardController::GetInstance()->IsKeyReleased(VK_RETURN))
+	{
+		switch (choice)
+		{
+		case 1:
+			cout << "Loading CMenuState" << endl;
+			SceneManager::GetInstance()->SetActiveScene("GameState");
+			break;
+		case 2:
+			cout << "Loading COptionState" << endl;
+			SceneManager::GetInstance()->SetActiveScene("OptionState");
+			break;
+		case 3:
+			break;
+		};
 	}
 }
 

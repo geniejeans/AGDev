@@ -53,7 +53,7 @@ void COptionState::Init()
 
 void COptionState::Update(double dt)
 {
-	if (KeyboardController::GetInstance()->IsKeyReleased(VK_SPACE))
+	if (KeyboardController::GetInstance()->IsKeyReleased(VK_BACK))
 	{
 		if (!Application::GetInstance().GetInGame())
 		{
