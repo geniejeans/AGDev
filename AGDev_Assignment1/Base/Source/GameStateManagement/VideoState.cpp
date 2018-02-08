@@ -10,6 +10,7 @@ using namespace std;
 #include "../TextEntity.h"
 #include "RenderHelper.h"
 #include "../SpriteEntity.h"
+#include <sstream>
 #include "../EntityManager.h"
 
 #include "KeyboardController.h"
@@ -39,6 +40,12 @@ void CVideoState::Init()
 	MeshBuilder::GetInstance()->GenerateQuad("VIDEOSTATE_3", Color(1, 1, 1), 1.f);
 	MeshBuilder::GetInstance()->GetMesh("VIDEOSTATE_3")->textureID = LoadTGA("Image//video3.tga");
 
+	MeshBuilder::GetInstance()->GenerateText("text", 16, 16);
+	MeshBuilder::GetInstance()->GetMesh("text")->textureID = LoadTGA("Image//calibri.tga");
+	MeshBuilder::GetInstance()->GetMesh("text")->material.kAmbient.Set(0, 1, 0);
+
+	float fontSize = 40.0f;
+	float halfFontSize = fontSize / 2.0f;
 	float halfWindowWidth = Application::GetInstance().GetWindowWidth() / 2.0f;
 	float halfWindowHeight = Application::GetInstance().GetWindowHeight() / 2.0f;
 	MenuStateBackground = Create::Sprite2DObject("VIDEOSTATE_1",
@@ -47,6 +54,12 @@ void CVideoState::Init()
 	cout << "CVideoState loaded\n" << endl;
 	Application::GetInstance().SetInGame(false);
 	choice = 1;
+
+	for (int i = 0; i < 5; ++i)
+	{
+		textObj[i] = Create::Text2DObject("text", Vector3(halfWindowWidth / 2, halfWindowHeight + fontSize*i + halfFontSize, 2.0f), "", Vector3(fontSize, fontSize, fontSize), Color(1.0f, 0.0f, 0.0f));
+	}
+
 }
 
 void CVideoState::Update(double dt)
@@ -108,6 +121,26 @@ void CVideoState::Update(double dt)
 			break;
 		};
 	}
+
+	std::ostringstream ss1;
+	ss1 << "right:" << CLuaInterface::GetInstance()->getCharValue("moveRight");
+	textObj[1]->SetText(ss1.str());
+
+	std::ostringstream ss2;
+	ss2.precision(3);
+	ss2 << "left:" << CLuaInterface::GetInstance()->getCharValue("moveLeft");
+	textObj[2]->SetText(ss2.str());
+
+	ss2.str("");
+	ss2.precision(3);
+	ss2 << "backward:" << CLuaInterface::GetInstance()->getCharValue("moveBackward");
+
+	textObj[3]->SetText(ss2.str());
+
+	std::ostringstream ss3;
+	ss3.precision(3);
+	ss3 << "Forward" << CLuaInterface::GetInstance()->getCharValue("moveForward");
+	textObj[4]->SetText(ss3.str());
 }
 
 void CVideoState::Render()
@@ -139,6 +172,9 @@ void CVideoState::Exit()
 {
 	//Remove  the entity from EntityManager
 	EntityManager::GetInstance()->RemoveEntity(MenuStateBackground);
+	for (int i = 0; i < 5; ++i)
+		EntityManager::GetInstance()->RemoveEntity(textObj[i]);
+
 
 	//Remove the meshes which are specific to CVideoState
 	MeshBuilder::GetInstance()->RemoveMesh("VIDEOSTATE_1");

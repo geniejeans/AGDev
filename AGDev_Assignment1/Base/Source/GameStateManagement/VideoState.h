@@ -8,6 +8,7 @@
 #include "../SpriteEntity.h"
 
 class SceneManager;
+class TextEntity;
 
 class CVideoState : public Scene
 {
@@ -24,5 +25,5 @@ private:
 	FPSCamera camera;
 	SpriteEntity* MenuStateBackground;
 	int choice;
-	// TextEntity* textObj[3];
+	TextEntity* textObj[5];
 };
