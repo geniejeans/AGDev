@@ -16,9 +16,9 @@
     <ClCompile Include="Source\EntityManager.cpp" />
     <ClCompile Include="Source\FPSCamera.cpp" />
     <ClCompile Include="Source\GameStateManagement\GameFileState.cpp" />
+    <ClCompile Include="Source\GameStateManagement\GameoverState.cpp" />
     <ClCompile Include="Source\GameStateManagement\HighscoreState.cpp" />
     <ClCompile Include="Source\GameStateManagement\IntroState.cpp" />
-    <ClCompile Include="Source\GameStateManagement\InventroyState.cpp" />
     <ClCompile Include="Source\GameStateManagement\MenuState.cpp" />
     <ClCompile Include="Source\GameStateManagement\OptionState.cpp" />
     <ClCompile Include="Source\GameStateManagement\ShopState.cpp" />
@@ -63,9 +63,9 @@
     <ClInclude Include="Source\EntityManager.h" />
     <ClInclude Include="Source\FPSCamera.h" />
     <ClInclude Include="Source\GameStateManagement\GameFileState.h" />
+    <ClInclude Include="Source\GameStateManagement\GameoverState.h" />
     <ClInclude Include="Source\GameStateManagement\HighscoreState.h" />
     <ClInclude Include="Source\GameStateManagement\IntroState.h" />
-    <ClInclude Include="Source\GameStateManagement\InventoryState.h" />
     <ClInclude Include="Source\GameStateManagement\MenuState.h" />
     <ClInclude Include="Source\GameStateManagement\OptionState.h" />
     <ClInclude Include="Source\GameStateManagement\ShopState.h" />

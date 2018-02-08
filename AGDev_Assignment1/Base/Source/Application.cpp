@@ -22,7 +22,7 @@
 #include "GameStateManagement\MenuState.h"
 #include "GameStateManagement\OptionState.h"
 #include "GameStateManagement\HighScoreState.h"
-#include "GameStateManagement\InventoryState.h"
+#include "GameStateManagement\GameoverState.h"
 #include "GameStateManagement\ShopState.h"
 #include "GameStateManagement\SkillState.h"
 #include "GameStateManagement\GameFileState.h"
@@ -185,7 +185,7 @@ void Application::Init()
 	SceneManager::GetInstance()->AddScene("MenuState", new CMenuState());
 	SceneManager::GetInstance()->AddScene("OptionState", new COptionState());
 	SceneManager::GetInstance()->AddScene("HighScoreState", new CHighScoreState());
-	SceneManager::GetInstance()->AddScene("InventoryState", new CInventoryState());
+	SceneManager::GetInstance()->AddScene("GameoverState", new CGameoverState());
 	SceneManager::GetInstance()->AddScene("ShopState", new CShopState());
 	SceneManager::GetInstance()->AddScene("SkillState", new CSkillState());
 	SceneManager::GetInstance()->AddScene("GameFileState", new CGameFileState());

@@ -687,6 +687,11 @@ void EntityManager::CollisionPlayerResponse(CPlayerInfo * Player, EntityBase * T
 		Player->ChangePoints(10);
 		ThisEntity->SetPosition(Vector3(newX, 6.0f, newZ));
 	}
+	else if (ThisEntity->GetMeshName() == "EnemyBullet")
+	{
+		Player->ChangeHealth(-10);
+		ThisEntity->SetIsDone(true);
+	}
 }
 
 Vector3 EntityManager::GetPlayerTarget()

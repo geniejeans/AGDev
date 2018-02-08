@@ -468,6 +468,13 @@ void SceneText::Update(double dt)
 		return;
 	}
 
+	if (playerInfo->GetHealth() <= 0)
+	{
+		Application::GetInstance().SetInGame(false);
+		cout << "Loading CGameOverState" << endl;
+		SceneManager::GetInstance()->SetActiveScene("GameoverState");
+		return;
+	}
 	// Update our entities
 	EntityManager::GetInstance()->Update(dt);
 
@@ -596,6 +603,7 @@ void SceneText::Exit()
 	if (Application::GetInstance().GetInGame())
 		return;
 
+	EntityManager::GetInstance()->Destroy();
 	// Detach camera from other entities
 	GraphicsManager::GetInstance()->DetachCamera();
 	playerInfo->DetachCamera();

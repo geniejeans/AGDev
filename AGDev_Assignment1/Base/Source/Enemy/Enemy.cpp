@@ -2,7 +2,7 @@
 #include "../EntityManager.h"
 #include "GraphicsManager.h"
 #include "RenderHelper.h"
-#include "../WeaponInfo/GrenadeThrow.h"
+#include "../WeaponInfo/Pistol.h"
 #include "../Waypoint/WaypointManager.h"
 
 #include <stdlib.h>     /* srand, rand */
@@ -70,7 +70,7 @@ void CEnemy::Init(void)
 	minBoundary.Set(-1, -1, -1);
 
 	// Set speed
-	m_dSpeed = 10.0;
+	m_dSpeed = 18.0;
 
 	// Initialise the LOD meshes
 	InitLOD("tanktop", "tanktopmid", "tanktopmid");
@@ -79,7 +79,7 @@ void CEnemy::Init(void)
 	this->SetCollider(true);
 	this->SetAABB(Vector3(1, 1, 1), Vector3(-1, -1, -1));
 
-	primaryWeapon = new CGrenadeThrow();
+	primaryWeapon = new CPistol();
 	primaryWeapon->Init();
 	// Add to EntityManager
 	EntityManager::GetInstance()->AddEntity(this, "", true);
@@ -117,7 +117,7 @@ void CEnemy::Init(float x, float y, float z)
 	minBoundary.Set(-1, -1, -1);
 
 	// Set speed
-	m_dSpeed = 10.0;
+	m_dSpeed = 18.0;
 
 	// Initialise the LOD meshes
 	InitLOD("tanktop", "tanktop", "tanktop");
@@ -126,7 +126,7 @@ void CEnemy::Init(float x, float y, float z)
 	this->SetCollider(true);
 	this->SetAABB(Vector3(1, 1, 1), Vector3(-1, -1, -1));
 
-	primaryWeapon = new CGrenadeThrow();
+	primaryWeapon = new CPistol();
 	primaryWeapon->Init();
 
 	distance = 2;
@@ -222,7 +222,7 @@ void CEnemy::Update(double dt)
 		position += viewVector * (float)m_dSpeed * (float)dt;//This is added
 	// Constrain the position
 	Constrain();
-	if (elapsed_time >= 10.0f)
+	if (sm->GetCurrentState() != "PATROL" && elapsed_time >= 0.4f)
 	{
 		if (primaryWeapon)
 			primaryWeapon->Discharge(position, EntityManager::GetInstance()->GetPlayerTarget(), this);

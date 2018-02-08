@@ -9,11 +9,11 @@
 
 class SceneManager;
 //class Text ENtity
-class CInventoryState :public Scene
+class CGameoverState :public Scene
 {
 public:
-	CInventoryState();
-	~CInventoryState();
+	CGameoverState();
+	~CGameoverState();
 	virtual void Init();
 	virtual void Update(double dt);
 	virtual void Render();

@@ -177,9 +177,6 @@
     <ClCompile Include="Source\GameStateManagement\HighscoreState.cpp">
       <Filter>GameStateManagement</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GameStateManagement\InventroyState.cpp">
-      <Filter>GameStateManagement</Filter>
-    </ClCompile>
     <ClCompile Include="Source\GameStateManagement\ShopState.cpp">
       <Filter>GameStateManagement</Filter>
     </ClCompile>
@@ -187,6 +184,9 @@
       <Filter>GameStateManagement</Filter>
     </ClCompile>
     <ClCompile Include="Source\GameStateManagement\GameFileState.cpp">
+      <Filter>GameStateManagement</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameStateManagement\GameoverState.cpp">
       <Filter>GameStateManagement</Filter>
     </ClCompile>
   </ItemGroup>
@@ -326,9 +326,6 @@
     <ClInclude Include="Source\GameStateManagement\HighscoreState.h">
       <Filter>GameStateManagement</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GameStateManagement\InventoryState.h">
-      <Filter>GameStateManagement</Filter>
-    </ClInclude>
     <ClInclude Include="Source\GameStateManagement\ShopState.h">
       <Filter>GameStateManagement</Filter>
     </ClInclude>
@@ -336,6 +333,9 @@
       <Filter>GameStateManagement</Filter>
     </ClInclude>
     <ClInclude Include="Source\GameStateManagement\GameFileState.h">
+      <Filter>GameStateManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameStateManagement\GameoverState.h">
       <Filter>GameStateManagement</Filter>
     </ClInclude>
   </ItemGroup>

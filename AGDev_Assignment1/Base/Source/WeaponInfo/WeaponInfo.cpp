@@ -174,8 +174,8 @@ void CWeaponInfo::Discharge(Vector3 position, Vector3 target, EntityBase* _sourc
 			CProjectileEntityBase* aProjectile = Create::ProjectileEntityBase("cube",
 				position,
 				(target - position).Normalized(),
-				2.0f,
-				10.0f,
+				4.0f,
+				50.0f,
 				_source);
 			aProjectile->SetMeshName("EnemyBullet");
 			aProjectile->SetCollider(true);

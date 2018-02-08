@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-#include "InventoryState.h"
+#include "GameoverState.h"
 #include "GL/glew.h"
 #include "../Application.h"
 #include "LoadTGA.h"
@@ -15,43 +15,43 @@ using namespace std;
 #include "KeyboardController.h"
 #include "SceneManager.h"
 
-CInventoryState::CInventoryState()
+CGameoverState::CGameoverState()
 {
 
 }
 
-CInventoryState::~CInventoryState()
+CGameoverState::~CGameoverState()
 {
 
 }
 
-void CInventoryState::Init()
+void CGameoverState::Init()
 {
 	// create and attach the camera to the scene
 	camera.Init(Vector3(0, 0, 10), Vector3(0, 0, 0), Vector3(0, 1, 0));
 	GraphicsManager::GetInstance()->AttachCamera(&camera);
 
 	// Load all the meshes
-	MeshBuilder::GetInstance()->GenerateQuad("OPTIONSTATE_BKGROUND", Color(1, 1, 1), 1.f);
-	MeshBuilder::GetInstance()->GetMesh("OPTIONSTATE_BKGROUND")->textureID = LoadTGA("Image//OptionState.tga");
+	MeshBuilder::GetInstance()->GenerateQuad("GAMEOVERSTATE_BKGROUND", Color(1, 1, 1), 1.f);
+	MeshBuilder::GetInstance()->GetMesh("GAMEOVERSTATE_BKGROUND")->textureID = LoadTGA("Image//GameoverState.tga");
 	float halfWindowWidth = Application::GetInstance().GetWindowWidth() / 2.0f;
 	float halfWindowHeight = Application::GetInstance().GetWindowHeight() / 2.0f;
-	IntroStateBackground = Create::Sprite2DObject("OPTIONSTATE_BKGROUND",
+	IntroStateBackground = Create::Sprite2DObject("GAMEOVERSTATE_BKGROUND",
 		Vector3(halfWindowWidth, halfWindowHeight, 0.0f),
 		Vector3(800.0f, 600.0f, 0.0f));
-	cout << "CIntroState loaded\n" << endl;
+	cout << "CGameoverState loaded\n" << endl;
 }
 
-void CInventoryState::Update(double dt)
+void CGameoverState::Update(double dt)
 {
 	if (KeyboardController::GetInstance()->IsKeyReleased(VK_SPACE))
 	{
-		cout << "Loading OptionState" << endl;
+		cout << "Loading MenuState" << endl;
 		SceneManager::GetInstance()->SetActiveScene("MenuState");
 	}
 }
 
-void CInventoryState::Render()
+void CGameoverState::Render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -76,13 +76,13 @@ void CInventoryState::Render()
 	EntityManager::GetInstance()->RenderUI();
 }
 
-void CInventoryState::Exit()
+void CGameoverState::Exit()
 {
 	// Remove teh entity from EntityManager
 	EntityManager::GetInstance()->RemoveEntity(IntroStateBackground);
 
 	// Remove the meshes which are specific to CIntroState
-	MeshBuilder::GetInstance()->RemoveMesh("OPTIONSTATE_BKGROUND");
+	MeshBuilder::GetInstance()->RemoveMesh("GAMEOVERSTATE_BKGROUND");
 
 	// Detach camera from other entities
 	GraphicsManager::GetInstance()->DetachCamera();
