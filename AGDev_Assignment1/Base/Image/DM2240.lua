@@ -90,10 +90,10 @@ width = 1024
 height = 768
 
 -- Keyboard Inputs
-moveForward  = "W"
+moveForward = "B"
 moveBackward = "S"
-moveLeft     = "A"
-moveRight    = "D"
+moveLeft = "A"
+moveRight = "D"
 
 -- CPlayerInfo start position
 CPlayerInfoStartPos = {0,0,10}

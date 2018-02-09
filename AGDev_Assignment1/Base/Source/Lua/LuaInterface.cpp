@@ -263,11 +263,19 @@ void CLuaInterface::error(const char * errorCode)
 		cout << errorCode << " is not a vlid. \n*** Please contact the developer ***" << endl;
 }
 
-void CLuaInterface::replaceForward(const char * varName, const char value)
+void CLuaInterface::replaceForward(const char * varName, const char value, const int lineNumber)
 {
-	lua_getglobal(theLuaState, varName);
-	lua_pushnumber(theLuaState, value);
-	lua_call(theLuaState, 1, 1);
-	//float distanceSquare = (float)lua_tonumber(theLuaState, -1);
-	lua_pop(theLuaState, 1);
+	//lua_getglobal(theLuaState, varName);
+	//lua_pushnumber(theLuaState, value);
+	//lua_call(theLuaState, 1, 1);
+	////float distanceSquare = (float)lua_tonumber(theLuaState, -1);
+	//lua_pop(theLuaState, 1);
+
+	lua_getglobal(theLuaState, "UpdateLineInFile");
+	char outputString[80];
+	sprintf(outputString, "%s = \"%c\"", varName, value);
+	lua_pushstring(theLuaState, outputString);
+	lua_pushstring(theLuaState, "Image//DM2240.lua");
+	lua_pushinteger(theLuaState, lineNumber);
+	lua_call(theLuaState, 3, 0); cout << "....................";
 }

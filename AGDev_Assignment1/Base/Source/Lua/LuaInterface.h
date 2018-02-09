@@ -71,5 +71,5 @@ public:
 	// Get error message using an error cose
 	void error(const char *errorCode);
 	// replace forward button
-	void replaceForward(const char* varName, const char value);
+	void replaceForward(const char* varName, const char value, const int lineNumber);
 };
