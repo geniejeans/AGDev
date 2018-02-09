@@ -279,3 +279,14 @@ void CLuaInterface::replaceForward(const char * varName, const char value, const
 	lua_pushinteger(theLuaState, lineNumber);
 	lua_call(theLuaState, 3, 0); cout << "....................";
 }
+
+std::string CLuaInterface::changeState(const char * currentState, int distanceFromPlayer)
+{
+	lua_getglobal(theLuaState, "ChangeEnemyState");
+	lua_pushstring(theLuaState, currentState);
+	lua_pushinteger(theLuaState, distanceFromPlayer);
+	lua_call(theLuaState, 2, 1);
+	std::string state = lua_tostring(theLuaState, -1);
+	lua_pop(theLuaState, 1);
+	return state;
+}

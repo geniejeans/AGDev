@@ -228,6 +228,9 @@ void CEnemy::Update(double dt)
 			primaryWeapon->Discharge(position, EntityManager::GetInstance()->GetPlayerTarget(), this);
 		elapsed_time = 0.0f;
 	}
+	string state = CLuaInterface::GetInstance()->changeState(sm->GetCurrentState().c_str(), (int)distanceFromPlayer);
+	if (state != "")
+		sm->SetNextState(state);
 	sm->Update(dt);
 }
 

@@ -3,6 +3,7 @@
 //Includes the lua headers
 #include "lua.hpp"
 #include "Vector3.h"
+#include <string>
 
 class CLuaInterface
 {
@@ -72,4 +73,6 @@ public:
 	void error(const char *errorCode);
 	// replace forward button
 	void replaceForward(const char* varName, const char value, const int lineNumber);
+	// Change the enemy's state
+	std::string changeState(const char * currentState, int distanceFromPlayer);
 };

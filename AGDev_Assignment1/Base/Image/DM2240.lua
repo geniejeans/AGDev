@@ -106,3 +106,22 @@ Waypoint_A_3 = {x=-30.0, y=0.0, z=0.0}
 
 
 --print(moveForward)
+function ChangeEnemyState(currentState, distanceFromPlayer)
+	if currentState == "PATROL" then
+		if distanceFromPlayer < 100 then
+			return "CHASE"
+		else 
+			return ""
+		end
+	elseif currentState == "CHASE" then
+		if distanceFromPlayer < 50 then
+			return "ATTACK"
+		elseif distanceFromPlayer >= 100 then
+			return "PATROL"
+		else 
+			return ""
+		end
+	else
+		return "CHASE"
+	end
+end
