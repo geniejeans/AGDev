@@ -1,3 +1,24 @@
+function UpdateLineInFile(inputString, fileName, lineNumber)
+	local file = assert(io.open(fileName, "rb"))
+	local sContents = file:read("*all")
+	local linesArray = {}
+	local value = 1
+	for line in io.lines(fileName) do
+		if value == lineNumber then
+			linesArray[#linesArray + 1] = inputString
+		else
+			linesArray[#linesArray + 1] = line
+		end
+		value = value + 1
+	end
+		file = assert(io.open(fileName, "w+"))
+		for i = 1, #linesArray do
+			file:write(linesArray[i])
+			file:write("\n")
+		end
+		file:close()
+end
+
 function SaveToLuaFile(outputString, fileName, overwrite)
    print("SaveToLuaFile...")
    local f;						-- The file
@@ -14,7 +35,7 @@ function SaveToLuaFile(outputString, fileName, overwrite)
 end
 
 function CalculateDistanceSquare(x1,y1,z1,x2,y2,z2)
-	local distanceSquare = (x2 - x1)*(x2 - x1) + (y2 - y1)*(y2 - y1) + (z2 - z1)*(z2 - z1)
+
 	print(distanceSquare)
 	return distanceSquare
 end
@@ -65,8 +86,8 @@ function CompareScore(score1, score2, score3)
 end
 
 title = "DM2240 - Week 14 Scripting"
-width = 800
-height = 600
+width = 1024
+height = 768
 
 -- Keyboard Inputs
 moveForward  = "W"

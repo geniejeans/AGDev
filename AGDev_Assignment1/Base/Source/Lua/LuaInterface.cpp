@@ -30,7 +30,7 @@ bool CLuaInterface::Init()
 		luaL_openlibs(theLuaState);
 
 		//3.Load lua script
-		luaL_dofile(theLuaState, "Image//DM2240.lua");
+		luaL_dofile(theLuaState, "Image/DM2240.lua");
 
 		result = true;
 	}
@@ -153,6 +153,17 @@ void CLuaInterface::saveCharValue(const char * varName, const char value, const 
 	lua_pushstring(theLuaState, fileName);
 	lua_pushinteger(theLuaState, bOverwrite);
 	lua_call(theLuaState, 3, 0);
+}
+
+void CLuaInterface::updateResolution(const char * varName, const int value, const int lineNumber)
+{
+	lua_getglobal(theLuaState, "UpdateLineInFile");
+	char outputString[80];
+	sprintf(outputString, "%s = %d", varName, value);
+	lua_pushstring(theLuaState, outputString);
+	lua_pushstring(theLuaState, "Image//DM2240.lua");
+	lua_pushinteger(theLuaState, lineNumber);
+	lua_call(theLuaState, 3, 0); cout << "....................";
 }
 
 char CLuaInterface::getCharValue(const char * varName)

@@ -119,8 +119,8 @@ void Application::Init()
 	CLuaInterface::GetInstance()->Init();
 
 	//Get the OpenGL resolution 
-	m_window_width = CLuaInterface::GetInstance()->getIntValue("width", "Image/Settings.lua");
-	m_window_height = CLuaInterface::GetInstance()->getIntValue("height", "Image/Settings.lua");
+	m_window_width = CLuaInterface::GetInstance()->getIntValue("width", "Image/DM2240.lua");
+	m_window_height = CLuaInterface::GetInstance()->getIntValue("height", "Image/DM2240.lua");
 
 	CLuaInterface::GetInstance()->Run();
 	CLuaInterface::GetInstance()->saveFloatValue("Player1", 200.10, "Image/DM2240_HighScore.lua", true);
@@ -202,10 +202,10 @@ void Application::Run()
 	m_timer.startTimer();    // Start timer to calculate how long it takes to render this frame
 	while (!glfwWindowShouldClose(m_window) && !IsKeyPressed(VK_ESCAPE))
 	{
-		if (m_window_height != CLuaInterface::GetInstance()->getIntValue("height", "Image/Settings.lua"))
+		if (m_window_height != CLuaInterface::GetInstance()->getIntValue("height", "Image/DM2240.lua"))
 		{
-			m_window_width = CLuaInterface::GetInstance()->getIntValue("width", "Image/Settings.lua");
-			m_window_height = CLuaInterface::GetInstance()->getIntValue("height", "Image/Settings.lua");
+			m_window_width = CLuaInterface::GetInstance()->getIntValue("width", "Image/DM2240.lua");
+			m_window_height = CLuaInterface::GetInstance()->getIntValue("height", "Image/DM2240.lua");
 			glfwSetWindowSize(m_window, m_window_width, m_window_height);
 
 

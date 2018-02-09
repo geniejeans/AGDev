@@ -106,32 +106,31 @@ void CVideoState::Update(double dt)
 		switch (choice)
 		{
 		case 1:
-			//CLuaInterface::GetInstance()->saveIntValue("width", 800, "Image/Settings.lua", true);
-			//CLuaInterface::GetInstance()->saveIntValue("height", 600, "Image/Settings.lua");
-			//Application::GetInstance().ChangeScene();
-
-			if (changekeys)
+			CLuaInterface::GetInstance()->updateResolution("width", 800, 89);
+			CLuaInterface::GetInstance()->updateResolution("height", 600, 90);
+			Application::GetInstance().ChangeScene();
+			/*if (changekeys)
 				changekeys = false;
 			else
-				changekeys = true;
+				changekeys = true;*/
 			break;
 		case 2:
-			//CLuaInterface::GetInstance()->saveIntValue("width", 1024, "Image/Settings.lua", true);
-			//CLuaInterface::GetInstance()->saveIntValue("height", 768, "Image/Settings.lua");
-			//Application::GetInstance().ChangeScene();
-			if (changekeys)
+			CLuaInterface::GetInstance()->updateResolution("width", 1024, 89);
+			CLuaInterface::GetInstance()->updateResolution("height", 768, 90);
+			Application::GetInstance().ChangeScene();
+	/*		if (changekeys)
 				changekeys = false;
 			else
-				changekeys = true;
+				changekeys = true;*/
 			break;
 		case 3:
-			//CLuaInterface::GetInstance()->saveIntValue("width", 1600, "Image/Settings.lua", true);
-			//CLuaInterface::GetInstance()->saveIntValue("height", 1200, "Image/Settings.lua");
-			//Application::GetInstance().ChangeScene();
-			if (changekeys)
+			CLuaInterface::GetInstance()->updateResolution("width", 1600, 89);
+			CLuaInterface::GetInstance()->updateResolution("height", 1200, 90);
+			Application::GetInstance().ChangeScene();
+	/*		if (changekeys)
 				changekeys = false;
 			else
-				changekeys = true;
+				changekeys = true;*/
 			break;
 		};
 	}

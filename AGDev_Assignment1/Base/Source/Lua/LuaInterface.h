@@ -56,6 +56,8 @@ public:
 	void saveVector3Value(const char* varName, const Vector3 value, const char* fileName,const bool bOverwrite = NULL);
 	// Save a char value through the Lua Interface Class
 	void saveCharValue(const char* varName, const char value, const char* fileName, const bool bOverwrite = NULL);
+	//Update the file
+	void updateResolution(const char* varName, const int value, const int lineNumber);
 	// Get a char value through the Lua Interface Class
 	char getCharValue(const char* varName);
 	// Get Vector3 values through the Lua Interface Class
